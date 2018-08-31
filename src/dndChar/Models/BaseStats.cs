@@ -1,5 +1,4 @@
-﻿using dndChar.Models;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
 namespace dndChar.Models
 {
