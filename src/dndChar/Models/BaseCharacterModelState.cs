@@ -1,6 +1,6 @@
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
-namespace dndChar
+namespace dndChar.Models
 {
     public class BaseCharacterModelState
     {

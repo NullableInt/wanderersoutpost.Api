@@ -1,6 +1,7 @@
+﻿using dndChar.Models;
 using Newtonsoft.Json;
 
-namespace dndChar
+namespace dndChar.Models
 {
     public class Skill
     {
@@ -9,11 +10,14 @@ namespace dndChar
 
         [JsonProperty("coreStat")]
         public AbilityScore CoreStat { get; set; }
-        
+
+        [JsonProperty("_proficiencyScore")]
+        public long ProficiencyScore { get; set; }
+
         [JsonProperty("proficiencyBonus")]
-        public int ProficiencyBonus { get; set; }
+        public string ProficiencyBonus { get; set; }
 
         [JsonProperty("SkillProficiencyBonus")]
-        public SkillProficiencyBonus SkillProficiencyBonus { get; set; }
+        public string SkillProficiencyBonus { get; set; }
     }
 }

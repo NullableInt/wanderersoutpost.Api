@@ -1,6 +1,7 @@
+﻿using dndChar.Models;
 using Newtonsoft.Json;
 
-namespace dndChar
+namespace dndChar.Models
 {
     public class BaseStats
     {
@@ -23,13 +24,13 @@ namespace dndChar
         public AbilityScore AbilityScore { get; set; }
 
         [JsonProperty("experience")]
-        public long Experience { get; set; }
+        public int Experience { get; set; }
 
         [JsonProperty("class")]
         public string Class { get; set; }
 
         [JsonProperty("level")]
-        public long Level { get; set; }
+        public int Level { get; set; }
 
         [JsonProperty("name")]
         public string Name { get; set; }
@@ -44,24 +45,24 @@ namespace dndChar
         public long Inspiration { get; set; }
 
         [JsonProperty("speed")]
-        public long Speed { get; set; }
+        public int Speed { get; set; }
 
         [JsonProperty("maxHitPoints")]
-        public long MaxHitPoints { get; set; }
+        public int MaxHitPoints { get; set; }
 
         [JsonProperty("tempHitPoints")]
-        public long TempHitPoints { get; set; }
+        public int TempHitPoints { get; set; }
 
         [JsonProperty("damagedHitPoints")]
-        public long DamagedHitPoints { get; set; }
+        public int DamagedHitPoints { get; set; }
 
         [JsonProperty("background")]
         public string Background { get; set; }
 
         [JsonProperty("_iniativeBonus")]
-        public long IniativeBonus { get; set; }
+        public int IniativeBonus { get; set; }
 
         [JsonProperty("_hitPoints")]
-        public long HitPoints { get; set; }
+        public int HitPoints { get; set; }
     }
 }

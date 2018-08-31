@@ -1,6 +1,7 @@
+﻿using dndChar.Models;
 using Newtonsoft.Json;
 
-namespace dndChar
+namespace dndChar.Models
 {
     public class SavingThrow
     {
@@ -8,7 +9,7 @@ namespace dndChar
         public AbilityScore Ability { get; set; }
 
         [JsonProperty("_proficiencyScore")]
-        public int ProficiencyScore { get; set; }
+        public long ProficiencyScore { get; set; }
 
         [JsonProperty("proficiencyBonus")]
         public string ProficiencyBonus { get; set; }

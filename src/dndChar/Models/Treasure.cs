@@ -1,6 +1,6 @@
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
-namespace dndChar
+namespace dndChar.Models
 {
     public class Treasure
     {
@@ -8,9 +8,9 @@ namespace dndChar
         public string Item { get; set; }
 
         [JsonProperty("worth")]
-        public long Worth { get; set; }
+        public int Worth { get; set; }
 
         [JsonProperty("currency")]
-        public string Currency { get; set; }
+        public Currency Currency { get; set; }
     }
 }

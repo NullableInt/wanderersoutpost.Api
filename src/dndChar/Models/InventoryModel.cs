@@ -1,8 +1,8 @@
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
-namespace dndChar
+namespace dndChar.Models
 {
-    public class Bond
+    public class InventoryModel
     {
         [JsonProperty("item")]
         public string Item { get; set; }

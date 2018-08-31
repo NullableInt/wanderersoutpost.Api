@@ -1,11 +1,11 @@
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
-namespace dndChar
+namespace dndChar.Models
 {
     public class AbilityScore
     {
         [JsonProperty("name")]
-        public AbilityScoreNameEnum AbilityScoreNameEnum { get; set; }
+        public AbilityScoreName AbilityScoreName { get; set; }
 
         [JsonProperty("_coreStat")]
         public int CoreStat { get; set; }
