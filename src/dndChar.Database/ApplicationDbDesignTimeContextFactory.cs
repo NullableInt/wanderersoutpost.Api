@@ -28,7 +28,7 @@ namespace dndChar.Database
             var connectionString = Configuration["Data:ApplicationDb:ConnectionString"];
 
             var optionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>()
-                .UseSqlite(connectionString);
+                .UseSqlServer(connectionString);
 
             return new ApplicationDbContext(optionsBuilder.Options);
         }

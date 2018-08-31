@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using dndChar.Database;
@@ -9,115 +10,29 @@ using dndChar.Database;
 namespace dndChar.Database.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20180831113356_AddedCharactersAndPlayers")]
-    partial class AddedCharactersAndPlayers
+    [Migration("20180831145958_initialCreate")]
+    partial class initialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.1.2-rtm-30932");
+                .HasAnnotation("ProductVersion", "2.1.2-rtm-30932")
+                .HasAnnotation("Relational:MaxIdentifierLength", 128)
+                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("dndChar.Character.CharacterStats", b =>
-                {
-                    b.Property<Guid>("CharacterStatsId")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("Background");
-
-                    b.Property<string>("CharacterAlignment");
-
-                    b.Property<string>("Class");
-
-                    b.Property<int>("Experience");
-
-                    b.Property<int>("IniativeBonus");
-
-                    b.Property<int>("Inspiration");
-
-                    b.Property<int>("Level");
-
-                    b.Property<string>("Name");
-
-                    b.Property<int>("ProficiencyBonus");
-
-                    b.Property<string>("Race");
-
-                    b.Property<int>("Speed");
-
-                    b.HasKey("CharacterStatsId");
-
-                    b.ToTable("CharacterStats");
-                });
-
-            modelBuilder.Entity("dndChar.Character.Inventory.CurrencyState", b =>
-                {
-                    b.Property<Guid>("CurrencyStateId")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int>("Copper");
-
-                    b.Property<int>("Electrum");
-
-                    b.Property<int>("Gold");
-
-                    b.Property<int>("Platinum");
-
-                    b.Property<int>("Silver");
-
-                    b.HasKey("CurrencyStateId");
-
-                    b.ToTable("CurrencyState");
-                });
-
-            modelBuilder.Entity("dndChar.Character.Inventory.Inventory", b =>
-                {
-                    b.Property<Guid>("InventoryId")
-                        .ValueGeneratedOnAdd();
-
-                    b.HasKey("InventoryId");
-
-                    b.ToTable("Inventory");
-                });
-
-            modelBuilder.Entity("dndChar.CharacterSheet", b =>
+            modelBuilder.Entity("dndChar.Data.CompoundTypes.CharacterSheet", b =>
                 {
                     b.Property<Guid>("CharacterSheetId")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<Guid?>("CharacterStatsId");
+                    b.Property<string>("AllState");
 
-                    b.Property<Guid?>("CurrencyStateId");
-
-                    b.Property<Guid?>("InventoryId");
+                    b.Property<Guid>("OwnerId");
 
                     b.HasKey("CharacterSheetId");
 
-                    b.HasIndex("CharacterStatsId");
-
-                    b.HasIndex("CurrencyStateId");
-
-                    b.HasIndex("InventoryId");
-
                     b.ToTable("Characters");
-                });
-
-            modelBuilder.Entity("dndChar.Player", b =>
-                {
-                    b.Property<Guid>("PlayerId")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("DisplayName");
-
-                    b.Property<string>("Email");
-
-                    b.Property<Guid?>("fk_characterSheet");
-
-                    b.HasKey("PlayerId");
-
-                    b.HasIndex("fk_characterSheet");
-
-                    b.ToTable("Players");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -138,7 +53,8 @@ namespace dndChar.Database.Migrations
 
                     b.HasIndex("NormalizedName")
                         .IsUnique()
-                        .HasName("RoleNameIndex");
+                        .HasName("RoleNameIndex")
+                        .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles");
                 });
@@ -146,7 +62,8 @@ namespace dndChar.Database.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("ClaimType");
 
@@ -207,7 +124,8 @@ namespace dndChar.Database.Migrations
 
                     b.HasIndex("NormalizedUserName")
                         .IsUnique()
-                        .HasName("UserNameIndex");
+                        .HasName("UserNameIndex")
+                        .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
                 });
@@ -215,7 +133,8 @@ namespace dndChar.Database.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("ClaimType");
 
@@ -275,28 +194,6 @@ namespace dndChar.Database.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
-                });
-
-            modelBuilder.Entity("dndChar.CharacterSheet", b =>
-                {
-                    b.HasOne("dndChar.Character.CharacterStats", "CharacterStats")
-                        .WithMany()
-                        .HasForeignKey("CharacterStatsId");
-
-                    b.HasOne("dndChar.Character.Inventory.CurrencyState", "CurrencyState")
-                        .WithMany()
-                        .HasForeignKey("CurrencyStateId");
-
-                    b.HasOne("dndChar.Character.Inventory.Inventory", "Inventory")
-                        .WithMany()
-                        .HasForeignKey("InventoryId");
-                });
-
-            modelBuilder.Entity("dndChar.Player", b =>
-                {
-                    b.HasOne("dndChar.CharacterSheet", "CharacterSheet")
-                        .WithMany()
-                        .HasForeignKey("fk_characterSheet");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

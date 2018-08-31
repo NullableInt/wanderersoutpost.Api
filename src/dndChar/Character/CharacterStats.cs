@@ -15,9 +15,9 @@ namespace dndChar.Character
         public Guid CharacterStatsId { get; set; }
 
         [NotMapped]
-        public Attributes Health
+        public Health Health
         {
-            get => JsonConvert.DeserializeObject<Attributes>(_health);
+            get => JsonConvert.DeserializeObject<Health>(_health);
             set => _health = JsonConvert.SerializeObject(value);
         }
 

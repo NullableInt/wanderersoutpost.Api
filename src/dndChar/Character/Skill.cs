@@ -7,5 +7,7 @@ namespace dndChar.Character
         public AbilityScore CoreStat { get; set; }
 
         public ProficiencyBonus Proficiency { get; set; }
+
+        public string SkillName { get; set; }
     }
 }

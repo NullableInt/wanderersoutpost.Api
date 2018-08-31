@@ -1,6 +1,7 @@
 ﻿using System;
 using dndChar.Character;
 using dndChar.Character.Inventory;
+using CurrencyState = dndChar.Data.CurrencyState;
 
 namespace dndChar
 {
