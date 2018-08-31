@@ -1,9 +1,20 @@
 ﻿@page
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
 @model IndexModel
 @{
     ViewData["Title"] = "Home page";
 }
 
-<h1>
-    FrontEnd for D&D character app.
-</h1>
+@if (SignInManager.IsSignedIn(User))
+{
+    <partial name="_ShowCharacters"/>
+}
+else
+{
+    <h1>
+        FrontEnd for D&D character app.
+    </h1>
+    <a asp-area="Identity" asp-page="/Account/Login" class="btn btn-primary btn-lg btn-block">Sign in</a>
+}
+
