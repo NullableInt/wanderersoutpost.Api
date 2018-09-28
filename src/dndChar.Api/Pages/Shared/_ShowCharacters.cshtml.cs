@@ -23,7 +23,7 @@ namespace dndChar.Api.Pages.Shared
 
         public async Task OnGetAsync()
         {
-            CharacterSheet = await _context.Characters.ToListAsync();
+            //CharacterSheet = await _context.Characters.ToListAsync();
         }
     }
 }

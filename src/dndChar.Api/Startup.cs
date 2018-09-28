@@ -56,6 +56,11 @@ namespace dndChar.Api
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
+            app.UseCors(options =>
+            {
+                options.AllowAnyOrigin().AllowAnyMethod();
+                options.AllowAnyHeader();
+            });
 
             app.UseAuthentication();
 
