@@ -2,6 +2,6 @@
 {
     public class ResetStateModelAction : IAction
     {
-        public string Type { get; set; } = "[ALL] reset";
+        public string Type { get; set; }
     }
 }

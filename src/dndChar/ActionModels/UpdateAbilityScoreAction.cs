@@ -4,11 +4,8 @@ namespace dndChar.ActionModels
 {
     public class UpdateAbilityScoreAction : IAction
     {
-        public string Type { get; set; } = "[ABILITYSCORE] update";
-        public readonly object Payload;
-        public UpdateAbilityScoreAction(AbilityScore payload)
-        {
-            Payload = payload;
-        }
+        public string Type { get; set; }
+
+        public AbilityScore Payload { get; set; }
     }
 }

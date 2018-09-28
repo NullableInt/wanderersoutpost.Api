@@ -2,6 +2,6 @@
 {
     public class SetupSkillsAction : IAction
     {
-        public string Type { get; set; } = "[BASESTATS] setup skills";
+        public string Type { get; set; }
     }
 }

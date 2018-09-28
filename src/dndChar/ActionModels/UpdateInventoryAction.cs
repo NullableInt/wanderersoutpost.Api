@@ -4,14 +4,10 @@ namespace dndChar.ActionModels
 {
     public class UpdateInventoryAction : IAction
     {
-        public string Type { get; set; } = "[INVENTORY] update";
-        public InventoryModel[] Payload { get; private set; }
-        public string InventoryName { get; private set; }
+        public string Type { get; set; }
 
-        public UpdateInventoryAction(InventoryModel[] payload, string inventoryName)
-        {
-            Payload = payload;
-            InventoryName = inventoryName;
-        }
+        public InventoryModel[] Payload { get; set; }
+
+        public string InventoryName { get; set; }
     }
 }

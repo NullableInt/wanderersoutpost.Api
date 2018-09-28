@@ -2,14 +2,10 @@
 {
     public class UpdateCurrencyAction : IAction
     {
-        public string Type { get; set; } = "[TREASURE] update currency";
-        public UpdateCurrencyAction(int payload, string currency)
-        {
-            this.Payload = payload;
-            this.Currency = currency;
-        }
+        public string Type { get; set; }
 
-        public int Payload { get; private set; }
-        public string Currency { get; private set; }
+        public int Payload { get; set; }
+
+        public string Currency { get; set; }
     }
 }

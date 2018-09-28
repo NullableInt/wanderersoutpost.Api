@@ -4,12 +4,8 @@ namespace dndChar.ActionModels
 {
     public class UpdateCharacterAlignmentAction : IAction
     {
-        public string Type { get; set; } = "[BASESTATS] update character alignment";
-        public UpdateCharacterAlignmentAction(CharacterAlignment payload)
-        {
-            Payload = payload;
-        }
+        public string Type { get; set; }
 
-        public object Payload { get; }
+        public CharacterAlignment Payload { get; set; }
     }
 }

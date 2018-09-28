@@ -4,12 +4,8 @@ namespace dndChar.ActionModels
 {
     public class UpdateAbilitySavingThrowAction : IAction
     {
-        public string Type { get; set; } = "[BASESTATS] update ability saving throw";
-        public readonly object Payload;
+        public string Type { get; set; }
 
-        public UpdateAbilitySavingThrowAction(AbilitySavingThrow payload)
-        {
-            this.Payload = payload;
-        }
+        public AbilitySavingThrow Payload { get; set; }
     }
 }

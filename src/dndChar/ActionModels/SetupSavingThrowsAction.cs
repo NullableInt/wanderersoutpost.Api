@@ -2,6 +2,6 @@
 {
     public class SetupSavingThrowsAction : IAction
     {
-        public string Type { get; set; } = "[BASESTATS] setup saving throws";
+        public string Type { get; set; }
     }
 }
