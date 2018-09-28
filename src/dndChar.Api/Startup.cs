@@ -1,3 +1,4 @@
+using dndChar.Api.Util;
 using dndChar.Database;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
@@ -36,7 +37,9 @@ namespace dndChar.Api
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddMvc(options =>
+                    options.Conventions.Add(new ApiExplorerVisibilityEnabledConvention()))
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
