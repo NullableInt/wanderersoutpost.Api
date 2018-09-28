@@ -6,14 +6,14 @@ namespace dndChar.Api
     public class TestController : Controller
     {
         [HttpPost("test")]
-        [Operation("test-type")]
+        [Action("test-type")]
         public IActionResult Test()
         {
             return new OkObjectResult("This is the test function");
         }
 
         [HttpPost("test")]
-        [Operation("test-type-other")]
+        [Action("test-type-other")]
         public IActionResult Test2()
         {
             return new OkObjectResult("This is the OTHER test function");

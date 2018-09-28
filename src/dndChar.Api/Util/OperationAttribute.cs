@@ -5,11 +5,11 @@ using Microsoft.AspNetCore.Mvc.ActionConstraints;
 namespace dndChar.Api.Util
 {
     [AttributeUsage(AttributeTargets.Method)]
-    public class OperationAttribute : Attribute, IActionConstraint
+    public class ActionAttribute : Attribute, IActionConstraint
     {
         private readonly string _actionName;
 
-        public OperationAttribute(string actionName)
+        public ActionAttribute(string actionName)
         {
             _actionName = actionName;
         }
