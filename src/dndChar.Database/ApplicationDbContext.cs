@@ -10,6 +10,6 @@ namespace dndChar.Database
         {
         }
 
-        public DbSet<Data.CompoundTypes.CharacterSheet> Characters { get; set; }
+        public DbSet<CharacterSheetDbEntry> Characters { get; set; }
     }
 }

@@ -6,6 +6,6 @@ namespace dndChar.Models.BaseStats
     {
         public BaseStats baseStats;
         public AbilitySavingThrow[] savingThrows;
-        public Skills.Skills[] skills;
+        public SkillModel[] skills;
     }
 }

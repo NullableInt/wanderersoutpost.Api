@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace dndChar.Database.Migrations
 {
-    public partial class initialCreate : Migration
+    public partial class InitialMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -53,7 +53,7 @@ namespace dndChar.Database.Migrations
                 {
                     CharacterSheetId = table.Column<Guid>(nullable: false),
                     OwnerId = table.Column<Guid>(nullable: false),
-                    AllState = table.Column<string>(nullable: true)
+                    CharacterSheetJson = table.Column<string>(maxLength: 32000, nullable: false)
                 },
                 constraints: table =>
                 {

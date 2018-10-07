@@ -1,18 +1,18 @@
-﻿using System;
-using dndChar.Character;
-using dndChar.Character.Inventory;
-using CurrencyState = dndChar.Data.CurrencyState;
+﻿using dndChar.Models.BaseStats;
+using dndChar.Models.Currency;
+using dndChar.Models.Inventory;
+using dndChar.Models.ServerState;
 
 namespace dndChar
 {
     public class CharacterSheet
     {
-        public Guid CharacterSheetId { get; set; }
+        public ServerStateModel ServerState { get; set; }
 
-        public CurrencyState CurrencyState { get; set; }
+        public CurrencyStateModel CurrencyState { get; set; }
 
-        public Inventory Inventory { get; set; }
+        public InventoryStateModel InventoryState { get; set; }
 
-        public CharacterStats CharacterStats { get; set; }
+        public BaseCharacterModel BaseCharacterModelState { get; set; }
     }
 }

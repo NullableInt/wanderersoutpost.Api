@@ -10,23 +10,25 @@ using dndChar.Database;
 namespace dndChar.Database.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20180831145958_initialCreate")]
-    partial class initialCreate
+    [Migration("20181007163508_InitialMigration")]
+    partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.1.2-rtm-30932")
+                .HasAnnotation("ProductVersion", "2.1.3-rtm-32065")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("dndChar.Data.CompoundTypes.CharacterSheet", b =>
+            modelBuilder.Entity("dndChar.CharacterSheetDbEntry", b =>
                 {
                     b.Property<Guid>("CharacterSheetId")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("AllState");
+                    b.Property<string>("CharacterSheetJson")
+                        .IsRequired()
+                        .HasMaxLength(32000);
 
                     b.Property<Guid>("OwnerId");
 

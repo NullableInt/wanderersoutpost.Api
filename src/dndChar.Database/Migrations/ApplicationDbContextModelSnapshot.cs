@@ -15,16 +15,18 @@ namespace dndChar.Database.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.1.2-rtm-30932")
+                .HasAnnotation("ProductVersion", "2.1.3-rtm-32065")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("dndChar.Data.CompoundTypes.CharacterSheet", b =>
+            modelBuilder.Entity("dndChar.CharacterSheetDbEntry", b =>
                 {
                     b.Property<Guid>("CharacterSheetId")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("AllState");
+                    b.Property<string>("CharacterSheetJson")
+                        .IsRequired()
+                        .HasMaxLength(32000);
 
                     b.Property<Guid>("OwnerId");
 

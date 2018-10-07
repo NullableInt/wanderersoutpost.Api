@@ -14,9 +14,9 @@
 @foreach (var item in Model.CharacterSheet) {
         <tr>
             <td>
-                <a asp-page="./Edit" asp-route-id="@item.CharacterSheetId">Edit</a> |
+                @*<a asp-page="./Edit" asp-route-id="@item.CharacterSheetId">Edit</a> |
                 <a asp-page="./Details" asp-route-id="@item.CharacterSheetId">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.CharacterSheetId">Delete</a>
+                <a asp-page="./Delete" asp-route-id="@item.CharacterSheetId">Delete</a>*@
             </td>
         </tr>
 }

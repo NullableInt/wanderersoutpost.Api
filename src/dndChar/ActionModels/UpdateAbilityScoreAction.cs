@@ -1,4 +1,4 @@
-﻿using dndChar.Character.AbilityScores;
+﻿using dndChar.Models.BaseStats;
 
 namespace dndChar.ActionModels
 {

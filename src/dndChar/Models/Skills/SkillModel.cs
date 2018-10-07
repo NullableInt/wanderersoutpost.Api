@@ -6,7 +6,7 @@ namespace dndChar.Models.Skills
     {
         public Skills name;
 
-        public Character.AbilityScores.AbilityScore coreStat;
+        public AbilityScore coreStat;
 
         public SkillProficiencyBonus proficiencyBonus;
     }

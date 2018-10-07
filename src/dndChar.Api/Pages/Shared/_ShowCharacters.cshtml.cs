@@ -12,9 +12,9 @@ namespace dndChar.Api.Pages.Shared
 {
     public class _ShowCharactersModel : PageModel
     {
-        private readonly dndChar.Database.ApplicationDbContext _context;
+        private readonly ApplicationDbContext _context;
 
-        public _ShowCharactersModel(dndChar.Database.ApplicationDbContext context)
+        public _ShowCharactersModel(ApplicationDbContext context)
         {
             _context = context;
         }

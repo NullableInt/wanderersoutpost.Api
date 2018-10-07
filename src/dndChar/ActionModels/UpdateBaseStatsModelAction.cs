@@ -1,4 +1,4 @@
-﻿using dndChar.Data;
+﻿using dndChar.Models.BaseStats;
 
 namespace dndChar.ActionModels
 {
@@ -6,6 +6,6 @@ namespace dndChar.ActionModels
     {
         public string Type { get; set; }
 
-        public BaseStats Payload { get; set; }
+        public AbilityScoreBase Payload { get; set; }
     }
 }
