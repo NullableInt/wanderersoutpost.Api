@@ -1,3 +1,4 @@
+using System;
 using dndChar.Api.Util;
 using dndChar.Database;
 using Microsoft.AspNetCore.Builder;
@@ -30,9 +31,29 @@ namespace dndChar.Api
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection")));
+            ConfigureDatabase(services);
+
+            services.Configure<IdentityOptions>(options =>
+            {
+                // Password settings.
+                options.Password.RequireDigit = true;
+                options.Password.RequireLowercase = true;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = true;
+                options.Password.RequiredLength = 6;
+                options.Password.RequiredUniqueChars = 1;
+
+                // Lockout settings.
+                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
+                options.Lockout.MaxFailedAccessAttempts = 5;
+                options.Lockout.AllowedForNewUsers = true;
+
+                // User settings.
+                options.User.AllowedUserNameCharacters =
+                "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
+                options.User.RequireUniqueEmail = false;
+            });
+
             services.AddDefaultIdentity<IdentityUser>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
@@ -68,6 +89,28 @@ namespace dndChar.Api
             app.UseAuthentication();
 
             app.UseMvc();
+        }
+
+        protected virtual void ConfigureDatabase(IServiceCollection services)
+        {
+            var dbType = Configuration.GetSection("Data:DbType").Value;
+
+            if (string.Equals(dbType, "sqlite", System.StringComparison.OrdinalIgnoreCase))
+            {
+                services.AddDbContext<ApplicationDbContext>(options =>
+                options.UseSqlite(
+                    Configuration.GetConnectionString("Sqlite")));
+            }
+            else
+            {
+                services.AddDbContext<ApplicationDbContext>(options =>
+                options.UseSqlServer(
+                    Configuration.GetConnectionString("DefaultConnection")));
+            }
+
+            var dbContext = services.BuildServiceProvider().GetService<ApplicationDbContext>();
+            dbContext.Database.EnsureCreated();
+            dbContext.Dispose();
         }
     }
 }
