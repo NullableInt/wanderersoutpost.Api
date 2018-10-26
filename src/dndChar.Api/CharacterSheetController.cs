@@ -1,14 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using dndChar.ActionModels;
 using dndChar.Api.Util;
-using dndChar.Models.BaseStats;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
-
-// For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace dndChar.Api
 {
@@ -127,11 +121,5 @@ namespace dndChar.Api
             await Task.CompletedTask;
             return new OkResult();
         }
-    }
-
-    public class ApiAction
-    {
-        public string Type { get; set; }
-        public string Payload { get; set; }
     }
 }
