@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <UserSecretsId>aspnet-dndChar.mvc-722941D9-DB3E-4381-B828-506B3BEA91C2</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.1.2" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.5" PrivateAssets="All" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\src\dndChar.Api\dndChar.Api.csproj" />
+    <ProjectReference Include="..\src\dndChar.Database\dndChar.Database.csproj" />
+    <ProjectReference Include="..\src\dndChar\dndChar.csproj" />
+  </ItemGroup>
+
+</Project>
