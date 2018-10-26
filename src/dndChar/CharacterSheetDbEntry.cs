@@ -1,5 +1,4 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Newtonsoft.Json;
 
@@ -8,10 +7,10 @@ namespace dndChar
     public class CharacterSheetDbEntry
     {
         [Key]
-        public Guid CharacterSheetId { get; set; }
+        public string CharacterSheetId { get; set; }
 
         [Required]
-        public Guid OwnerId { get; set; }
+        public string OwnerId { get; set; }
 
         [NotMapped]
         public CharacterSheet CharacterSheet { get; set; }

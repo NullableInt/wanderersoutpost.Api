@@ -96,7 +96,6 @@ namespace dndChar.Api
             switch (selectedDbType)
             {
                 case DatabaseProviders.Sqlite:
-                    
                     services.AddDbContext<ApplicationDbContext>(options => options.UseSqlite(connectionString));
                     break;
                 case DatabaseProviders.SqlServer:

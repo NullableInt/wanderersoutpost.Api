@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
 
@@ -25,10 +27,23 @@ namespace dndChar.Database
 
         public ApplicationDbContext CreateDbContext(string[] args)
         {
-            var connectionString = Configuration["Data:ApplicationDb:ConnectionString"];
-
-            var optionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>()
-                .UseSqlServer(connectionString);
+            var dbType = Configuration.GetSection("Data:DbType").Value;
+            var selectedDbType = Enum.Parse<DatabaseProviders>(dbType, true);
+            var connectionString = Configuration.GetConnectionString(selectedDbType.ToString());
+            if (string.IsNullOrEmpty(connectionString))
+                connectionString = Configuration.GetConnectionString("DefaultConnection");
+            var optionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>();
+            switch (selectedDbType)
+            {
+                case DatabaseProviders.Sqlite:
+                    optionsBuilder.UseSqlite(connectionString);
+                    break;
+                case DatabaseProviders.SqlServer:
+                    optionsBuilder.UseSqlServer(connectionString);
+                    break;
+                default:
+                    throw new NotImplementedException($"{selectedDbType} is not a supported database.");
+            }
 
             return new ApplicationDbContext(optionsBuilder.Options);
         }

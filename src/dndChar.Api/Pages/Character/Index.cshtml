@@ -1,0 +1,27 @@
+﻿@page
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@model dndChar.Api.Views.Character.IndexModel
+@{
+    Layout = "~/Pages/_ViewImports.cshtml";
+}
+<table class="table">
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Class</th>
+        <th>Level</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model.CharacterSheet)
+    {
+        <tr>
+            <td>@Html.DisplayFor(modelItem => item.CharacterSheet.BaseCharacterModelState.baseStats.name)</td>
+            <td>@Html.DisplayFor(modelItem => item.CharacterSheet.BaseCharacterModelState.baseStats.name)</td>
+            <td>@Html.DisplayFor(modelItem => item.CharacterSheet.BaseCharacterModelState.baseStats.Class)</td>
+            <td>@Html.DisplayFor(modelItem => item.CharacterSheet.BaseCharacterModelState.baseStats.level)</td>
+        </tr>
+    }
+    </tbody>
+</table>

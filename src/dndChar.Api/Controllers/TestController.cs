@@ -1,7 +1,8 @@
 ﻿using dndChar.Api.Util;
+
 using Microsoft.AspNetCore.Mvc;
 
-namespace dndChar.Api
+namespace dndChar.Api.Controllers
 {
     public class TestController : Controller
     {
