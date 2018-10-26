@@ -6,11 +6,13 @@ using System.Threading.Tasks;
 
 using dndChar.Database;
 using dndChar;
+using dndChar.mvc.Data;
 
 using Microsoft.AspNetCore.Mvc;
 using dndChar.mvc.Models;
 using dndChar.mvc.Viewmodels;
 
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 
 namespace dndChar.mvc.Controllers
