@@ -3,34 +3,28 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-
 using dndChar.Database;
-using dndChar;
-using dndChar.mvc.Data;
-
 using Microsoft.AspNetCore.Mvc;
 using dndChar.mvc.Models;
 using dndChar.mvc.Viewmodels;
-
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 
 namespace dndChar.mvc.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ApplicationDbContext applicationDbContext;
-        private readonly UserManager<IdentityUser> userManager;
+        private readonly ApplicationDbContext _applicationDbContext;
+        private readonly UserManager<IdentityUser> _userManager;
 
         public HomeController(UserManager<IdentityUser> userManager, ApplicationDbContext applicationDbContext)
         {
-            this.userManager = userManager;
-            this.applicationDbContext = applicationDbContext;
+            this._userManager = userManager;
+            this._applicationDbContext = applicationDbContext;
         }
         public async Task<IActionResult> Index()
         {
-            var user = await this.userManager.GetUserAsync(HttpContext.User);
-            if (!this.applicationDbContext.Characters.Any(entry => entry.OwnerId == user.Id))
+            var user = await this._userManager.GetUserAsync(HttpContext.User);
+            if (!this._applicationDbContext.Characters.Any(entry => entry.OwnerId == user.Id))
             {
                 var newCharacterSheet = CharacterSheet.CreateCharacterSheet(user.Id, false);
                 var dbEntry = new CharacterSheetDbEntry
@@ -39,8 +33,8 @@ namespace dndChar.mvc.Controllers
                     OwnerId = user.Id,
                     CharacterSheetId = Guid.NewGuid().ToString()
                 };
-                await this.applicationDbContext.Characters.AddAsync(dbEntry);
-                await this.applicationDbContext.SaveChangesAsync();
+                await this._applicationDbContext.Characters.AddAsync(dbEntry);
+                await this._applicationDbContext.SaveChangesAsync();
             }
             var sheets = new List<string> { "sheet1", "sheet2", "sheet3"};
 
