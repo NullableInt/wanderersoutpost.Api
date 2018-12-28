@@ -1,6 +1,5 @@
 using System;
 using dndChar.Api.Util;
-using dndChar.Database;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Hosting;
@@ -28,12 +27,7 @@ namespace dndChar.Api
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
-
-            ConfigureDatabase(services);
-
-            services.AddDefaultIdentity<IdentityUser>()
-                .AddEntityFrameworkStores<ApplicationDbContext>();
-
+            
             services.AddMvc(options =>
                     options.Conventions.Add(new ApiExplorerVisibilityEnabledConvention()))
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
@@ -64,31 +58,6 @@ namespace dndChar.Api
             app.UseAuthentication();
 
             app.UseMvc();
-        }
-
-        protected virtual void ConfigureDatabase(IServiceCollection services)
-        {
-            var dbType = Configuration.GetSection("Data:DbType").Value;
-            var selectedDbType = Enum.Parse<DatabaseProviders>(dbType, true);
-            var connectionString = Configuration.GetConnectionString(selectedDbType.ToString());
-            if (string.IsNullOrEmpty(connectionString))
-                connectionString = Configuration.GetConnectionString("DefaultConnection");
-
-            switch (selectedDbType)
-            {
-                case DatabaseProviders.Sqlite:
-                    services.AddDbContext<ApplicationDbContext>(options => options.UseSqlite(connectionString));
-                    break;
-                case DatabaseProviders.SqlServer:
-                    services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(connectionString));
-                    break;
-                default:
-                    throw new NotImplementedException($"{selectedDbType} is not a supported database.");
-            }
-
-            var dbContext = services.BuildServiceProvider().GetService<ApplicationDbContext>();
-            dbContext.Database.EnsureCreated();
-            dbContext.Dispose();
         }
     }
 }

@@ -2,6 +2,8 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using dndChar.Database;
 
 namespace dndChar.Database.Migrations
 {
@@ -12,24 +14,7 @@ namespace dndChar.Database.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.1.4-rtm-31024");
-
-            modelBuilder.Entity("dndChar.CharacterSheetDbEntry", b =>
-                {
-                    b.Property<string>("CharacterSheetId")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("CharacterSheetJson")
-                        .IsRequired()
-                        .HasMaxLength(32000);
-
-                    b.Property<string>("OwnerId")
-                        .IsRequired();
-
-                    b.HasKey("CharacterSheetId");
-
-                    b.ToTable("Characters");
-                });
+                .HasAnnotation("ProductVersion", "2.2.0-rtm-35687");
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {

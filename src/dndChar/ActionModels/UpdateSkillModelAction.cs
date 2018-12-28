@@ -6,6 +6,6 @@ namespace dndChar.ActionModels
     {
         public string Type { get; set; }
 
-        public SkillModel Payload { get; set; }
+        public SkillModelUpdate Payload { get; set; }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 using dndChar.Models.BaseStats;
 using dndChar.Models.Currency;
@@ -9,15 +10,17 @@ namespace dndChar
 {
     public class CharacterSheet
     {
+        public string Id { get; set; }
+
         public ServerStateModel ServerState { get; set; }
 
         public CurrencyStateModel CurrencyState { get; set; }
 
-        public InventoryStateModel InventoryState { get; set; }
+        public Dictionary<string, InventoryModel[]> InventoryState { get; set; }
 
         public BaseCharacterModel BaseCharacterModelState { get; set; }
 
-        public static CharacterSheet CreateCharacterSheet(string appUserId, bool isReadOnly)
+        public static CharacterSheet CreateCharacterSheet(Guid appUserId, bool isReadOnly)
         {
             var baseCharacerModelState = new BaseCharacterModel
             {
@@ -90,20 +93,20 @@ namespace dndChar
                 },
                 treasure = new[] {new TreasureModel() }
             };
-            var inventorystate = new InventoryStateModel
+            var inventorystate = new Dictionary<string, InventoryModel[]>
             {
-                bonds = new[] { new InventoryModel() { item = string.Empty } },
-                equipment = new[] { new InventoryModel(){item = string.Empty} },
-                featuresAndTraits = new[] { new InventoryModel() { item = string.Empty } },
-                flaws = new[] { new InventoryModel() { item = string.Empty } },
-                ideals = new[] { new InventoryModel() { item = string.Empty } },
-                otherProficienciesAndLanguages = new[] { new InventoryModel() { item = string.Empty } },
-                personalityTraits = new[] { new InventoryModel() { item = string.Empty } },
+                { "bonds", new[] { new InventoryModel() { item = string.Empty } } },
+                { "equipment", new[] { new InventoryModel() { item = string.Empty } } },
+                { "featuresAndTraits", new[] { new InventoryModel() { item = string.Empty } } },
+                { "flaws", new[] { new InventoryModel() { item = string.Empty } } },
+                { "ideals", new[] { new InventoryModel() { item = string.Empty } } },
+                { "otherProficienciesAndLanguages", new[] { new InventoryModel() { item = string.Empty } } },
+                { "personalityTraits", new[] { new InventoryModel() { item = string.Empty } } }
             };
             var serverState = new ServerStateModel
             {
                 Readonly = isReadOnly,
-                appUserId = new Guid(appUserId)
+                appUserId = appUserId
             };
             return new CharacterSheet
             {

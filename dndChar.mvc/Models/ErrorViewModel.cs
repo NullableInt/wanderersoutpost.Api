@@ -1,5 +1,3 @@
-using System;
-
 namespace dndChar.mvc.Models
 {
     public class ErrorViewModel

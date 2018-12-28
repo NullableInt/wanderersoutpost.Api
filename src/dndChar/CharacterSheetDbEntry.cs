@@ -6,17 +6,12 @@ namespace dndChar
 {
     public class CharacterSheetDbEntry
     {
-        [Key]
         public string CharacterSheetId { get; set; }
 
-        [Required]
         public string OwnerId { get; set; }
 
-        [NotMapped]
         public CharacterSheet CharacterSheet { get; set; }
 
-        [Required]
-        [MaxLength(32000)]
         public string CharacterSheetJson
         {
             get => JsonConvert.SerializeObject(CharacterSheet);

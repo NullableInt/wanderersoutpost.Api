@@ -1,4 +1,6 @@
-﻿using dndChar.Models.Skills;
+﻿using System.Collections.Generic;
+
+using dndChar.Models.Skills;
 
 namespace dndChar.Models.BaseStats
 {
@@ -6,6 +8,6 @@ namespace dndChar.Models.BaseStats
     {
         public BaseStats baseStats;
         public AbilitySavingThrow[] savingThrows;
-        public SkillModel[] skills;
+        public Dictionary<string,SkillModel[]> Skills;
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace dndChar.ActionModels
+﻿using dndChar.Models.Currency;
+
+namespace dndChar.ActionModels
 {
     public class UpdateCurrencyAction : IAction
     {
@@ -6,6 +8,6 @@
 
         public int Payload { get; set; }
 
-        public string Currency { get; set; }
+        public Currency Currency { get; set; }
     }
 }

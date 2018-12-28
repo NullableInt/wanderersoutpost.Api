@@ -1,5 +1,8 @@
 ﻿using System;
+
+using dndChar.Api.Util;
 using dndChar.Database;
+
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Hosting;
@@ -8,6 +11,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+
+using Raven.Client.Documents;
 
 namespace dndChar.mvc
 {
@@ -24,17 +29,9 @@ namespace dndChar.mvc
         {
             services.Configure<CookiePolicyOptions>(options =>
             {
-                options.CheckConsentNeeded = context => true;
+                options.CheckConsentNeeded = context => false;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
-
-            ConfigureDatabase(services);
-
-            services.AddDefaultIdentity<IdentityUser>()
-                .AddEntityFrameworkStores<ApplicationDbContext>();
-
-            services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-            
             services.Configure<IdentityOptions>(options =>
             {
                 options.Password.RequireDigit = true;
@@ -52,8 +49,17 @@ namespace dndChar.mvc
                     "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
                 options.User.RequireUniqueEmail = false;
             });
+            services.AddDefaultIdentity<IdentityUser>()
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddDefaultTokenProviders();
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddDbContext<ApplicationDbContext>(options => options.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddMvc(options =>
+                                options.Conventions.Add(new ApiExplorerVisibilityEnabledConvention()))
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+            services.AddSingleton<DocumentStoreHolder>();
+            services.Configure<RavenConfig>(Configuration.GetSection("Raven"));
         }
         
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -72,6 +78,11 @@ namespace dndChar.mvc
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
+            app.UseCors(options =>
+            {
+                options.AllowAnyOrigin().AllowAnyMethod();
+                options.AllowAnyHeader();
+            });
 
             app.UseAuthentication();
 
@@ -79,31 +90,6 @@ namespace dndChar.mvc
             {
                 routes.MapRoute(name: "default", template: "{controller=Home}/{action=Index}/{id?}");
             });   
-        }
-
-        protected virtual void ConfigureDatabase(IServiceCollection services)
-        {
-            var dbType = Configuration.GetSection("Data:DbType").Value;
-            var selectedDbType = Enum.Parse<DatabaseProviders>(dbType, true);
-            var connectionString = Configuration.GetConnectionString(selectedDbType.ToString());
-            if (string.IsNullOrEmpty(connectionString))
-                connectionString = Configuration.GetConnectionString("DefaultConnection");
-
-            switch (selectedDbType)
-            {
-                case DatabaseProviders.Sqlite:
-                    services.AddDbContext<ApplicationDbContext>(options => options.UseSqlite(connectionString));
-                    break;
-                case DatabaseProviders.SqlServer:
-                    services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(connectionString));
-                    break;
-                default:
-                    throw new NotImplementedException($"{selectedDbType} is not a supported database.");
-            }
-
-            var dbContext = services.BuildServiceProvider().GetService<ApplicationDbContext>();
-            dbContext.Database.EnsureCreated();
-            dbContext.Dispose();
         }
     }
 }

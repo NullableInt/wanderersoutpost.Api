@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace dndChar.Database.Migrations
 {
-    public partial class initialadd : Migration
+    public partial class initittitital_create : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -44,19 +44,6 @@ namespace dndChar.Database.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Characters",
-                columns: table => new
-                {
-                    CharacterSheetId = table.Column<string>(nullable: false),
-                    OwnerId = table.Column<string>(nullable: false),
-                    CharacterSheetJson = table.Column<string>(maxLength: 32000, nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Characters", x => x.CharacterSheetId);
                 });
 
             migrationBuilder.CreateTable(
@@ -219,9 +206,6 @@ namespace dndChar.Database.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
-
-            migrationBuilder.DropTable(
-                name: "Characters");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

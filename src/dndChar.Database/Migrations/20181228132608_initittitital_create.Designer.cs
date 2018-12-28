@@ -9,31 +9,14 @@ using dndChar.Database;
 namespace dndChar.Database.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20181026091228_initial add")]
-    partial class initialadd
+    [Migration("20181228132608_initittitital_create")]
+    partial class initittitital_create
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.1.4-rtm-31024");
-
-            modelBuilder.Entity("dndChar.CharacterSheetDbEntry", b =>
-                {
-                    b.Property<string>("CharacterSheetId")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("CharacterSheetJson")
-                        .IsRequired()
-                        .HasMaxLength(32000);
-
-                    b.Property<string>("OwnerId")
-                        .IsRequired();
-
-                    b.HasKey("CharacterSheetId");
-
-                    b.ToTable("Characters");
-                });
+                .HasAnnotation("ProductVersion", "2.2.0-rtm-35687");
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {

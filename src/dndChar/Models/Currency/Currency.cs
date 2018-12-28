@@ -2,6 +2,10 @@
 {
     public enum Currency
     {
-        cp, sp, ep, gp, pp
+        copper,
+        silver,
+        electrum,
+        gold,
+        platinum
     }
 }
