@@ -7,8 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "dndChar", "src\dndChar\dndC
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{E26682F2-14B0-447D-B491-49DF1CC0E293}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{97F3E63F-7877-4631-B745-3F24A8B8F97B}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "dndChar.Database", "src\dndChar.Database\dndChar.Database.csproj", "{3F9329F5-E48A-47F8-9B7B-B17B1927EF5A}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "dndChar.mvc", "src\dndChar.mvc\dndChar.mvc.csproj", "{48290152-997C-4C41-9514-E9119440A265}"
