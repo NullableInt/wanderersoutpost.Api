@@ -23,15 +23,22 @@ namespace dndChar.mvc.Controllers
         }
 
         [HttpPost("{characterSheetId}")]
-        public async Task<IActionResult> UpdateTreasures([FromRoute] string characterSheetId, [FromBody] RpgCharModel dynamic)
+        public async Task<IActionResult> UpdateTreasures([FromRoute] Guid characterSheetId, [FromBody] RpgCharModel dynamic)
         {
+            dynamic.Profile.CharacterId = characterSheetId;
             using (var session = Store.OpenAsyncSession())
             {
-                await session.StoreAsync(dynamic);
+                await session.StoreAsync(dynamic, "RpgChar/" + characterSheetId);
 
                 await session.SaveChangesAsync();
             }
             return Ok();
+        }
+
+        [HttpGet("")]
+        public IActionResult Index()
+        {
+            return Ok("Wow it works");
         }
 
         public async Task<IActionResult> UpdateRpgModel(string characterSheetId, Action<RpgCharModel> updateMethod)
