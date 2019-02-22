@@ -56,12 +56,35 @@ namespace dndChar.mvc.Controllers
             return Ok();
         }
 
-        public async Task<IActionResult> UpdateRpgModel(string id, Action<RpgCharModel> updateMethod)
+        [HttpGet("{id}/Profile")]
+        public async Task<IActionResult> GetProfile([FromRoute] Guid id)
+        {
+            using (var session = Store.OpenAsyncSession())
+            {
+                var character = await session.LoadAsync<RpgCharModel>($"RpgChar/{id}");
+                if (character != null && character.Profile != null)
+                {
+                    return Ok(character.Profile);
+                }
+                return BadRequest();
+            }
+        }
+
+        [HttpPatch("{id}/Profile")]
+        public async Task<IActionResult> UpdateProfile([FromRoute] Guid id, [FromBody] Profile newProfile)
+        {
+            return await UpdateRpgModel(id, (sheet) =>
+            {
+                sheet.Profile = newProfile;
+            });
+        }
+
+        public async Task<IActionResult> UpdateRpgModel(Guid id, Action<RpgCharModel> updateMethod)
         {
             using (var session = Store.OpenAsyncSession())
             {
                 var characterSheet = await session.LoadAsync<RpgCharModel>($"RpgChar/{id}");
-                if (characterSheet.Profile.CharacterId != Guid.Parse(id))
+                if (characterSheet.Profile.CharacterId != id)
                 {
                     return new ForbidResult();
                 }
