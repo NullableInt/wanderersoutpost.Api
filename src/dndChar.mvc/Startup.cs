@@ -102,20 +102,16 @@ namespace dndChar.mvc
                 app.UseHsts();
             }
 
-            app.UseHttpsRedirection();
-            app.UseStaticFiles();
+            app.UseHttpsRedirection();            
             app.UseCookiePolicy();
-            app.UseCors(options =>
-            {
-                options.AllowAnyOrigin().AllowAnyMethod();
-                options.AllowAnyHeader();
-            });
 
+            app.UseCors("AllowSpecificOrigin");
+            app.UseStaticFiles();
             app.UseAuthentication();
 
             app.UseMvc(routes =>
             {
-                routes.MapRoute(name: "default", template: "{controller=Home}/{action=Index}/{id?}");
+                routes.MapRoute(name: "default", template: "{controller=RpgChar}/{action=Index}/{id?}");
             });   
         }
     }
