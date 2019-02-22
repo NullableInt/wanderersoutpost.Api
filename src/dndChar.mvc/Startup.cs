@@ -13,6 +13,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 using Raven.Client.Documents;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using dndChar.mvc.Authorization;
+using Microsoft.AspNetCore.Authorization;
 
 namespace dndChar.mvc
 {
@@ -60,8 +63,32 @@ namespace dndChar.mvc
 
             services.AddSingleton<DocumentStoreHolder>();
             services.Configure<RavenConfig>(Configuration.GetSection("Raven"));
+
+            SetupAuth0(services);
         }
-        
+
+        private void SetupAuth0(IServiceCollection services)
+        {
+            string domain = $"https://{Configuration["Auth0:Domain"]}/";
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+
+            }).AddJwtBearer(options =>
+            {
+                options.Authority = domain;
+                options.Audience = Configuration["Auth0:ApiIdentifier"];
+            });
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("read:messages", policy => policy.Requirements.Add(new HasScopeRequirement("read:messages", domain)));
+            });
+
+            // register the scope authorization handler
+            services.AddSingleton<IAuthorizationHandler, HasScopeHandler>();
+        }
+
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())
@@ -75,20 +102,16 @@ namespace dndChar.mvc
                 app.UseHsts();
             }
 
-            app.UseHttpsRedirection();
-            app.UseStaticFiles();
+            app.UseHttpsRedirection();            
             app.UseCookiePolicy();
-            app.UseCors(options =>
-            {
-                options.AllowAnyOrigin().AllowAnyMethod();
-                options.AllowAnyHeader();
-            });
 
+            app.UseCors("AllowSpecificOrigin");
+            app.UseStaticFiles();
             app.UseAuthentication();
 
             app.UseMvc(routes =>
             {
-                routes.MapRoute(name: "default", template: "{controller=Home}/{action=Index}/{id?}");
+                routes.MapRoute(name: "default", template: "{controller=RpgChar}/{action=Index}/{id?}");
             });   
         }
     }
