@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using dndChar.Api.Util;
 using dndChar.Database;
 using dndChar.mvc.Models.RpgChar;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Raven.Client.Documents;
@@ -56,6 +57,17 @@ namespace dndChar.mvc.Controllers
                 await session.SaveChangesAsync();
             }
             return Ok();
+        }
+
+        [HttpGet]
+        [Route("private-scoped")]
+        [Authorize("read:messages")]
+        public IActionResult Scoped()
+        {
+            return Json(new
+            {
+                Message = "Hello from a private endpoint! You need to be authenticated and have a scope of read:messages to see this."
+            });
         }
     }
 }
