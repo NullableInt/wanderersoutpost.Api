@@ -75,7 +75,7 @@ namespace dndChar.mvc.Controllers
         {
             return await UpdateRpgModel(id, (sheet) =>
             {
-                sheet.Profile = newProfile;
+                return sheet.Profile = newProfile;
             });
         }
 
@@ -98,7 +98,7 @@ namespace dndChar.mvc.Controllers
         {
             return await UpdateRpgModel(id, (sheet) =>
             {
-                sheet.Traits = traits;
+                return sheet.Traits = traits;
             });
         }
 
@@ -121,7 +121,7 @@ namespace dndChar.mvc.Controllers
         {
             return await UpdateRpgModel(id, (sheet) =>
             {
-                sheet.Items = items;
+                return sheet.Items = items;
             });
         }
 
@@ -144,7 +144,7 @@ namespace dndChar.mvc.Controllers
         {
             return await UpdateRpgModel(id, (sheet) =>
             {
-                sheet.AbilityScores = abilityScores;
+                return sheet.AbilityScores = abilityScores;
             });
         }
 
@@ -167,7 +167,7 @@ namespace dndChar.mvc.Controllers
         {
             return await UpdateRpgModel(id, (sheet) =>
             {
-                sheet.Status = statuses;
+                return sheet.Status = statuses;
             });
         }
 
@@ -190,7 +190,7 @@ namespace dndChar.mvc.Controllers
         {
             return await UpdateRpgModel(id, (sheet) =>
             {
-                sheet.HitDice = dice;
+                return sheet.HitDice = dice;
             });
         }
 
@@ -213,7 +213,7 @@ namespace dndChar.mvc.Controllers
         {
             return await UpdateRpgModel(id, (sheet) =>
             {
-                sheet.Health = health;
+                return sheet.Health = health;
             });
         }
 
@@ -236,7 +236,7 @@ namespace dndChar.mvc.Controllers
         {
             return await UpdateRpgModel(id, (sheet) =>
             {
-                sheet.SavingThrows = savingThrows;
+                return sheet.SavingThrows = savingThrows;
             });
         }
 
@@ -259,7 +259,7 @@ namespace dndChar.mvc.Controllers
         {
             return await UpdateRpgModel(id, (sheet) =>
             {
-                sheet.Skills = skills;
+                return sheet.Skills = skills;
             });
         }
 
@@ -282,7 +282,7 @@ namespace dndChar.mvc.Controllers
         {
             return await UpdateRpgModel(id, (sheet) =>
             {
-                sheet.HitDiceType = hitDices;
+                return sheet.HitDiceType = hitDices;
             });
         }
 
@@ -305,7 +305,7 @@ namespace dndChar.mvc.Controllers
         {
             return await UpdateRpgModel(id, (sheet) =>
             {
-                sheet.DeathSave = deathSaves;
+                return sheet.DeathSave = deathSaves;
             });
         }
 
@@ -328,7 +328,7 @@ namespace dndChar.mvc.Controllers
         {
             return await UpdateRpgModel(id, (sheet) =>
             {
-                sheet.Treasure = treasures;
+                return sheet.Treasure = treasures;                
             });
         }
 
@@ -351,7 +351,7 @@ namespace dndChar.mvc.Controllers
         {
             return await UpdateRpgModel(id, (sheet) =>
             {
-                sheet.CharacterAppearance = characterAppearances;
+                return sheet.CharacterAppearance = characterAppearances;
             });
         }
 
@@ -374,7 +374,7 @@ namespace dndChar.mvc.Controllers
         {
             return await UpdateRpgModel(id, (sheet) =>
             {
-                sheet.FeaturesTraits = featuresTraits;
+                return sheet.FeaturesTraits = featuresTraits;
             });
         }
 
@@ -397,7 +397,7 @@ namespace dndChar.mvc.Controllers
         {
             return await UpdateRpgModel(id, (sheet) =>
             {
-                sheet.Equipment = equipment;
+                return sheet.Equipment = equipment;
             });
         }
 
@@ -420,7 +420,7 @@ namespace dndChar.mvc.Controllers
         {
             return await UpdateRpgModel(id, (sheet) =>
             {
-                sheet.MagicItems = magicItems;
+                return sheet.MagicItems = magicItems;
             });
         }
 
@@ -443,7 +443,7 @@ namespace dndChar.mvc.Controllers
         {
             return await UpdateRpgModel(id, (sheet) =>
             {
-                sheet.Notes = notes;
+                return sheet.Notes = notes;
             });
         }
         [HttpGet("{id}/Spells")]
@@ -465,7 +465,7 @@ namespace dndChar.mvc.Controllers
         {
             return await UpdateRpgModel(id, (sheet) =>
             {
-                sheet.Spells = spells;
+                return sheet.Spells = spells;
             });
         }
         [HttpGet("{id}/Feats")]
@@ -487,11 +487,11 @@ namespace dndChar.mvc.Controllers
         {
             return await UpdateRpgModel(id, (sheet) =>
             {
-                sheet.Feats = feats;
+                return sheet.Feats = feats;
             });
         }
 
-        public async Task<IActionResult> UpdateRpgModel(Guid id, Action<RpgCharModel> updateMethod)
+        public async Task<IActionResult> UpdateRpgModel(Guid id, Func<RpgCharModel, dynamic> updateMethod)
         {
             using (var session = Store.OpenAsyncSession())
             {
@@ -501,11 +501,12 @@ namespace dndChar.mvc.Controllers
                     return new ForbidResult();
                 }
 
-                updateMethod(characterSheet);
+                var result = updateMethod(characterSheet);
 
                 await session.SaveChangesAsync();
-            }
-            return Ok();
+
+                return Ok(result);
+            }            
         }
     }
 }
