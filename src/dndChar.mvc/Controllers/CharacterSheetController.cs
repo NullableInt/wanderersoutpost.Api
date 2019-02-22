@@ -6,7 +6,6 @@ using dndChar.Api.Util;
 using dndChar.Database;
 using dndChar.Models.BaseStats;
 using dndChar.Models.Currency;
-using dndChar.Models.Skills;
 
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;

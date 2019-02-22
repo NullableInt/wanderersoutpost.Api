@@ -1,6 +1,4 @@
-﻿using dndChar.Models.Skills;
-
-namespace dndChar.ActionModels
+﻿namespace dndChar.ActionModels
 {
     public class UpdateSkillModelAction : IAction
     {
