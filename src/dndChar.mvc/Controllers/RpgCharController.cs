@@ -17,23 +17,10 @@ namespace dndChar.mvc.Controllers
     public class RpgCharController : Controller
     {
         public IDocumentStore Store { get; set; }
-        
+
         public RpgCharController(DocumentStoreHolder holder)
         {
             Store = holder.Store;
-        }
-
-        [HttpPost("{characterSheetId}")]
-        public async Task<IActionResult> UpdateTreasures([FromRoute] Guid characterSheetId, [FromBody] RpgCharModel dynamic)
-        {
-            dynamic.Profile.CharacterId = characterSheetId;
-            using (var session = Store.OpenAsyncSession())
-            {
-                await session.StoreAsync(dynamic, "RpgChar/" + characterSheetId);
-
-                await session.SaveChangesAsync();
-            }
-            return Ok();
         }
 
         [HttpGet("")]
@@ -42,12 +29,39 @@ namespace dndChar.mvc.Controllers
             return Ok("Wow it works");
         }
 
-        public async Task<IActionResult> UpdateRpgModel(string characterSheetId, Action<RpgCharModel> updateMethod)
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetAll([FromRoute] Guid id)
         {
             using (var session = Store.OpenAsyncSession())
             {
-                var characterSheet = await session.LoadAsync<RpgCharModel>("RpgChar/" + characterSheetId);
-                if (characterSheet.Profile.CharacterId != Guid.Parse(characterSheetId))
+                var character = await session.LoadAsync<RpgCharModel>($"RpgChar/{id}");
+                if (character != null && character.Profile != null)
+                {
+                    return Ok(character);
+                }
+                return BadRequest();
+            }
+        }
+
+        [HttpPost("{id}")]
+        public async Task<IActionResult> SetAll([FromRoute] Guid id, [FromBody] RpgCharModel dynamic)
+        {
+            dynamic.Profile.CharacterId = id;
+            using (var session = Store.OpenAsyncSession())
+            {
+                await session.StoreAsync(dynamic, $"RpgChar/{id}");
+
+                await session.SaveChangesAsync();
+            }
+            return Ok();
+        }
+
+        public async Task<IActionResult> UpdateRpgModel(string id, Action<RpgCharModel> updateMethod)
+        {
+            using (var session = Store.OpenAsyncSession())
+            {
+                var characterSheet = await session.LoadAsync<RpgCharModel>($"RpgChar/{id}");
+                if (characterSheet.Profile.CharacterId != Guid.Parse(id))
                 {
                     return new ForbidResult();
                 }
@@ -57,17 +71,6 @@ namespace dndChar.mvc.Controllers
                 await session.SaveChangesAsync();
             }
             return Ok();
-        }
-
-        [HttpGet]
-        [Route("private-scoped")]
-        [Authorize("read:messages")]
-        public IActionResult Scoped()
-        {
-            return Json(new
-            {
-                Message = "Hello from a private endpoint! You need to be authenticated and have a scope of read:messages to see this."
-            });
         }
     }
 }
