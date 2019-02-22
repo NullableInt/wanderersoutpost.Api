@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using dndChar.Database;
 using dndChar.mvc.Models.RpgChar;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Raven.Client.Documents;
 
@@ -10,6 +11,7 @@ namespace dndChar.mvc.Controllers
 {
     [Route("[controller]")]
     [ApiController]
+    [Authorize]
     public class RpgCharController : Controller
     {
         public IDocumentStore Store { get; set; }
