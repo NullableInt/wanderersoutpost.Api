@@ -31,6 +31,19 @@ namespace dndChar.mvc
             services.AddSingleton<DocumentStoreHolder>();
             services.Configure<RavenConfig>(Configuration.GetSection("Raven"));
 
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowSpecificOrigin",
+                    builder =>
+                    {
+                        builder
+                        .WithOrigins("http://localhost:3000")
+                        .AllowAnyMethod()
+                        .AllowAnyHeader()
+                        .AllowCredentials();
+                    });
+            });
+
             SetupAuth0(services);
         }
 
@@ -45,8 +58,14 @@ namespace dndChar.mvc
             }).AddJwtBearer(options =>
             {
                 options.Authority = domain;
-                options.Audience = Configuration["Auth0:ApiIdentifier"];
+                options.Audience = Configuration["Auth0:Audience"];
+                options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+                {
+                    ValidAudience = Configuration["Auth0:Audience"],
+                    ValidIssuer = domain
+                };
             });
+
             services.AddAuthorization(options =>
             {
                 options.AddPolicy("read:messages", policy => policy.Requirements.Add(new HasScopeRequirement("read:messages", domain)));
@@ -61,25 +80,24 @@ namespace dndChar.mvc
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseDatabaseErrorPage();
             }
             else
             {
                 app.UseExceptionHandler("/Home/Error");
-                app.UseHsts();
             }
 
-            app.UseHttpsRedirection();            
-            app.UseCookiePolicy();
-
             app.UseCors("AllowSpecificOrigin");
+
             app.UseStaticFiles();
+
             app.UseAuthentication();
 
             app.UseMvc(routes =>
             {
-                routes.MapRoute(name: "default", template: "{controller=RpgChar}/{action=Index}/{id?}");
-            });   
+                routes.MapRoute(
+                    name: "default",
+                    template: "{controller=Home}/{action=Index}/{id?}");
+            });
         }
     }
 }
