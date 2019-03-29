@@ -7,7 +7,7 @@ namespace dndChar.Models.BaseStats
     public class BaseCharacterModel
     {
         public BaseStats baseStats;
-        public AbilitySavingThrow[] savingThrows;
+        public List<AbilitySavingThrow> savingThrows;
         public Dictionary<string,SkillModel[]> Skills;
     }
 }

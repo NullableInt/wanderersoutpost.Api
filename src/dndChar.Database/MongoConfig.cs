@@ -1,9 +1,7 @@
 ﻿namespace dndChar.Database
 {
-    public class RavenConfig
+    public class MongoConfig
     {
-        public string DefaultDatabase { get; set; }
-
         public string Url { get; set; }
     }
 }

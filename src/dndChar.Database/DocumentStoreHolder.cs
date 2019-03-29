@@ -1,23 +1,16 @@
 ﻿using Microsoft.Extensions.Options;
-
-using Raven.Client.Documents;
+using MongoDB.Driver;
 
 namespace dndChar.Database
 {
     public class DocumentStoreHolder
     {
-        public DocumentStoreHolder(IOptions<RavenConfig> ravenSettings)
+        public DocumentStoreHolder(IOptions<MongoConfig> mongoSettings)
         {
-            var _ravenSettings = ravenSettings.Value;
-
-            Store = new DocumentStore
-            {
-                Database = _ravenSettings.DefaultDatabase,
-                Urls = new []{_ravenSettings.Url}
-            }.Initialize();
+            Store = new MongoClient(mongoSettings.Value.Url);
         }
 
 
-        public IDocumentStore Store { get; private set; }
+        public IMongoClient Store { get; private set; }
     }
 }

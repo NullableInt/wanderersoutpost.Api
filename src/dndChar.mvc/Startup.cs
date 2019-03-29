@@ -29,7 +29,7 @@ namespace dndChar.mvc
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             services.AddSingleton<DocumentStoreHolder>();
-            services.Configure<RavenConfig>(Configuration.GetSection("Raven"));
+            services.Configure<MongoConfig>(Configuration.GetSection("Mongo"));
 
             services.AddCors(options =>
             {
