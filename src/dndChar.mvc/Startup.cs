@@ -49,7 +49,7 @@ namespace dndChar.mvc
 
         private void SetupAuth0(IServiceCollection services)
         {
-            string domain = $"https://{Configuration["Auth0:Domain"]}/";
+            string domain = $"https://{Configuration["Auth0:Domain"]}";
             services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -57,13 +57,15 @@ namespace dndChar.mvc
 
             }).AddJwtBearer(options =>
             {
-                options.Authority = domain;
+                options.Authority = Configuration["Auth0:Authority"];
                 options.Audience = Configuration["Auth0:Audience"];
+                /*
                 options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
                 {
                     ValidAudience = Configuration["Auth0:Audience"],
                     ValidIssuer = domain
                 };
+                */
             });
 
             services.AddAuthorization(options =>
