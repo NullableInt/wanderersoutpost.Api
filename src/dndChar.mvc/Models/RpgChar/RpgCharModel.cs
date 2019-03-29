@@ -5,6 +5,7 @@ namespace dndChar.mvc.Models.RpgChar
 
     public class RpgCharModel
     {
+        public string OwnerID { get; set; }
         public Profile Profile { get; set; }
         public List<Trait> Traits { get; set; }
         public List<Item> Items { get; set; }

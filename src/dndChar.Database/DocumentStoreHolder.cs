@@ -15,7 +15,6 @@ namespace dndChar.Database
                 Database = _ravenSettings.DefaultDatabase,
                 Urls = new []{_ravenSettings.Url}
             }.Initialize();
-
         }
 
 

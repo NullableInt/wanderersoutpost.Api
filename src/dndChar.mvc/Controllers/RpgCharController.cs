@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using dndChar.Database;
 using dndChar.mvc.Models.RpgChar;
@@ -22,13 +23,20 @@ namespace dndChar.mvc.Controllers
         }
 
         [HttpGet("")]
-        public IActionResult Index()
+        public async Task<IActionResult> IndexAsync()
         {
-            return Ok("Wow it works");
+            using(var session = Store.OpenAsyncSession())
+            {
+                //var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+                var userId = "auth0|5c7bdd2b56a92827fef4a7ba";
+                var rpgChars = await session.Query<RpgCharModel>().Where(x => x.OwnerID == userId, true).ToListAsync();
+                return Ok(rpgChars);
+            }
         }
 
+
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetAll([FromRoute] Guid id)
+        public async Task<IActionResult> GetAllById([FromRoute] Guid id)
         {
             using (var session = Store.OpenAsyncSession())
             {
@@ -44,6 +52,10 @@ namespace dndChar.mvc.Controllers
         [HttpPost("{id}")]
         public async Task<IActionResult> SetAll([FromRoute] Guid id, [FromBody] RpgCharModel dynamic)
         {
+            var nameClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+            var claims = User.Claims;
+            var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            dynamic.OwnerID = userId;
             dynamic.Profile.CharacterId = id;
             using (var session = Store.OpenAsyncSession())
             {

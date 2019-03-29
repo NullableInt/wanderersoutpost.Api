@@ -37,7 +37,7 @@ namespace dndChar.mvc
                     builder =>
                     {
                         builder
-                        .WithOrigins("http://localhost:3000")
+                        .WithOrigins("http://localhost:3000", "http://localhost:8080")
                         .AllowAnyMethod()
                         .AllowAnyHeader()
                         .AllowCredentials();
@@ -59,13 +59,11 @@ namespace dndChar.mvc
             {
                 options.Authority = Configuration["Auth0:Authority"];
                 options.Audience = Configuration["Auth0:Audience"];
-                /*
                 options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
                 {
                     ValidAudience = Configuration["Auth0:Audience"],
                     ValidIssuer = domain
                 };
-                */
             });
 
             services.AddAuthorization(options =>

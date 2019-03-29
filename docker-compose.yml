@@ -1,0 +1,10 @@
+version: '3.4'
+
+services:
+  dndchar.mvc:
+    image: ${DOCKER_REGISTRY-}dndcharmvc
+    build:
+      context: .
+      dockerfile: src/dndChar.mvc/Dockerfile
+    ports:
+      - "3010:3010"
