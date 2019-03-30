@@ -30,13 +30,9 @@ namespace dndChar.mvc.Controllers
             return Ok(await collection.Find(f => f.OwnerID == guidAsString).ToListAsync());
         }
 
-
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetAllById([FromRoute] Guid id)
-        {
-            return await GetRpgModelPart(id, Builders<RpgCharModel>.Projection.Include(e => e));
-        }
-
+        public async Task<IActionResult> GetAllById([FromRoute] Guid id) => await GetRpgModelPart(id, Builders<RpgCharModel>.Projection.Include(e => e));
+        
         [HttpPost("{id}")]
         public async Task<IActionResult> SetAll([FromRoute] Guid id, [FromBody] RpgCharModel dynamic)
         {
@@ -164,7 +160,7 @@ namespace dndChar.mvc.Controllers
         [HttpPatch("{id}/Feats")]
         public async Task<IActionResult> UpdateFeats([FromRoute] Guid id, [FromBody] List<Feat> feats) => await UpdateRpgModel(id, Builders<RpgCharModel>.Update.Set(sheet => sheet.Feats, feats), feats);
 
-        public async Task<IActionResult> UpdateRpgModel(Guid id, UpdateDefinition<RpgCharModel> updateMethod, dynamic returnData)
+        private async Task<IActionResult> UpdateRpgModel(Guid id, UpdateDefinition<RpgCharModel> updateMethod, dynamic returnData)
         {
             var collection = MongoDb.GetCollection<RpgCharModel>("RpgCharModels");
 
@@ -172,7 +168,7 @@ namespace dndChar.mvc.Controllers
             return Ok(returnData);
         }
 
-        public async Task<IActionResult> GetRpgModelPart(Guid id, ProjectionDefinition<RpgCharModel, dynamic> projectionDefinition)
+        private async Task<IActionResult> GetRpgModelPart(Guid id, ProjectionDefinition<RpgCharModel, dynamic> projectionDefinition)
         {
             var guidAsString = id.ToString();
             var collection = MongoDb.GetCollection<RpgCharModel>("RpgCharModels");
