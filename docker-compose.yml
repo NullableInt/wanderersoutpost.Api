@@ -7,7 +7,7 @@ services:
       context: .
       dockerfile: src/dndChar.mvc/Dockerfile
     ports:
-      - "3010:3010"
+      - "3010:80"
   mongodb:
         image: mongo:latest
         container_name: "mongodb"
