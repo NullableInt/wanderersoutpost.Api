@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using dndChar.mvc.Authorization;
 using Microsoft.AspNetCore.Authorization;
 
 namespace dndChar.mvc

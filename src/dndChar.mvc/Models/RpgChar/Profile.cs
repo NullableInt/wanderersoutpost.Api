@@ -1,10 +1,7 @@
-﻿using System;
-
-namespace dndChar.mvc.Models.RpgChar
+﻿namespace dndChar.mvc.Models.RpgChar
 {
     public class Profile
     {
-        public Guid CharacterId { get; set; }
         public string CharacterName { get; set; }
         public string CharacterImage { get; set; }
         public string Background { get; set; }
