@@ -7,7 +7,10 @@ services:
       context: .
       dockerfile: src/dndChar.mvc/Dockerfile
     ports:
-      - "3010:80"
+      #- "3010:3010"  # For local
+      - "80:3010" # For prod
+    links:
+    - mongodb
   mongodb:
         image: mongo:latest
         container_name: "mongodb"
@@ -19,5 +22,3 @@ services:
         ports:
             - 27017:27017
         command: mongod --smallfiles --logpath=/dev/null # --quiet
-volumes:
-  db_data:
