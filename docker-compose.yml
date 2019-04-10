@@ -1,11 +1,11 @@
 version: '3.4'
 
 services:
-  dndchar.mvc:
-    image: ${DOCKER_REGISTRY-}dndcharmvc
+  dndcharapi:
+    image: ${DOCKER_REGISTRY-}dndcharapi
     build:
       context: .
-      dockerfile: src/dndChar.mvc/Dockerfile
+      dockerfile: src/dndCharApi/Dockerfile
     ports:
       #- "32777:3010"  # For local
       - "80:3010" # For prod
