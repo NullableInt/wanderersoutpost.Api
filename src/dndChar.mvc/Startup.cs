@@ -82,7 +82,6 @@ namespace dndChar.mvc
             }
             else
             {
-                //app.UseExceptionHandler("/Home/Error");
                 app.UseDeveloperExceptionPage();
             }
 

@@ -24,9 +24,24 @@ namespace dndChar.mvc.Controllers
         [HttpGet("")]
         public async Task<IActionResult> IndexAsync()
         {
-            var stringAsString = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            var collection = MongoDb.GetCollection<RpgCharModel>("RpgCharModels");
-            return Ok(await collection.Find(f => f.OwnerID == stringAsString).ToListAsync());
+            try
+            {
+
+                var userName = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                var collection = MongoDb.GetCollection<RpgCharModel>("RpgCharModels");
+                var found = collection.Find(f => f.OwnerID == userName);
+                if (found.Any())
+                {
+                    var list = await found.ToListAsync();
+                    return Ok(list);
+                }
+                return NoContent();
+            }
+            catch (System.Exception e)
+            {
+
+                throw e;
+            }
         }
 
         [HttpGet("{id}")]

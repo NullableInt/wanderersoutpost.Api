@@ -1,12 +1,21 @@
 ﻿using System.Linq;
+using dndChar.Database;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using MongoDB.Driver;
 
 namespace dndChar.mvc.Controllers
 {
     [Route("api")]
     public class ApiController : Controller
     {
+        public IMongoDatabase MongoDb { get; set; }
+
+        public ApiController(DocumentStoreHolder holder)
+        {
+            MongoDb = holder.Store.GetDatabase("RpgCharModelDb");
+        }
+
         [HttpGet]
         [Route("public")]
         public IActionResult Public()
