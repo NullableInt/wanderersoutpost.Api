@@ -2,7 +2,7 @@
 using MongoDB.Bson.Serialization.Attributes;
 using System.Collections.Generic;
 
-namespace dndChar.mvc.Models.RpgChar
+namespace dndCharApi.Models.RpgChar
 {
 
     public class RpgCharModel

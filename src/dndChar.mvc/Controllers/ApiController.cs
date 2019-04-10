@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Driver;
 
-namespace dndChar.mvc.Controllers
+namespace dndCharApi.Controllers
 {
     [Route("api")]
     public class ApiController : Controller

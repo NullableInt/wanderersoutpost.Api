@@ -1,17 +1,13 @@
 ﻿using System;
 using System.Threading.Tasks;
-
-using dndChar.ActionModels;
-using dndChar.Api.Util;
 using dndChar.Database;
-using dndChar.Models.BaseStats;
-using dndChar.Models.Currency;
+using dndCharApi;
 
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Driver;
 
-namespace dndChar.mvc.Controllers
+namespace dndCharApi.Controllers
 {
     [Route("CharacterSheet")]
     [ApiController]
@@ -40,7 +36,6 @@ namespace dndChar.mvc.Controllers
             filter.ServerState.appUserId == characterSheetId, sheet => sheet.BaseCharacterModelState.savingThrows[sheet.BaseCharacterModelState.savingThrows.FindIndex(e => e.ability.name == payload.Payload.ability.name)], payload.Payload );
             return Ok();
         }
-        */
 
         [Action("[ABILITYSCORE] update")]
         [HttpPost("{characterSheetId}")]
@@ -167,5 +162,6 @@ namespace dndChar.mvc.Controllers
             await collection.FindOneAndUpdateAsync(filter => filter.ServerState.appUserId == characterSheetId, updateMethod);
             return Ok();
         }
+        */
     }
 }

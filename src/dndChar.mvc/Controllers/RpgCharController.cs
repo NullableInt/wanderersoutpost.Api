@@ -2,12 +2,12 @@
 using System.Security.Claims;
 using System.Threading.Tasks;
 using dndChar.Database;
-using dndChar.mvc.Models.RpgChar;
+using dndCharApi.Models.RpgChar;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Driver;
 
-namespace dndChar.mvc.Controllers
+namespace dndCharApi.Controllers
 {
     [Route("[controller]")]
     [ApiController]

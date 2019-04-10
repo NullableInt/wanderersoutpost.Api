@@ -1,4 +1,4 @@
-namespace dndChar.mvc.Models
+namespace dndCharApi.Models
 {
     public class ErrorViewModel
     {

@@ -1,4 +1,4 @@
-﻿namespace dndChar.mvc.Models.RpgChar
+﻿namespace dndCharApi.Models.RpgChar
 {
     public class SpellList
     {
