@@ -70,7 +70,7 @@ namespace dndCharApi.Controllers
         [HttpGet("Database")]
         public IActionResult Database()
         {
-            return Json(MongoConfig);
+            return Json(System.Environment.GetEnvironmentVariable("MongodbUrl"));
         }
     }
 }

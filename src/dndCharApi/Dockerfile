@@ -7,8 +7,6 @@ WORKDIR /src
 COPY ["src/dndCharApi/dndCharApi.csproj", "src/dndCharApi/"]
 COPY ["src/dndChar.Database/dndChar.Database.csproj", "src/dndChar.Database/"]
 RUN dotnet restore "src/dndCharApi/dndCharApi.csproj"
-#Set up env
-ENV MongoConfig:Url='123123123'
 COPY . .
 WORKDIR "/src/src/dndCharApi"
 RUN dotnet build "dndCharApi.csproj" -c Release -o /app
