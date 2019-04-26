@@ -1,3 +1,6 @@
+#Set up env
+ENV MongoConfig.Url=123123123
+
 FROM microsoft/dotnet:2.2-aspnetcore-runtime AS base
 WORKDIR /app
 EXPOSE 80
