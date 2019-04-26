@@ -2,6 +2,7 @@
 using dndChar.Database;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 
 namespace dndCharApi.Controllers
@@ -11,9 +12,12 @@ namespace dndCharApi.Controllers
     {
         public IMongoDatabase MongoDb { get; set; }
 
-        public ApiController(DocumentStoreHolder holder)
+        private readonly MongoConfig MongoConfig;
+
+        public ApiController(DocumentStoreHolder holder, IOptions<MongoConfig> options)
         {
             MongoDb = holder.Store.GetDatabase("RpgCharModelDb");
+            MongoConfig = options.Value;
         }
 
         [HttpGet]
@@ -62,6 +66,12 @@ namespace dndCharApi.Controllers
                     c.Type,
                     c.Value
                 }));
+        }
+
+        [HttpGet("Database")]
+        public IActionResult Database()
+        {
+            return Json(MongoConfig);
         }
     }
 }
