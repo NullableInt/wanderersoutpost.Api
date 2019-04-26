@@ -4,6 +4,5 @@ services:
   dndcharapi:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - MongoUrl=${MongoUrl}
     ports:
       - "80"
