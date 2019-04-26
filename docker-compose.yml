@@ -7,8 +7,4 @@ services:
       context: .
       dockerfile: src/dndCharApi/Dockerfile
     ports:
-      - "3010:3010"  # For local
-      #- "80:3010" # For prod
-      - "433:433"
-    environment:
-      - MongoUrl=mongodb://localhost:27017
+      - "3010:3010"
