@@ -29,8 +29,7 @@ namespace dndCharApi
 
             services.AddSingleton<DocumentStoreHolder>();
 
-            //Load env file
-            DotNetEnv.Env.Load();
+            services.Configure<MongoConfig>(Configuration.GetSection("MongoConfig"));
 
             services.AddCors(options =>
             {

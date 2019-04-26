@@ -8,3 +8,5 @@ services:
       dockerfile: src/dndCharApi/Dockerfile
     ports:
       - "3010:3010"
+    environment:
+      - MongoUrl=${MongoUrl}
