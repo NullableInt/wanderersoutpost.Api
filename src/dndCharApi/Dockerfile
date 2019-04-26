@@ -5,7 +5,6 @@ EXPOSE 80
 FROM microsoft/dotnet:2.2-sdk AS build
 WORKDIR /src
 COPY ["src/dndCharApi/dndCharApi.csproj", "src/dndCharApi/"]
-COPY ["src/dndCharApi/.env", "src/dndCharApi/.env"]
 COPY ["src/dndChar.Database/dndChar.Database.csproj", "src/dndChar.Database/"]
 RUN dotnet restore "src/dndCharApi/dndCharApi.csproj"
 COPY . .
