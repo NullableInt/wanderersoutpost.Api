@@ -68,7 +68,7 @@ namespace dndCharApi.Controllers
         [HttpGet("Database")]
         public IActionResult Database()
         {
-            return Json(System.Environment.GetEnvironmentVariable("Mongo.Url"));
+            return Json(System.Environment.GetEnvironmentVariable("MongoUrl"));
         }
     }
 }
