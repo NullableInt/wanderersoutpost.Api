@@ -12,9 +12,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include=".env">
+    <Content Include=".env">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>
