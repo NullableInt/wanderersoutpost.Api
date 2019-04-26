@@ -12,12 +12,9 @@ namespace dndCharApi.Controllers
     {
         public IMongoDatabase MongoDb { get; set; }
 
-        private readonly MongoConfig MongoConfig;
-
-        public ApiController(DocumentStoreHolder holder, IOptions<MongoConfig> options)
+        public ApiController(DocumentStoreHolder holder)
         {
             MongoDb = holder.Store.GetDatabase("RpgCharModelDb");
-            MongoConfig = options.Value;
         }
 
         [HttpGet]
@@ -71,7 +68,7 @@ namespace dndCharApi.Controllers
         [HttpGet("Database")]
         public IActionResult Database()
         {
-            return Json(MongoConfig);
+            return Json(System.Environment.GetEnvironmentVariable("Mongo.Url"));
         }
     }
 }

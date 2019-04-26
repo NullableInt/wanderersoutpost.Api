@@ -28,7 +28,9 @@ namespace dndCharApi
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             services.AddSingleton<DocumentStoreHolder>();
-            services.Configure<MongoConfig>(Configuration.GetSection("Mongo"));
+
+            //Load env file
+            DotNetEnv.Env.Load();
 
             services.AddCors(options =>
             {

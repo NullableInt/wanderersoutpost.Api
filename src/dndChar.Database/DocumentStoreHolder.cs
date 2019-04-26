@@ -5,9 +5,10 @@ namespace dndChar.Database
 {
     public class DocumentStoreHolder
     {
-        public DocumentStoreHolder(IOptions<MongoConfig> mongoSettings)
+        public DocumentStoreHolder()
         {
-            Store = new MongoClient(mongoSettings.Value.Url);
+            var url = System.Environment.GetEnvironmentVariable("Mongo.Url");
+            Store = new MongoClient(url);
         }
 
 
