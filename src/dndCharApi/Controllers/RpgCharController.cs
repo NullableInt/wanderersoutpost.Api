@@ -47,17 +47,24 @@ namespace dndCharApi.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetAllById([FromRoute] string id) => await GetRpgModelPart(id, Builders<RpgCharModel>.Projection.Include(e => e));
         
-        [HttpPost("{id}")]
-        public async Task<IActionResult> SetAll([FromRoute] string id, [FromBody] RpgCharModel dynamic)
+        [HttpPost("{id?}")]
+        [HttpPost("newChar/{id?}")]
+        public async Task<IActionResult> SetAll([FromBody] RpgCharModel dynamic, [FromRoute] string id = null)
         {
             var nameClaim = User.FindFirst(ClaimTypes.NameIdentifier);
             var claims = User.Claims;
             var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
             dynamic.OwnerID = userId;
+
+            if (string.IsNullOrEmpty(id))
+            {
+                id = System.Guid.NewGuid().ToString("D");
+            }
             dynamic.Id = id.ToString();
+
             var collection = MongoDb.GetCollection<RpgCharModel>("RpgCharModels");
             await collection.InsertOneAsync(dynamic);
-            return Ok();
+            return Ok(dynamic.Id);
         }
 
         [HttpGet("{id}/Profile")]
