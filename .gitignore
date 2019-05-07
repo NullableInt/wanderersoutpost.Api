@@ -331,3 +331,4 @@ ASALocalRun/
 *.db
 
 .env
+data/db/*
