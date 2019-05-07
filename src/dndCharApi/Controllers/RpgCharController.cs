@@ -27,7 +27,6 @@ namespace dndCharApi.Controllers
         {
             try
             {
-
                 var userName = User.FindFirstValue(ClaimTypes.NameIdentifier);
                 var collection = MongoDb.GetCollection<RpgCharModel>("RpgCharModels");
                 var found = collection.Find(f => f.OwnerID == userName);
@@ -40,7 +39,7 @@ namespace dndCharApi.Controllers
             }
             catch (System.Exception e)
             {
-
+                //This try catch with a throw is only here for debug.
                 throw e;
             }
         }
@@ -57,7 +56,7 @@ namespace dndCharApi.Controllers
             var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
             dynamic.OwnerID = userId;
 
-            if (string.IsNullOrEmpty(id))
+            if (string.IsNullOrEmpty(id) || !ObjectId.TryParse(id, out var objectId))
             {
                 id = ObjectId.GenerateNewId().ToString();
             }
