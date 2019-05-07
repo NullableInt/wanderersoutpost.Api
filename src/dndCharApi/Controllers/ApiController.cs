@@ -355,7 +355,9 @@ namespace dndCharApi.Controllers
                         Platinum = "1",
                         Silver = "0"
                     }
-                }
+                },
+                _created = new BsonDateTime(System.DateTime.UtcNow),
+                _lastUpdated = new BsonDateTime(System.DateTime.UtcNow)
             });
         }
     }

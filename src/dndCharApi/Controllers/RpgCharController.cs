@@ -71,6 +71,8 @@ namespace dndCharApi.Controllers
                 id = ObjectId.GenerateNewId().ToString();
             }
             dynamic.Id = id.ToString();
+            dynamic._created = new BsonDateTime(System.DateTime.UtcNow);
+            dynamic._lastUpdated = new BsonDateTime(System.DateTime.UtcNow);
 
             var collection = MongoDb.GetCollection<RpgCharModel>("RpgCharModels");
             await collection.InsertOneAsync(dynamic);
@@ -195,7 +197,8 @@ namespace dndCharApi.Controllers
         {
             var collection = MongoDb.GetCollection<RpgCharModel>("RpgCharModels");
             var stringId = id.ToString();
-            await collection.FindOneAndUpdateAsync(filter => filter.Id == stringId, updateMethod);
+            updateMethod = updateMethod.CurrentDate(s => s._lastUpdated);
+            await collection.UpdateOneAsync(filter => filter.Id == stringId, updateMethod);
             return Ok(returnData);
         }
 
@@ -214,7 +217,6 @@ namespace dndCharApi.Controllers
             }
             catch (System.Exception e)
             {
-
                 throw e;
             }
         }

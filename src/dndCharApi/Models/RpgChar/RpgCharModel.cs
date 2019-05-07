@@ -30,5 +30,7 @@ namespace dndCharApi.Models.RpgChar
         public List<Note> Notes { get; set; }
         public Spells Spells { get; set; }
         public List<Feat> Feats { get; set; }
+        public BsonDateTime _created { get; set; }
+        public BsonDateTime _lastUpdated { get; set; }
     }
 }
