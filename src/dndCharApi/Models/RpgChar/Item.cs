@@ -2,11 +2,11 @@
 {
     public class Item
     {
-        public string ItemName { get; set; }
-        public string ItemDesc { get; set; }
-        public int ItemQty { get; set; }
-        public double ItemWeight { get; set; }
-        public int ItemCost { get; set; }
-        public string ItemCurrencyDenomination { get; set; }
+        public string Name { get; set; }
+        public string Desc { get; set; }
+        public int Qty { get; set; }
+        public double Weight { get; set; }
+        public int Cost { get; set; }
+        public string CurrencyDenomination { get; set; }
     }
 }

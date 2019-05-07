@@ -1,8 +1,10 @@
 ﻿using System.Linq;
 using dndChar.Database;
+using dndCharApi.Models.RpgChar;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
+using MongoDB.Bson;
 using MongoDB.Driver;
 
 namespace dndCharApi.Controllers
@@ -71,6 +73,290 @@ namespace dndCharApi.Controllers
         public IActionResult Database()
         {
             return Json(System.Environment.GetEnvironmentVariable("MongodbUrl"));
+        }
+
+        [HttpGet("mock")]
+        public IActionResult Mock()
+        {
+            return Json(new RpgCharModel
+            {
+                AbilityScores = new AbilityScores
+                {
+                    Cha = "8",
+                    Con = "7",
+                    Dex = "6",
+                    Int = "5",
+                    Str = "4",
+                    Wis = "3"
+                },
+                CharacterAppearance = new System.Collections.Generic.List<CharacterAppearance>
+                {
+                    new CharacterAppearance
+                    {
+                        EyeColor = "Eye",
+                        HairColor = "Hair",
+                        Height = "Height",
+                        SkinColor = "Skin",
+                        Weight = "Weight"
+                    }
+                },
+                DeathSave = new System.Collections.Generic.List<DeathSave>
+                {
+                    new DeathSave
+                    {
+                        DeathSaveFailure = true
+                    },
+                    new DeathSave
+                    {
+                        DeathSaveSuccess = true
+                    }
+                },
+                Equipment = new Equipment
+                {
+                    Armor = new System.Collections.Generic.List<Armor>
+                    {
+                        new Armor
+                        {
+                            Class = 11,
+                            CurrencyDenomination = "What",
+                            Description = "Desc",
+                            Equipped = "eq",
+                            MagicalModifier = 1,
+                            Name = "Name",
+                            Price = 1,
+                            Stealth = "1",
+                            Type = "Type",
+                            Weight = 12
+                        }
+                    },
+                    Weapons = new System.Collections.Generic.List<Weapon>
+                    {
+                        new Weapon
+                        {
+                            CurrencyDenomination = "d",
+                            Weight = 1,
+                            Type = "Type",
+                            Price = 1,
+                            Name = "Weapon",
+                            DamageType = "Force",
+                            Description = "Lightsaber",
+                            Dmg = "2d6",
+                            Handedness = "Left",
+                            Hit = -1,
+                            Proficiency = "M;aybe",
+                            Property = "Prop",
+                            Quantity = 1,
+                            Range = "5ft",
+                            ToHitModifier = -1
+                        }
+                    }
+                },
+                Feats = new System.Collections.Generic.List<Feat>
+                {
+                    new Feat
+                    {
+                        Description = "Allows you to sneak past friends",
+                        Name = "Halfling nibleness"
+                    }
+                },
+                FeaturesTraits = new System.Collections.Generic.List<FeaturesTrait>
+                {
+                    new FeaturesTrait
+                    {
+                        Background = "Noble",
+                        Bonds = "Bondy bond",
+                        Flaws = "Very",
+                        Ideals = "Few"
+                    }
+                },
+                Health = new Health
+                {
+                    Damage = 1,
+                    MaxHitpoints = 6,
+                    TempHitpoints = 2
+                },
+                HitDice = new System.Collections.Generic.List<HitDice>
+                {
+                    new HitDice
+                    {
+                        ExtraHitDice = 0,
+                        HitDiceUsed = 1
+                    }
+                },
+                HitDiceType = new System.Collections.Generic.List<HitDiceTypeModel>
+                {
+                    new HitDiceTypeModel
+                    {
+                        HitDiceType = "d8"
+                    }
+                },
+                Id = ObjectId.GenerateNewId().ToString(),
+                Items = new System.Collections.Generic.List<Item>
+                {
+                    new Item
+                    {
+                        Cost =  14,
+                        CurrencyDenomination = "SP",
+                        Desc = "Oh no",
+                        Name = "Woah",
+                        Qty = 1,
+                        Weight = 154
+                    }
+                },
+                MagicItems = new System.Collections.Generic.List<MagicItem>
+                {
+                    new MagicItem
+                    {
+                        Weight = 14,
+                        Attuned = true,
+                        Charges = 0,
+                        Description = "No ide",
+                        MaxCharges = 1,
+                        Name = "Boy",
+                        Rarity = "Legendary",
+                        RequiresAttunement = true,
+                        Type = "Unknown"
+                    }
+                },
+                Notes = new System.Collections.Generic.List<Note>
+                {
+                    new Note
+                    {
+                        IsSavedChatNotes = true,
+                        Text = "Test text"
+                    }
+                },
+                OwnerID = "Unique ID for owner from identity federation",
+                Profile = new Profile
+                {
+                    Age = "23",
+                    Alignment = "Truly evil",
+                    Background = "Is this a duplicate from Features and traits?",
+                    CharacterImage = "Url here",
+                    CharacterName = "Testy testerson",
+                    Diety = "",
+                    Exp = "Milestone",
+                    Gender = "No",
+                    Level = 2,
+                    PlayerName = "U+1F618",
+                    Race = "U+1F364",
+                    TypeClass = "God"
+                },
+                SavingThrows = new System.Collections.Generic.List<SavingThrow>
+                {
+                    new SavingThrow
+                    {
+                        Name = "Dex",
+                        Proficiency = true
+                    },
+                    new SavingThrow
+                    {
+                        Name = "Int",
+                        Proficiency = false
+                    }
+                },
+                Skills = new System.Collections.Generic.List<Skill>
+                {
+                    new Skill
+                    {
+                        AbilityScore = "Wis",
+                        BonusModifier = 1,
+                        Proficiency = "Expertice",
+                        Name = "Prospecting"
+                    }
+                },
+                Spells = new Spells
+                {
+                    Cantrips = new System.Collections.Generic.List<Cantrip>
+                    {
+                        new Cantrip
+                        {
+                            CastingTime = "1 turn",
+                            Components = "Verbal",
+                            Description = "Tells a lie",
+                            Dmg = "6d8",
+                            DmgType = "Psycic",
+                            Duration = "Lifetime",
+                            isRitual = false,
+                            MaterialComponents = "None",
+                            Name = "Lie",
+                            Range = "32ft",
+                            SaveAttr = "Int",
+                            School = "Godlike",
+                            Type = "All"
+                        }
+                    },
+                    CantripsKnown = 1,
+                    InvocationsKnown = 1,
+                    MaxPrepared = 13,
+                    SpellAttackBonus = 42,
+                    SpellcastingAbility = "All so fuck you",
+                    SpellList = new System.Collections.Generic.List<SpellList>
+                    {
+                        new SpellList
+                        {
+                            CastingTime = "1 turn",
+                            Components = "Verbal",
+                            Description = "Tells a lie",
+                            Dmg = "6d8",
+                            DmgType = "Psycic",
+                            Duration = "Lifetime",
+                            isRitual = false,
+                            MaterialComponents = "None",
+                            Name = "Lie",
+                            Range = "32ft",
+                            SaveAttr = "Int",
+                            School = "Godlike",
+                            Type = "All",
+                            AlwaysPrepared = true,
+                            Level = 99,
+                            Prepared = true
+                        }
+                    },
+                    SpellSaveDc = 19,
+                    SpellsKnown = 1,
+                    SpellSlots = new System.Collections.Generic.List<SpellSlot>
+                    {
+                        new SpellSlot
+                        {
+                            AvailableSpellSlots = 0,
+                            Level = 1,
+                            ResetsOn = "Seconds",
+                            UsedSpellSlots = 0
+                        }
+                    }
+                },
+                Status = new System.Collections.Generic.List<Status>
+                {
+                    new Status
+                    {
+                        Identifier = "Dead,y",
+                        Name = "Unknown",
+                        Type = "Forcy",
+                        Value = 13
+                    }
+                },
+                Traits = new System.Collections.Generic.List<Trait>
+                {
+                    new Trait
+                    {
+                        Description = "Trait",
+                        Name = "Trait name",
+                        Race = "Racism"
+                    }
+                },
+                Treasure = new System.Collections.Generic.List<Treasure>
+                {
+                    new Treasure
+                    {
+                        Copper = "0",
+                        Electrum = "4",
+                        Gold = "0",
+                        Platinum = "1",
+                        Silver = "0"
+                    }
+                }
+            });
         }
     }
 }

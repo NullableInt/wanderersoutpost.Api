@@ -45,7 +45,17 @@ namespace dndCharApi.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetAllById([FromRoute] string id) => await GetRpgModelPart(id, Builders<RpgCharModel>.Projection.Include(e => e));
+        public async Task<IActionResult> GetAllById([FromRoute] string id)
+        {
+            var collection = MongoDb.GetCollection<RpgCharModel>("RpgCharModels");
+            var stringId = id.ToString();
+            var list = await collection.Find(f => f.Id == stringId).ToListAsync();
+            if (list.Count > 0)
+            {
+                return Ok(list[0]);
+            }
+            return NotFound();
+        }
         
         [HttpPost("{id?}")]
         [HttpPost("newChar/{id?}")]
@@ -64,7 +74,7 @@ namespace dndCharApi.Controllers
 
             var collection = MongoDb.GetCollection<RpgCharModel>("RpgCharModels");
             await collection.InsertOneAsync(dynamic);
-            return Ok(dynamic.Id);
+            return new JsonResult(dynamic.Id);
         }
 
         [HttpGet("{id}/Profile")]
@@ -191,10 +201,22 @@ namespace dndCharApi.Controllers
 
         private async Task<IActionResult> GetRpgModelPart(string id, ProjectionDefinition<RpgCharModel, dynamic> projectionDefinition)
         {
-            //var ownerId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            var collection = MongoDb.GetCollection<RpgCharModel>("RpgCharModels");
-            var stringId = id.ToString();
-            return Ok(await collection.Find(f => f.Id == stringId).Project(projectionDefinition).ToListAsync());
+            try
+            {
+                var collection = MongoDb.GetCollection<RpgCharModel>("RpgCharModels");
+                var stringId = id.ToString();
+                var list = await collection.Find(f => f.Id == stringId).Project(projectionDefinition).ToListAsync();
+                if(list.Count > 0)
+                {
+                    return Ok(list[0]);
+                }
+                return Ok();
+            }
+            catch (System.Exception e)
+            {
+
+                throw e;
+            }
         }
     }
 }
