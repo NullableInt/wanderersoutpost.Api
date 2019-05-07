@@ -480,7 +480,7 @@ Content-Type: application/json
 ### Get part of model
 By using the part of the model you can get just a scoped response, this makes it more light weight for the front end if you want to load several characters, or if you want to test with just certain parts of the code.
 
-### Request url
+### Request url for getting profile
 ```
 HTTP GET /RpgChar/{id}/Profile
 ```
@@ -505,10 +505,11 @@ Content-Type: application/json
 }
 ```
 
-### Request url
+### Request url for getting traits
 ```
 HTTP GET /RpgChar/{id}/Traits
 ```
+
 ### Response
 ```
 Responsecode 200 OK
@@ -525,10 +526,11 @@ Content-Type: application/json
 }
 ```
 
-### Request url
+### Request url for getting items
 ```
 HTTP GET /RpgChar/{id}/Items
 ```
+
 ### Response
 ```
 Responsecode 200 OK
@@ -548,10 +550,11 @@ Content-Type: application/json
 }
 ```
 
-### Request url
+### Request url for getting ability scores
 ```
 HTTP GET /RpgChar/{id}/AbilityScores
 ```
+
 ### Response
 ```
 Responsecode 200 OK
@@ -569,10 +572,11 @@ Content-Type: application/json
 }
 ```
 
-### Request url
+### Request url for getting the statuses affecting the character
 ```
 HTTP GET /RpgChar/{id}/Status
 ```
+
 ### Response
 ```
 Responsecode 200 OK
@@ -590,10 +594,11 @@ Content-Type: application/json
 }
 ```
 
-### Request url
+### Request url for getting hit dice
 ```
 HTTP GET /RpgChar/{id}/HitDice
 ```
+
 ### Response
 ```
 Responsecode 200 OK
@@ -609,10 +614,11 @@ Content-Type: application/json
 }
 ```
 
-### Request url
+### Request url for getting health
 ```
 HTTP GET /RpgChar/{id}/Health
 ```
+
 ### Response
 ```
 Responsecode 200 OK
@@ -627,10 +633,11 @@ Content-Type: application/json
 }
 ```
 
-### Request url
+### Request url for getting saving throws
 ```
 HTTP GET /RpgChar/{id}/SavingThrows
 ```
+
 ### Response
 ```
 Responsecode 200 OK
@@ -650,10 +657,11 @@ Content-Type: application/json
 }
 ```
 
-### Request url
+### Request url for getting skills
 ```
 HTTP GET /RpgChar/{id}/Skills
 ```
+
 ### Response
 ```
 Responsecode 200 OK
@@ -671,10 +679,11 @@ Content-Type: application/json
 }
 ```
 
-### Request url
+### Request url for getting hit dice type
 ```
 HTTP GET /RpgChar/{id}/HitDiceType
 ```
+
 ### Response
 ```
 Responsecode 200 OK
@@ -689,10 +698,11 @@ Content-Type: application/json
 }
 ```
 
-### Request url
+### Request url for getting death saves
 ```
 HTTP GET /RpgChar/{id}/DeathSave
 ```
+
 ### Response
 ```
 Responsecode 200 OK
@@ -712,10 +722,11 @@ Content-Type: application/json
 }
 ```
 
-### Request url
+### Request url for getting treaures
 ```
 HTTP GET /RpgChar/{id}/Treasure
 ```
+
 ### Response
 ```
 Responsecode 200 OK
@@ -734,10 +745,11 @@ Content-Type: application/json
 }
 ```
 
-### Request url
+### Request url for getting the character appearance
 ```
 HTTP GET /RpgChar/{id}/CharacterAppearance
 ```
+
 ### Response
 ```
 Responsecode 200 OK
@@ -756,10 +768,11 @@ Content-Type: application/json
 }
 ```
 
-### Request url
+### Request url for getting features and traits
 ```
 HTTP GET /RpgChar/{id}/FeaturesTraits
 ```
+
 ### Response
 ```
 Responsecode 200 OK
@@ -777,10 +790,11 @@ Content-Type: application/json
 }
 ```
 
-### Request url
+### Request url for getting equipment
 ```
 HTTP GET /RpgChar/{id}/Equipment
 ```
+
 ### Response
 ```
 Responsecode 200 OK
@@ -825,10 +839,11 @@ Content-Type: application/json
 }
 ```
 
-### Request url
+### Request url for getting magic items
 ```
 HTTP GET /RpgChar/{id}/MagicItems
 ```
+
 ### Response
 ```
 Responsecode 200 OK
@@ -851,10 +866,11 @@ Content-Type: application/json
 }
 ```
 
-### Request url
+### Request url for getting notes
 ```
 HTTP GET /RpgChar/{id}/Notes
 ```
+
 ### Response
 ```
 Responsecode 200 OK
@@ -870,10 +886,11 @@ Content-Type: application/json
 }
 ```
 
-### Request url
+### Request url for getting spells
 ```
 HTTP GET /RpgChar/{id}/Spells
 ```
+
 ### Response
 ```
 Responsecode 200 OK
@@ -937,10 +954,11 @@ Content-Type: application/json
 }
 ```
 
-### Request url
+### Request url for getting feats
 ```
 HTTP GET /RpgChar/{id}/Feats
 ```
+
 ### Response
 ```
 Responsecode 200 OK
@@ -954,4 +972,33 @@ Content-Type: application/json
         }
     ]
 }
+```
+
+## Setting data on a character
+The following methods are all sub methods on a `RpgChar` for setting fields, they all use the `PATCH` verb and only fields passed inn will be updated.
+The structure is the same as for getting parts and they all compliment them, the return of all api methods are the updated part.
+Meaning if you update the `health` of a character using `HTTP PATCH /RpgChar/{id}/Health` you will get in return the same object as if you called `HTTP GET /RpgChar/{id}/Health`.
+
+### Available urls
+
+```
+HTTP PATCH /RpgChar/{id}/Profile
+HTTP PATCH /RpgChar/{id}/Traits
+HTTP PATCH /RpgChar/{id}/Items
+HTTP PATCH /RpgChar/{id}/AbilityScores
+HTTP PATCH /RpgChar/{id}/Status
+HTTP PATCH /RpgChar/{id}/HitDice
+HTTP PATCH /RpgChar/{id}/Health
+HTTP PATCH /RpgChar/{id}/SavingThrows
+HTTP PATCH /RpgChar/{id}/Skills
+HTTP PATCH /RpgChar/{id}/HitDiceType
+HTTP PATCH /RpgChar/{id}/DeathSave
+HTTP PATCH /RpgChar/{id}/Treasure
+HTTP PATCH /RpgChar/{id}/CharacterAppearance
+HTTP PATCH /RpgChar/{id}/FeaturesTraits
+HTTP PATCH /RpgChar/{id}/Equipment
+HTTP PATCH /RpgChar/{id}/MagicItems
+HTTP PATCH /RpgChar/{id}/Notes
+HTTP PATCH /RpgChar/{id}/Spells
+HTTP PATCH /RpgChar/{id}/Feats
 ```
