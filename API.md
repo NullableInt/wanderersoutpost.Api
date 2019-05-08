@@ -477,6 +477,22 @@ Content-Type: application/json
 "idOfNewCharacter"
 ```
 
+### Create a new character with default not-null fields
+This method is a lot like a previous create character, but it does not allow you to send in a body, but will instead pre-fill all fields with non-null variables, saving a lot of null-checks if such is wanted.
+
+### Request url
+Request has an optional id.
+```
+HTTP GET /RpgChar/newChar/{id?}
+```
+
+### Response
+```
+Responsecode 200 OK
+Content-Type: application/json
+"idOfNewCharacter"
+```
+
 ### Get part of model
 By using the part of the model you can get just a scoped response, this makes it more light weight for the front end if you want to load several characters, or if you want to test with just certain parts of the code.
 
