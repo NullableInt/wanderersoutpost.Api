@@ -9,6 +9,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
+using dndCharApi.Models.RpgChar;
+using MongoDB.Bson.Serialization;
+using MongoDB.Bson.Serialization.Conventions;
 
 namespace dndCharApi
 {
@@ -85,6 +88,11 @@ namespace dndCharApi
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            var pack = new ConventionPack();
+            pack.Add(new CamelCaseElementNameConvention());
+
+            ConventionRegistry.Register(new CamelCaseElementNameConvention().Name,pack,t => true);
 
             app.UseCors("AllowSpecificOrigin");
 
