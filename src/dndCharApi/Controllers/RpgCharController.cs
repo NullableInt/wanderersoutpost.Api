@@ -58,7 +58,6 @@ namespace dndCharApi.Controllers
         }
         
         [HttpPost("{id?}")]
-        [HttpPost("newChar/{id?}")]
         public async Task<IActionResult> SetAll([FromBody] RpgCharModel dynamic, [FromRoute] string id = null)
         {
             var nameClaim = User.FindFirst(ClaimTypes.NameIdentifier);
@@ -77,6 +76,49 @@ namespace dndCharApi.Controllers
             var collection = MongoDb.GetCollection<RpgCharModel>("RpgCharModels");
             await collection.InsertOneAsync(dynamic);
             return new JsonResult(dynamic.Id);
+        }
+
+        [HttpGet("newChar/{id?}")]
+        public async Task<IActionResult> NewChar([FromRoute] string id = null)
+        {
+            var nameClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+            var claims = User.Claims;
+            var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+
+            if (string.IsNullOrEmpty(id) || !ObjectId.TryParse(id, out var objectId))
+            {
+                id = ObjectId.GenerateNewId().ToString();
+            }
+            var newChar = new RpgCharModel
+            {
+                AbilityScores = new AbilityScores(),
+                CharacterAppearance = new List<CharacterAppearance>(),
+                DeathSave = new List<DeathSave>(),
+                Equipment = new Equipment(),
+                Feats = new List<Feat>(),
+                FeaturesTraits = new List<FeaturesTrait>(),
+                Health = new Health(),
+                HitDice = new List<HitDice>(),
+                HitDiceType = new List<HitDiceTypeModel>(),
+                Id = id.ToString(),
+                Items = new List<Item>(),
+                MagicItems = new List<MagicItem>(),
+                Notes = new List<Note>(),
+                OwnerID = userId,
+                Profile = new Profile(),
+                SavingThrows = new List<SavingThrow>(),
+                Skills = new List<Skill>(),
+                Spells = new Spells(),
+                Status = new List<Status>(),
+                Traits = new List<Trait>(),
+                Treasure = new List<Treasure>(),
+                _created = new BsonDateTime(System.DateTime.UtcNow),
+                _lastUpdated = new BsonDateTime(System.DateTime.UtcNow)
+            };
+
+            var collection = MongoDb.GetCollection<RpgCharModel>("RpgCharModels");
+            await collection.InsertOneAsync(newChar);
+            return new JsonResult(id);
         }
 
         [HttpGet("{id}/Profile")]
