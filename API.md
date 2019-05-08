@@ -345,7 +345,8 @@ Responsecode 204 No Content
 ```
 
 #### Response if at least one character is found
-The model is identical to the the one returned from `api/Mock` but returned as an array object.
+The model structure is identical to the the one returned from `api/Mock`.
+The return type of this is a list of characters.
 
 ```
 Responsecode 200 OK
@@ -444,7 +445,7 @@ Content-Type: application/json
 "health": {...},
 "hitDice": {...},
 "hitDiceType": {...},
-"id": "5cd122da686a1f1b20a79b16",
+"id": "idPassedInTheRequest",
 "items": {...},
 "magicItems": {...},
 "notes": {...},
@@ -483,7 +484,8 @@ This method is a lot like a previous create character, but it does not allow you
 ### Request url
 Request has an optional id.
 ```
-HTTP GET /RpgChar/newChar/{id?}
+HTTP GET /RpgChar/newChar/
+HTTP GET /RpgChar/newChar/{id}
 ```
 
 ### Response
@@ -532,7 +534,7 @@ Responsecode 200 OK
 Content-Type: application/json
 {
     "_id": "Id of object",
-    "Traits": [
+    "traits": [
         {
             "name": "Trait name",
             "race": "Racism",
@@ -553,7 +555,7 @@ Responsecode 200 OK
 Content-Type: application/json
 {
     "_id": "Id of object",
-    "Items":[
+    "items":[
         {
             "name": "Woah",
             "desc": "Oh no",
