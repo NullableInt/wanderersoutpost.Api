@@ -11,6 +11,7 @@ using MongoDB.Driver;
 namespace dndCharApi.Controllers
 {
     [Route("[controller]")]
+    [Route("characters")]
     [ApiController]
     [Authorize]
     public class RpgCharController : Controller
