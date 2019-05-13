@@ -95,6 +95,10 @@ namespace dndCharApi
             ConventionRegistry.Register(new CamelCaseElementNameConvention().Name,pack,t => true);
 
             app.UseCors("AllowSpecificOrigin");
+            /*
+             * Ugly hack, fix tomorrow or after D&D
+             */
+            app.UseCors(b => b.SetIsOriginAllowed(a => true));
 
             app.UseStaticFiles();
 
