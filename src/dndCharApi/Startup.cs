@@ -94,12 +94,16 @@ namespace dndCharApi
 
             ConventionRegistry.Register(new CamelCaseElementNameConvention().Name,pack,t => true);
 
-            app.UseCors("AllowSpecificOrigin");
-            app.UseCors(b => b.WithOrigins("https://rpgchar-web.rover.scry.one").AllowAnyHeader().AllowAnyMethod().AllowCredentials().Build());
-
             app.UseStaticFiles();
 
             app.UseAuthentication();
+
+            app.UseCors(builder => builder
+                .SetIsOriginAllowedToAllowWildcardSubdomains()
+                .WithOrigins(Configuration.GetSection("AllowedCors").Get<AllowedCors>().Cors)
+                .AllowCredentials()
+                .AllowAnyHeader()
+                .AllowAnyMethod());
 
             app.UseMvc(routes =>
             {
