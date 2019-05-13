@@ -95,7 +95,7 @@ namespace dndCharApi
             ConventionRegistry.Register(new CamelCaseElementNameConvention().Name,pack,t => true);
 
             app.UseCors("AllowSpecificOrigin");
-            app.UseCors(b => b.WithOrigins("https://rpgchar-web.rover.scry.one").AllowAnyHeader().AllowAnyMethod().AllowCredentials());
+            app.UseCors(b => b.WithOrigins("https://rpgchar-web.rover.scry.one").AllowAnyHeader().AllowAnyMethod().AllowCredentials().Build());
 
             app.UseStaticFiles();
 
