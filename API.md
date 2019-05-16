@@ -496,6 +496,21 @@ Content-Type: application/json
 "idOfNewCharacter"
 ```
 
+### Delete a character
+
+### Request url
+```
+HTTP DELETE /RpgChar/{id}
+```
+
+### Response
+```
+Responsecode 200 OK
+Content-Type: application/json
+"idOfDeletedCharacter"
+```
+
+
 ### Get part of model
 By using the part of the model you can get just a scoped response, this makes it more light weight for the front end if you want to load several characters, or if you want to test with just certain parts of the code.
 

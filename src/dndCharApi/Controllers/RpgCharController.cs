@@ -80,6 +80,22 @@ namespace dndCharApi.Controllers
             return new JsonResult(dynamic.Id);
         }
 
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteChar([FromRoute] string id)
+        {
+            var collection = MongoDb.GetCollection<RpgCharModel>("RpgCharModels");
+            var deleteCollection = MongoDb.GetCollection<RpgCharModel>("RpgCharModelsDeleted");
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            var stringId = id.ToString();
+
+            var list = await collection.FindAsync(f => f.Id == stringId && f.OwnerID == userId);
+
+            await deleteCollection.InsertManyAsync(list.ToEnumerable());
+            var deleteResult = collection.DeleteMany(f => f.Id == stringId && f.OwnerID == userId);
+
+            return Ok(id);
+        }
+
         [HttpGet("newChar/{id?}")]
         public async Task<IActionResult> NewChar([FromRoute] string id = null)
         {
