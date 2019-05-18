@@ -147,59 +147,5 @@ namespace dndCharApi.Controllers
 
             return Ok(firmlyShapedGoo.Id);
         }
-
-        #region mock construciton
-
-        [HttpGet("newChar/{id?}")]
-        public async Task<IActionResult> NewChar([FromRoute] string id = null)
-        {
-            var userId = "google-oauth2|102912685359589454387";
-
-            if (string.IsNullOrEmpty(id) || !ObjectId.TryParse(id, out var objectId))
-            {
-                id = ObjectId.GenerateNewId().ToString();
-            }
-
-            var newChar = new RpgCharModel
-            {
-                AbilityScores = new AbilityScores(),
-                CharacterAppearance = new List<CharacterAppearance>(),
-                DeathSave = new List<DeathSave>(),
-                Equipment = new Equipment(),
-                Feats = new List<Feat>(),
-                FeaturesTraits = new List<FeaturesTrait>(),
-                Health = new Health(),
-                HitDice = new List<HitDice>(),
-                HitDiceType = new List<HitDiceTypeModel>(),
-                Id = id.ToString(),
-                Items = new List<Item>(),
-                MagicItems = new List<MagicItem>(),
-                Notes = new List<Note>(),
-                OwnerID = userId,
-                Profile = new Profile(),
-                SavingThrows = new List<SavingThrow>(),
-                Skills = new List<Skill>(),
-                Spells = new Spells(),
-                Status = new List<Status>(),
-                Traits = new List<Trait>(),
-                Treasure = new List<Treasure>(),
-                _created = new BsonDateTime(System.DateTime.UtcNow),
-                _lastUpdated = new BsonDateTime(System.DateTime.UtcNow)
-            };
-
-            var collection = MongoDb.GetCollection<BaseCharacterSheet>("RpgCharModels");
-            await collection.InsertOneAsync(newChar);
-
-            var cthulu = new CallOfCthulu
-            {
-                OwnerID = userId,
-                Sanity = new Random().Next(0, 100),
-                _created = new BsonDateTime(System.DateTime.UtcNow),
-                _lastUpdated = new BsonDateTime(System.DateTime.UtcNow)
-            };
-            await collection.InsertOneAsync(cthulu);
-            return new JsonResult(id);
-        }
-        #endregion
     }
 }
