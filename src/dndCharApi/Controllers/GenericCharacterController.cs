@@ -98,6 +98,21 @@ namespace dndCharApi.Controllers
             return BadRequest();
         }
 
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteById([FromRoute] string id)
+        {
+            var collection = MongoDb.GetCollection<dynamic>("RpgCharModels");
+            var deleteCollection = MongoDb.GetCollection<dynamic>("RpgCharModelsDeleted");
+            var stringId = id.ToString();
+            var filter = Builders<dynamic>.Filter.Eq("_id", ObjectId.Parse(stringId));
+            var list = await collection.FindAsync(filter);
+
+            await deleteCollection.InsertManyAsync(list.ToEnumerable());
+            await collection.DeleteManyAsync(filter);
+            return Ok(id);
+        }
+
+
         [HttpPost("create/{gameSystem}")]
         public async Task<IActionResult> CreateSomeCharacterIfYouCanBoi([FromRoute] string gameSystem, [FromBody] dynamic body)
         {
