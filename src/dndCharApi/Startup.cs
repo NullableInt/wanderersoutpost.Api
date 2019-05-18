@@ -1,7 +1,6 @@
-﻿
-using dndChar.Api.Util;
+﻿using dndChar.Api.Util;
 using dndChar.Database;
-
+using dndCharApi.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -9,8 +8,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
-using dndCharApi.Models.RpgChar;
-using MongoDB.Bson.Serialization;
 using MongoDB.Bson.Serialization.Conventions;
 
 namespace dndCharApi
