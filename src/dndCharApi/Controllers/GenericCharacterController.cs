@@ -2,18 +2,20 @@
 using dndCharApi.Models;
 using dndCharApi.Models.CallOfCthulu;
 using dndCharApi.Models.RpgChar;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace dndCharApi.Controllers
 {
     [Route("")]
+    [Authorize]
     public class GenericCharacterController : Controller
     {
         private readonly IEnumerable<ICharacterSheet> characterSheetTypes;
@@ -36,8 +38,7 @@ namespace dndCharApi.Controllers
 
             if (list.Count > 0)
             {
-                var theOne = list[0];
-                return Ok(theOne);
+                return Ok(list[0]);
             }
             return NotFound();
         }
@@ -64,11 +65,16 @@ namespace dndCharApi.Controllers
         }
 
         [HttpPatch("{id}/{property}")]
-        public async Task<IActionResult> SetBySomePropertyIfItHasIt([FromRoute] string id, [FromRoute] string property, [FromBody] string propertyValue)
+        public async Task<IActionResult> SetBySomePropertyIfItHasIt([FromRoute] string id,
+                                                                    [FromRoute] string property,
+                                                                    [FromBody] string propertyValue)
         {
             var collection = MongoDb.GetCollection<dynamic>("RpgCharModels");
             var stringId = id.ToString();
-            var filter = Builders<dynamic>.Filter.Eq("_id", ObjectId.Parse(stringId));
+            var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            var filter = Builders<dynamic>.Filter.And(
+                            Builders<dynamic>.Filter.Eq("_id", ObjectId.Parse(stringId)),
+                            Builders<dynamic>.Filter.Eq("ownerID", userId));
             var list = await (await collection.FindAsync(filter)).ToListAsync();
 
             if (list.Count > 0)
@@ -104,7 +110,10 @@ namespace dndCharApi.Controllers
             var collection = MongoDb.GetCollection<dynamic>("RpgCharModels");
             var deleteCollection = MongoDb.GetCollection<dynamic>("RpgCharModelsDeleted");
             var stringId = id.ToString();
-            var filter = Builders<dynamic>.Filter.Eq("_id", ObjectId.Parse(stringId));
+            var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            var filter = Builders<dynamic>.Filter.And(
+                            Builders<dynamic>.Filter.Eq("_id", ObjectId.Parse(stringId)),
+                            Builders<dynamic>.Filter.Eq("ownerID", userId));
             var list = await collection.FindAsync(filter);
 
             await deleteCollection.InsertManyAsync(list.ToEnumerable());
@@ -116,6 +125,7 @@ namespace dndCharApi.Controllers
         [HttpPost("create/{gameSystem}")]
         public async Task<IActionResult> CreateSomeCharacterIfYouCanBoi([FromRoute] string gameSystem, [FromBody] dynamic body)
         {
+            var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
             var type = characterSheetTypes.FirstOrDefault(s => s.GetType().Name.Equals(gameSystem, StringComparison.OrdinalIgnoreCase));
             if (type == null)
                 return BadRequest();
@@ -125,6 +135,7 @@ namespace dndCharApi.Controllers
                 return BadRequest();
             var firmlyShapedGoo = deserializedGenericGoo as BaseCharacterSheet;
             firmlyShapedGoo.Id = ObjectId.GenerateNewId().ToString();
+            firmlyShapedGoo.OwnerID = userId;
             firmlyShapedGoo._created = new BsonDateTime(System.DateTime.UtcNow);
             firmlyShapedGoo._lastUpdated = new BsonDateTime(System.DateTime.UtcNow);
 
