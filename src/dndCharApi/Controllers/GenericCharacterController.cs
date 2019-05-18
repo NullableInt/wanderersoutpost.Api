@@ -71,7 +71,7 @@ namespace dndCharApi.Controllers
         {
             var collection = MongoDb.GetCollection<dynamic>("RpgCharModels");
             var stringId = id.ToString();
-            var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
             var filter = Builders<dynamic>.Filter.And(
                             Builders<dynamic>.Filter.Eq("_id", ObjectId.Parse(stringId)),
                             Builders<dynamic>.Filter.Eq("ownerID", userId));
@@ -84,8 +84,6 @@ namespace dndCharApi.Controllers
                 var thePropertyIfFound = props.FirstOrDefault(e => e.Name.Equals(property, StringComparison.OrdinalIgnoreCase));
                 if (thePropertyIfFound != null)
                 {
-                    var theValueType = thePropertyIfFound.DeclaringType;
-
                     try
                     {
                         var value = Convert.ChangeType(propertyValue, thePropertyIfFound.PropertyType);
@@ -110,13 +108,14 @@ namespace dndCharApi.Controllers
             var collection = MongoDb.GetCollection<dynamic>("RpgCharModels");
             var deleteCollection = MongoDb.GetCollection<dynamic>("RpgCharModelsDeleted");
             var stringId = id.ToString();
-            var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
             var filter = Builders<dynamic>.Filter.And(
                             Builders<dynamic>.Filter.Eq("_id", ObjectId.Parse(stringId)),
                             Builders<dynamic>.Filter.Eq("ownerID", userId));
             var list = await collection.FindAsync(filter);
 
             await deleteCollection.InsertManyAsync(list.ToEnumerable());
+            await deleteCollection.UpdateManyAsync(filter, Builders<dynamic>.Update.CurrentDate("_lastUpdated"));
             await collection.DeleteManyAsync(filter);
             return Ok(id);
         }
@@ -125,22 +124,26 @@ namespace dndCharApi.Controllers
         [HttpPost("create/{gameSystem}")]
         public async Task<IActionResult> CreateSomeCharacterIfYouCanBoi([FromRoute] string gameSystem, [FromBody] dynamic body)
         {
-            var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
             var type = characterSheetTypes.FirstOrDefault(s => s.GetType().Name.Equals(gameSystem, StringComparison.OrdinalIgnoreCase));
             if (type == null)
+            {
                 return BadRequest();
+            }   
 
             var deserializedGenericGoo = Newtonsoft.Json.JsonConvert.DeserializeObject(body.ToString(), type.GetType());
             if (deserializedGenericGoo == null)
+            {
                 return BadRequest();
+            }
+            
             var firmlyShapedGoo = deserializedGenericGoo as BaseCharacterSheet;
             firmlyShapedGoo.Id = ObjectId.GenerateNewId().ToString();
             firmlyShapedGoo.OwnerID = userId;
             firmlyShapedGoo._created = new BsonDateTime(System.DateTime.UtcNow);
             firmlyShapedGoo._lastUpdated = new BsonDateTime(System.DateTime.UtcNow);
 
-            var collection = MongoDb.GetCollection<dynamic>("RpgCharModels");
-            await collection.InsertOneAsync(deserializedGenericGoo);
+            await MongoDb.GetCollection<dynamic>("RpgCharModels").InsertOneAsync(deserializedGenericGoo);
 
             return Ok(firmlyShapedGoo.Id);
         }
