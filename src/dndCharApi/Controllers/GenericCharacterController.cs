@@ -30,19 +30,68 @@ namespace dndCharApi.Controllers
             if (list.Count > 0)
             {
                 var theOne = list[0];
-                var reallyTheOne = theOne as BaseCharacterSheet;
-                switch (theOne)
-                {
-                    case CallOfCthulu cthulu:
-                        return Ok(cthulu);
-                    case RpgCharModel rpgChar:
-                        return Ok(rpgChar);
-                    default:
-                        break;
-                }
+                return Ok(theOne);
             }
             return NotFound();
         }
+
+        [HttpGet("{id}/{property}")]
+        public async Task<IActionResult> GetBySomePropertyIfItHasIt([FromRoute] string id, [FromRoute] string property)
+        {
+            var collection = MongoDb.GetCollection<dynamic>("RpgCharModels");
+            var stringId = id.ToString();
+            var filter = Builders<dynamic>.Filter.Eq("_id", ObjectId.Parse(stringId));
+            var list = await (await collection.FindAsync(filter)).ToListAsync();
+
+            if (list.Count > 0)
+            {
+                var theOne = list[0] as BaseCharacterSheet;
+                var props = theOne.GetType().GetProperties();
+                var thePropertyIfFound = props.FirstOrDefault(e => e.Name.Equals(property, StringComparison.OrdinalIgnoreCase));
+                if (thePropertyIfFound != null)
+                {
+                    return Json(thePropertyIfFound.GetValue(theOne));
+                }
+            }
+            return BadRequest();
+        }
+
+        [HttpPatch("{id}/{property}")]
+        public async Task<IActionResult> SetBySomePropertyIfItHasIt([FromRoute] string id, [FromRoute] string property, [FromBody] string propertyValue)
+        {
+            var collection = MongoDb.GetCollection<dynamic>("RpgCharModels");
+            var stringId = id.ToString();
+            var filter = Builders<dynamic>.Filter.Eq("_id", ObjectId.Parse(stringId));
+            var list = await (await collection.FindAsync(filter)).ToListAsync();
+
+            if (list.Count > 0)
+            {
+                var theOne = list[0] as BaseCharacterSheet;
+                var props = theOne.GetType().GetProperties();
+                var thePropertyIfFound = props.FirstOrDefault(e => e.Name.Equals(property, StringComparison.OrdinalIgnoreCase));
+                if (thePropertyIfFound != null)
+                {
+                    var theValueType = thePropertyIfFound.DeclaringType;
+
+                    try
+                    {
+                        var value = Convert.ChangeType(propertyValue, thePropertyIfFound.PropertyType);
+                        thePropertyIfFound.SetValue(theOne, value);
+
+                        await collection.UpdateOneAsync(filter, Builders<dynamic>.Update.Set(property, value).CurrentDate("_lastUpdated"));
+                        return Ok(propertyValue);
+                    }
+                    catch (Exception)
+                    {
+                        return BadRequest("fuck");
+                    }
+                    
+                }
+            }
+            return BadRequest();
+        }
+
+        #region mock construciton
 
         [HttpGet("newChar/{id?}")]
         public async Task<IActionResult> NewChar([FromRoute] string id = null)
@@ -87,10 +136,13 @@ namespace dndCharApi.Controllers
             var cthulu = new CallOfCthulu
             {
                 OwnerID = userId,
-                Sanity = new Random().Next(0, 100)
+                Sanity = new Random().Next(0, 100),
+                _created = new BsonDateTime(System.DateTime.UtcNow),
+                _lastUpdated = new BsonDateTime(System.DateTime.UtcNow)
             };
             await collection.InsertOneAsync(cthulu);
             return new JsonResult(id);
         }
+        #endregion
     }
 }

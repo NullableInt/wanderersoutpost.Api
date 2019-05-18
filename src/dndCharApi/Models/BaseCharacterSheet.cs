@@ -10,6 +10,10 @@ namespace dndCharApi.Models
         public string Id { get; set; }
         [BsonRequired]
         public string OwnerID { get; set; }
+        [BsonRequired]
+        public BsonDateTime _created { get; set; }
+        [BsonRequired]
+        public BsonDateTime _lastUpdated { get; set; }
 
         [BsonRequired]
         public string GameSystem => GetType().Name;

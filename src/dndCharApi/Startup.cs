@@ -9,6 +9,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using MongoDB.Bson.Serialization.Conventions;
+using dndCharApi.Models.RpgChar;
+using MongoDB.Bson.Serialization;
+using dndCharApi.Models.CallOfCthulu;
 
 namespace dndCharApi
 {
@@ -86,10 +89,9 @@ namespace dndCharApi
                 app.UseDeveloperExceptionPage();
             }
 
-            var pack = new ConventionPack();
-            pack.Add(new CamelCaseElementNameConvention());
+            AddCamelCaseConvention();
 
-            ConventionRegistry.Register(new CamelCaseElementNameConvention().Name,pack,t => true);
+            AddClassMapsForCharacterSheets();
 
             app.UseStaticFiles();
 
@@ -108,6 +110,20 @@ namespace dndCharApi
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+        }
+
+        private static void AddCamelCaseConvention()
+        {
+            var pack = new ConventionPack();
+            pack.Add(new CamelCaseElementNameConvention());
+
+            ConventionRegistry.Register(new CamelCaseElementNameConvention().Name, pack, t => true);
+        }
+
+        private static void AddClassMapsForCharacterSheets()
+        {
+            BsonClassMap.RegisterClassMap<RpgCharModel>();
+            BsonClassMap.RegisterClassMap<CallOfCthulu>();
         }
     }
 }
