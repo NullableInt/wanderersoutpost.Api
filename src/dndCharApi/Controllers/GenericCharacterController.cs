@@ -8,6 +8,7 @@ using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 
 namespace dndCharApi.Controllers
@@ -15,9 +16,15 @@ namespace dndCharApi.Controllers
     [Route("")]
     public class GenericCharacterController : Controller
     {
+        private readonly IEnumerable<ICharacterSheet> characterSheetTypes;
+
         public IMongoDatabase MongoDb { get; set; }
 
-        public GenericCharacterController(DocumentStoreHolder holder) => MongoDb = holder.Store.GetDatabase("RpgCharModelDb");
+        public GenericCharacterController(DocumentStoreHolder holder, IEnumerable<ICharacterSheet> characterSheetTypes)
+        {
+            MongoDb = holder.Store.GetDatabase("RpgCharModelDb");
+            this.characterSheetTypes = characterSheetTypes;
+        }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetAllById([FromRoute] string id)
@@ -89,6 +96,27 @@ namespace dndCharApi.Controllers
                 }
             }
             return BadRequest();
+        }
+
+        [HttpPost("create/{gameSystem}")]
+        public async Task<IActionResult> CreateSomeCharacterIfYouCanBoi([FromRoute] string gameSystem, [FromBody] dynamic body)
+        {
+            var type = characterSheetTypes.FirstOrDefault(s => s.GetType().Name.Equals(gameSystem, StringComparison.OrdinalIgnoreCase));
+            if (type == null)
+                return BadRequest();
+
+            var deserializedGenericGoo = Newtonsoft.Json.JsonConvert.DeserializeObject(body.ToString(), type.GetType());
+            if (deserializedGenericGoo == null)
+                return BadRequest();
+            var firmlyShapedGoo = deserializedGenericGoo as BaseCharacterSheet;
+            firmlyShapedGoo.Id = ObjectId.GenerateNewId().ToString();
+            firmlyShapedGoo._created = new BsonDateTime(System.DateTime.UtcNow);
+            firmlyShapedGoo._lastUpdated = new BsonDateTime(System.DateTime.UtcNow);
+
+            var collection = MongoDb.GetCollection<dynamic>("RpgCharModels");
+            await collection.InsertOneAsync(deserializedGenericGoo);
+
+            return Ok(firmlyShapedGoo.Id);
         }
 
         #region mock construciton

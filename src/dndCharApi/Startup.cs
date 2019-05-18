@@ -12,6 +12,7 @@ using MongoDB.Bson.Serialization.Conventions;
 using dndCharApi.Models.RpgChar;
 using MongoDB.Bson.Serialization;
 using dndCharApi.Models.CallOfCthulu;
+using dndCharApi.Models;
 
 namespace dndCharApi
 {
@@ -46,6 +47,9 @@ namespace dndCharApi
                         .AllowCredentials();
                     });
             });
+
+            services.AddSingleton<ICharacterSheet, CallOfCthulu>();
+            services.AddSingleton<ICharacterSheet, RpgCharModel>();
 
             SetupAuth0(services);
         }

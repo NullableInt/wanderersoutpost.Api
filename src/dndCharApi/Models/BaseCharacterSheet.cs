@@ -3,7 +3,7 @@ using MongoDB.Bson;
 
 namespace dndCharApi.Models
 {
-    public class BaseCharacterSheet
+    public class BaseCharacterSheet : ICharacterSheet
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
