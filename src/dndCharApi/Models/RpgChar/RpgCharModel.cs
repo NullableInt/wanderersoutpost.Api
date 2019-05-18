@@ -1,15 +1,10 @@
 ﻿using MongoDB.Bson;
-using MongoDB.Bson.Serialization.Attributes;
 using System.Collections.Generic;
 
 namespace dndCharApi.Models.RpgChar
 {
-    public class RpgCharModel
+    public class RpgCharModel : BaseCharacterSheet
     {
-        [BsonId]
-        [BsonRepresentation(BsonType.ObjectId)]
-        public string Id { get; set; }
-        public string OwnerID { get; set; }
         public Profile Profile { get; set; }
         public List<Trait> Traits { get; set; }
         public List<Item> Items { get; set; }
