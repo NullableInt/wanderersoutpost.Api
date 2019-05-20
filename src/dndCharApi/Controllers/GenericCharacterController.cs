@@ -1,7 +1,6 @@
 ﻿using dndChar.Database;
+using dndCharApi.Extensions;
 using dndCharApi.Models;
-using dndCharApi.Models.CallOfCthulu;
-using dndCharApi.Models.RpgChar;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Bson;
@@ -9,6 +8,7 @@ using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
@@ -38,7 +38,16 @@ namespace dndCharApi.Controllers
 
             if (list.Count > 0)
             {
-                return Ok(list[0]);
+                var listOfProps = new Dictionary<string, string>();
+                var theOne = list[0] as BaseCharacterSheet;
+                var baseProps = typeof(BaseCharacterSheet).GetProperties(BindingFlags.DeclaredOnly | BindingFlags.Instance | BindingFlags.Public);
+
+                var props = theOne.GetType().GetProperties().Where(p => p.DeclaringType != typeof(BaseCharacterSheet));
+                foreach (var prop in props)
+                {
+                    listOfProps.Add(prop.Name.ToCamelCase(), $"/{stringId}/{prop.Name.ToCamelCase()}");
+                }
+                return Json(listOfProps);
             }
             return NotFound();
         }
