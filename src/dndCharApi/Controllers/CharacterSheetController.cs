@@ -1,7 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
-using dndChar.Database;
-using dndCharApi;
+﻿using dndChar.Database;
 
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
