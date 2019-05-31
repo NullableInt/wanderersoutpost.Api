@@ -1,11 +1,59 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Azure.Storage;
+using Microsoft.Azure.Storage.Blob;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace dndCharApi.Controllers
 {
-    public class ImageController
+    [Route("[controller]")]
+    [ApiController]
+    //[Authorize]
+    public class ImageController : Controller
     {
+        public CloudStorageAccount StorageAccount { get; set; }
+        public string BlobContainerName { get; set; } = "imagescontainerblob";
+
+        public ImageController()
+        {
+            string storageConnectionString = Environment.GetEnvironmentVariable("azureblobConnection");
+
+            StorageAccount = CloudStorageAccount.Parse(storageConnectionString);
+        }
+
+        [HttpPost("uploadImage")]
+        public async Task<IActionResult> UploadImage(IFormFile imageFile)
+        {
+            if(imageFile == null)
+            {
+                return BadRequest();
+            }
+            try
+            {
+                var isForm = Request.HasFormContentType;
+                if (Request.HasFormContentType)
+                {
+                    var read = await Request.ReadFormAsync();
+                }
+                CloudBlobClient blobClient = StorageAccount.CreateCloudBlobClient();
+                CloudBlobContainer blobContainer = blobClient.GetContainerReference(BlobContainerName);
+
+                CloudBlockBlob blob = blobContainer.GetBlockBlobReference($"{Guid.NewGuid()}/{imageFile.FileName}");
+                await blob.UploadFromStreamAsync(imageFile.OpenReadStream());
+                return Ok(blob.Uri.ToString());
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e);
+            }
+        }
     }
 }

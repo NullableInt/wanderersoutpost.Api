@@ -48,8 +48,7 @@ namespace dndCharApi
                     });
             });
 
-            services.AddSingleton<ICharacterSheet, CallOfCthulu>();
-            services.AddSingleton<ICharacterSheet, RpgCharModel>();
+            SetupCharacterSheetModels(services);
 
             SetupAuth0(services);
         }
@@ -97,8 +96,6 @@ namespace dndCharApi
 
             AddClassMapsForCharacterSheets();
 
-            app.UseStaticFiles();
-
             app.UseAuthentication();
 
             app.UseCors(builder => builder
@@ -130,6 +127,12 @@ namespace dndCharApi
         {
             BsonClassMap.RegisterClassMap<RpgCharModel>();
             BsonClassMap.RegisterClassMap<CallOfCthulu>();
+        }
+
+        private static void SetupCharacterSheetModels(IServiceCollection services)
+        {
+            services.AddSingleton<ICharacterSheet, CallOfCthulu>();
+            services.AddSingleton<ICharacterSheet, RpgCharModel>();
         }
     }
 }
