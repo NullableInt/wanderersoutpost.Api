@@ -32,16 +32,12 @@ namespace dndCharApi.Controllers
             }
             try
             {
-                var isForm = Request.HasFormContentType;
-                if (Request.HasFormContentType)
-                {
-                    var read = await Request.ReadFormAsync();
-                }
                 CloudBlobClient blobClient = StorageAccount.CreateCloudBlobClient();
                 CloudBlobContainer blobContainer = blobClient.GetContainerReference(BlobContainerName);
-
                 CloudBlockBlob blob = blobContainer.GetBlockBlobReference($"{Guid.NewGuid()}/{imageFile.FileName}");
+
                 await blob.UploadFromStreamAsync(imageFile.OpenReadStream());
+
                 return Ok(blob.Uri.ToString());
             }
             catch (Exception e)
