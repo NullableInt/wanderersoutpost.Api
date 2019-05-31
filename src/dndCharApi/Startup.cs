@@ -118,8 +118,10 @@ namespace dndCharApi
 
         private static void AddCamelCaseConvention()
         {
-            var pack = new ConventionPack();
-            pack.Add(new CamelCaseElementNameConvention());
+            var pack = new ConventionPack
+            {
+                new CamelCaseElementNameConvention()
+            };
 
             ConventionRegistry.Register(new CamelCaseElementNameConvention().Name, pack, t => true);
         }

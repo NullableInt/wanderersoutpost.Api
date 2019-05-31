@@ -62,8 +62,6 @@ namespace dndCharApi.Controllers
         [HttpPost("{id?}")]
         public async Task<IActionResult> SetAll([FromBody] RpgCharModel dynamic, [FromRoute] string id = null)
         {
-            var nameClaim = User.FindFirst(ClaimTypes.NameIdentifier);
-            var claims = User.Claims;
             var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
             dynamic.OwnerID = userId;
 
@@ -99,14 +97,13 @@ namespace dndCharApi.Controllers
         [HttpGet("newChar/{id?}")]
         public async Task<IActionResult> NewChar([FromRoute] string id = null)
         {
-            var nameClaim = User.FindFirst(ClaimTypes.NameIdentifier);
-            var claims = User.Claims;
             var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
 
             if (string.IsNullOrEmpty(id) || !ObjectId.TryParse(id, out var objectId))
             {
                 id = ObjectId.GenerateNewId().ToString();
             }
+
             var newChar = new RpgCharModel
             {
                 AbilityScores = new AbilityScores(),
