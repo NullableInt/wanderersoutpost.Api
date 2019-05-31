@@ -13,6 +13,7 @@ using dndCharApi.Models.RpgChar;
 using MongoDB.Bson.Serialization;
 using dndCharApi.Models.CallOfCthulu;
 using dndCharApi.Models;
+using dndCharApi.Models.Session;
 
 namespace dndCharApi
 {
@@ -127,12 +128,14 @@ namespace dndCharApi
         {
             BsonClassMap.RegisterClassMap<RpgCharModel>();
             BsonClassMap.RegisterClassMap<CallOfCthulu>();
+            BsonClassMap.RegisterClassMap<Campaign>();
         }
 
         private static void SetupCharacterSheetModels(IServiceCollection services)
         {
             services.AddSingleton<ICharacterSheet, CallOfCthulu>();
             services.AddSingleton<ICharacterSheet, RpgCharModel>();
+            services.AddSingleton<ICharacterSheet, Campaign>();
         }
     }
 }
