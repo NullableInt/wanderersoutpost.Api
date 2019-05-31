@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 namespace dndCharApi.Controllers
 {
     [Route("")]
-    [Authorize]
+    //[Authorize]
     public class GenericCharacterController : Controller
     {
         private readonly IEnumerable<ICharacterSheet> characterSheetTypes;
@@ -25,6 +25,29 @@ namespace dndCharApi.Controllers
         {
             MongoDb = holder.GetDefaultDatabase();
             this.characterSheetTypes = characterSheetTypes;
+        }
+
+        [HttpGet("")]
+        public async Task<IActionResult> GetAll()
+        {
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            var filter = Builders<dynamic>.Filter.Eq("ownerID", userId);
+            var collection = MongoDb.GetCollection<dynamic>("RpgCharModels");
+            var list = await (await collection.FindAsync(filter)).ToListAsync();
+
+            if(list.Count == 0)
+            {
+                return Ok();
+            }
+
+            var listOfIds = new List<string>();
+            foreach (var item in list)
+            {
+                var upScaled = item as BaseCharacterSheet;
+                listOfIds.Add(upScaled.Id);
+            }
+
+            return Ok(listOfIds);
         }
 
         [HttpGet("{id}")]
@@ -119,12 +142,12 @@ namespace dndCharApi.Controllers
             var filter = Builders<dynamic>.Filter.And(
                             Builders<dynamic>.Filter.Eq("_id", ObjectId.Parse(stringId)),
                             Builders<dynamic>.Filter.Eq("ownerID", userId));
-            var list = await collection.FindAsync(filter);
+            var list = await (await collection.FindAsync(filter)).ToListAsync();
 
-            await deleteCollection.InsertManyAsync(list.ToEnumerable());
+            await deleteCollection.InsertManyAsync(list);
             await deleteCollection.UpdateManyAsync(filter, Builders<dynamic>.Update.CurrentDate("_lastUpdated"));
             await collection.DeleteManyAsync(filter);
-            return Ok(id);
+            return Json(id);
         }
 
 
@@ -152,7 +175,7 @@ namespace dndCharApi.Controllers
 
             await MongoDb.GetCollection<dynamic>("RpgCharModels").InsertOneAsync(deserializedGenericGoo);
 
-            return Ok(firmlyShapedGoo.Id);
+            return Json(firmlyShapedGoo.Id);
         }
     }
 }

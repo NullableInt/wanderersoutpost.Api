@@ -95,7 +95,7 @@ namespace dndCharApi.Controllers
             }
 
             CampaignCollection.UpdateOne(c => c.Id == campaignId, Builders<Campaign>.Update.AddToSet("characters", foundCharacter.Id));
-            return Ok(campaignId);
+            return Json(campaignId);
         }
     }
 }
