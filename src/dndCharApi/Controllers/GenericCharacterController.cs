@@ -40,7 +40,6 @@ namespace dndCharApi.Controllers
             {
                 var listOfProps = new Dictionary<string, string>();
                 var theOne = list[0] as BaseCharacterSheet;
-                var baseProps = typeof(BaseCharacterSheet).GetProperties(BindingFlags.DeclaredOnly | BindingFlags.Instance | BindingFlags.Public);
 
                 var props = theOne.GetType().GetProperties().Where(p => p.DeclaringType != typeof(BaseCharacterSheet));
                 foreach (var prop in props)
@@ -70,7 +69,7 @@ namespace dndCharApi.Controllers
                     return Json(thePropertyIfFound.GetValue(theOne));
                 }
             }
-            return BadRequest();
+            return NotFound();
         }
 
         [HttpPatch("{id}/{property}")]
@@ -103,12 +102,12 @@ namespace dndCharApi.Controllers
                     }
                     catch (Exception)
                     {
-                        return BadRequest("fuck");
+                        return BadRequest($"An error occured when updating {stringId}'s {property}.");
                     }
                     
                 }
             }
-            return BadRequest();
+            return NotFound();
         }
 
         [HttpDelete("{id}")]
@@ -137,13 +136,13 @@ namespace dndCharApi.Controllers
             var type = characterSheetTypes.FirstOrDefault(s => s.GetType().Name.Equals(gameSystem, StringComparison.OrdinalIgnoreCase));
             if (type == null)
             {
-                return BadRequest();
+                return BadRequest($"{gameSystem} is not a valid type");
             }   
 
             var deserializedGenericGoo = Newtonsoft.Json.JsonConvert.DeserializeObject(body.ToString(), type.GetType());
             if (deserializedGenericGoo == null)
             {
-                return BadRequest();
+                return BadRequest($"The request could not be made into a {gameSystem} entity, you have failed");
             }
             
             var firmlyShapedGoo = deserializedGenericGoo as BaseCharacterSheet;
