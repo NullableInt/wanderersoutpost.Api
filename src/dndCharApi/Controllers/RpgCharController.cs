@@ -20,7 +20,7 @@ namespace dndCharApi.Controllers
 
         public RpgCharController(DocumentStoreHolder holder)
         {
-            MongoDb = holder.Store.GetDatabase("RpgCharModelDb");
+            MongoDb = holder.GetDefaultDatabase();
         }
 
         [HttpGet("")]

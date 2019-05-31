@@ -23,7 +23,7 @@ namespace dndCharApi.Controllers
 
         public GenericCharacterController(DocumentStoreHolder holder, IEnumerable<ICharacterSheet> characterSheetTypes)
         {
-            MongoDb = holder.Store.GetDatabase("RpgCharModelDb");
+            MongoDb = holder.GetDefaultDatabase();
             this.characterSheetTypes = characterSheetTypes;
         }
 

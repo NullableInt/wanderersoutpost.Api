@@ -17,7 +17,7 @@ namespace dndCharApi.Controllers
         public CharacterSheetController(UserManager<IdentityUser> userManager, DocumentStoreHolder holder)
         {
             UserManager = userManager;
-            MongoDb = holder.Store.GetDatabase("CharacterSheetDb");
+            MongoDb = holder.GetDefaultDatabase();
         }
 
         /*
