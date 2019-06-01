@@ -5,11 +5,13 @@
 ### Test api is live with public endpoint
 
 #### Request
+
 ```
 HTTP GET /Api/Public
 ```
 
 #### Response
+
 ```
 Responsecode 200 OK
 ```
@@ -17,17 +19,20 @@ Responsecode 200 OK
 ### Test api is live with private endpoint
 
 #### Request
+
 ```
 HTTP GET /Api/Private
 Authorization: Bearer
 ```
 
 #### Response if authorized
+
 ```
 Responsecode 200 OK
 ```
 
 #### Response if not authorized
+
 ```
 Responsecode 401 UNAUTHORIZED
 ```
@@ -35,11 +40,13 @@ Responsecode 401 UNAUTHORIZED
 ### Check what claims you currently have access to
 
 #### Request
+
 ```
 HTTP GET /Api/Claims
 ```
 
 #### Response
+
 ```
 Responsecode 200 OK
 Content-Type: application/json
@@ -82,11 +89,13 @@ Content-Type: application/json
 ### Get a mock of a character model
 
 #### Request
+
 ```
 HTTP GET /api/mock
 ```
 
 #### Response
+
 ```
 Responsecode 200 OK
 Content-Type: application/json
@@ -327,6 +336,193 @@ Content-Type: application/json
 }
 ```
 
+## Generic character controller
+
+The Generic controller under the root path of `\` is a result of testing reflection and having fun with generics with a result of a working API.
+
+### Get all characters for logged in user
+
+This will return a list of all ID's connected to user logged in.
+
+#### Request
+
+```
+HTTP GET /
+```
+
+#### Response
+
+```
+Responsecode 200 OK
+Content-Type: application/json
+["Array","of","the","ids"]
+```
+
+### Create a character
+
+Current supported `gameSystem`s are `RpgChar` and `CallOfCthulu`.
+
+#### Request
+
+```
+HTTP POST /create/{gameSystem}
+{
+    Optional Json body
+}
+```
+
+#### Response
+
+```
+Responsecode 200 OK
+Content-Type: application/json
+"{idOfNewCharacter}"
+```
+
+### Get Info of one character
+
+This will return all the properties of the requested id (if found) as a list of URLs.
+
+#### Request
+
+```
+HTTP GET /{id}
+```
+
+#### Response
+
+Example response for a campaign
+
+```
+Responsecode 200 OK
+Content-Type: application/json
+{
+    "characters": "/5cf11bbb8ca3773b6ce45eda/characters",
+    "session": "/5cf11bbb8ca3773b6ce45eda/session",
+    "campaignImage": "/5cf11bbb8ca3773b6ce45eda/campaignImage",
+    "campaignType": "/5cf11bbb8ca3773b6ce45eda/campaignType"
+}
+```
+
+### Request info about a property
+
+Using the result from the previous request you get a series of links you can do `GET` or `PUT` requests to,
+if you send a `GET` request to a `property url` you will get the structure of that property.
+
+#### Request example for a CallOfCthulu profile information
+
+```
+HTTP GET /{id}/profile
+```
+
+#### Response
+
+```
+Responsecode 200 OK
+Content-Type: application/json
+{
+    "characterName": null,
+    "playerName": null,
+    "occupation": null,
+    "age": null,
+    "sex": null,
+    "residence": null,
+    "birthplace": null
+}
+```
+
+### Update info about a property
+
+Continuing to use the result from our previous `GET` we can see what properties are available.
+We will use this to update the `characterName` and `occupation` as an example.
+
+#### Request
+
+```
+HTTP PATCH /{id}/profile
+{
+	"characterName": "H.P. LoveCraft",
+	"occupation": "Weird writer"
+}
+```
+
+#### Response
+
+```
+Responsecode 200 OK
+Content-Type: application/json
+{
+    "characterName": "H.P. LoveCraft",
+    "playerName": null,
+    "occupation": "Weird writer"
+    "age": null,
+    "sex": null,
+    "residence": null,
+    "birthplace": null
+}
+```
+
+### Delete a character
+
+This deletes a character
+
+#### Request
+
+```
+HTTP DELETE /{id}
+```
+
+#### Response
+
+```
+Responsecode 200 OK
+Content-Type: application/json
+{Id of deleted character}
+```
+
+## Campaigns
+
+Campaigns are quite simple. A list of `characterId`s and sessions.
+Create one, add some characters and start playing sessions!
+
+### Create a campaign
+
+#### Request
+
+Create a campaign for a game system, currently supported are `RpgCharModel` and `CallOfCthulu`
+
+```
+HTTP POST /campgain/create/{gameSystem}
+```
+
+#### Response
+
+```
+Responsecode 200 OK
+Content-Type: application/json
+{Id of new campagin}
+```
+
+### Add a character to a campagin
+
+To add a character simply send add the ID of the character to a campaign, make sure they are created using the same `gameSystem`!
+
+#### Request
+
+```
+HTTP POST /campgain/{campaignId}/add/{characterId}
+```
+
+#### Response
+
+```
+Responsecode 200 OK
+Content-Type: application/json
+{Id of campagin}
+```
+
+# The following is kinda deprecated
+
 ## RpgChar api methods
 
 This api and its methods are for getting and manipulating either an entire RpgChar or only parts of its model.
@@ -336,16 +532,19 @@ It's made with the idea that you can access parts of the model using the same ac
 ### Get all characters for logged in user
 
 #### Request
+
 ```
 HTTP GET /RpgChar
 ```
 
 #### Response if no characters are created
+
 ```
 Responsecode 204 No Content
 ```
 
 #### Response if at least one character is found
+
 The model structure is identical to the the one returned from `api/Mock`.
 The return type of this is a list of characters.
 
@@ -428,11 +627,13 @@ Content-Type: application/json
 ### Get one character
 
 #### Request
+
 ```
 HTTP GET /RpgChar/{id}
 ```
 
 #### Response
+
 ```
 Responsecode 200 OK
 Content-Type: application/json
@@ -462,17 +663,20 @@ Content-Type: application/json
 ```
 
 ### Create a new character
+
 This method can take either nothing, an id for the new character, or an id for the new character and a model.
 It will always return the ID for the character if it can be created.
 
 ### Request urls
+
 ```
 HTTP POST /RpgChar/
 HTTP POST /RpgChar/{id}
 HTTP POST /RpgChar/{id} with JsonBody
 ```
 
-### Response 
+### Response
+
 ```
 Responsecode 200 OK
 Content-Type: application/json
@@ -480,16 +684,20 @@ Content-Type: application/json
 ```
 
 ### Create a new character with default not-null fields
+
 This method is a lot like a previous create character, but it does not allow you to send in a body, but will instead pre-fill all fields with non-null variables, saving a lot of null-checks if such is wanted.
 
 ### Request url
+
 Request has an optional id.
+
 ```
 HTTP GET /RpgChar/newChar/
 HTTP GET /RpgChar/newChar/{id}
 ```
 
 ### Response
+
 ```
 Responsecode 200 OK
 Content-Type: application/json
@@ -499,27 +707,31 @@ Content-Type: application/json
 ### Delete a character
 
 ### Request url
+
 ```
 HTTP DELETE /RpgChar/{id}
 ```
 
 ### Response
+
 ```
 Responsecode 200 OK
 Content-Type: application/json
 "idOfDeletedCharacter"
 ```
 
-
 ### Get part of model
+
 By using the part of the model you can get just a scoped response, this makes it more light weight for the front end if you want to load several characters, or if you want to test with just certain parts of the code.
 
 ### Request url for getting profile
+
 ```
 HTTP GET /RpgChar/{id}/Profile
 ```
 
 ### Response
+
 ```
 Responsecode 200 OK
 Content-Type: application/json
@@ -540,11 +752,13 @@ Content-Type: application/json
 ```
 
 ### Request url for getting traits
+
 ```
 HTTP GET /RpgChar/{id}/Traits
 ```
 
 ### Response
+
 ```
 Responsecode 200 OK
 Content-Type: application/json
@@ -561,11 +775,13 @@ Content-Type: application/json
 ```
 
 ### Request url for getting items
+
 ```
 HTTP GET /RpgChar/{id}/Items
 ```
 
 ### Response
+
 ```
 Responsecode 200 OK
 Content-Type: application/json
@@ -585,11 +801,13 @@ Content-Type: application/json
 ```
 
 ### Request url for getting ability scores
+
 ```
 HTTP GET /RpgChar/{id}/AbilityScores
 ```
 
 ### Response
+
 ```
 Responsecode 200 OK
 Content-Type: application/json
@@ -607,11 +825,13 @@ Content-Type: application/json
 ```
 
 ### Request url for getting the statuses affecting the character
+
 ```
 HTTP GET /RpgChar/{id}/Status
 ```
 
 ### Response
+
 ```
 Responsecode 200 OK
 Content-Type: application/json
@@ -629,11 +849,13 @@ Content-Type: application/json
 ```
 
 ### Request url for getting hit dice
+
 ```
 HTTP GET /RpgChar/{id}/HitDice
 ```
 
 ### Response
+
 ```
 Responsecode 200 OK
 Content-Type: application/json
@@ -649,11 +871,13 @@ Content-Type: application/json
 ```
 
 ### Request url for getting health
+
 ```
 HTTP GET /RpgChar/{id}/Health
 ```
 
 ### Response
+
 ```
 Responsecode 200 OK
 Content-Type: application/json
@@ -668,11 +892,13 @@ Content-Type: application/json
 ```
 
 ### Request url for getting saving throws
+
 ```
 HTTP GET /RpgChar/{id}/SavingThrows
 ```
 
 ### Response
+
 ```
 Responsecode 200 OK
 Content-Type: application/json
@@ -692,11 +918,13 @@ Content-Type: application/json
 ```
 
 ### Request url for getting skills
+
 ```
 HTTP GET /RpgChar/{id}/Skills
 ```
 
 ### Response
+
 ```
 Responsecode 200 OK
 Content-Type: application/json
@@ -714,11 +942,13 @@ Content-Type: application/json
 ```
 
 ### Request url for getting hit dice type
+
 ```
 HTTP GET /RpgChar/{id}/HitDiceType
 ```
 
 ### Response
+
 ```
 Responsecode 200 OK
 Content-Type: application/json
@@ -733,11 +963,13 @@ Content-Type: application/json
 ```
 
 ### Request url for getting death saves
+
 ```
 HTTP GET /RpgChar/{id}/DeathSave
 ```
 
 ### Response
+
 ```
 Responsecode 200 OK
 Content-Type: application/json
@@ -757,11 +989,13 @@ Content-Type: application/json
 ```
 
 ### Request url for getting treaures
+
 ```
 HTTP GET /RpgChar/{id}/Treasure
 ```
 
 ### Response
+
 ```
 Responsecode 200 OK
 Content-Type: application/json
@@ -780,11 +1014,13 @@ Content-Type: application/json
 ```
 
 ### Request url for getting the character appearance
+
 ```
 HTTP GET /RpgChar/{id}/CharacterAppearance
 ```
 
 ### Response
+
 ```
 Responsecode 200 OK
 Content-Type: application/json
@@ -803,11 +1039,13 @@ Content-Type: application/json
 ```
 
 ### Request url for getting features and traits
+
 ```
 HTTP GET /RpgChar/{id}/FeaturesTraits
 ```
 
 ### Response
+
 ```
 Responsecode 200 OK
 Content-Type: application/json
@@ -825,11 +1063,13 @@ Content-Type: application/json
 ```
 
 ### Request url for getting equipment
+
 ```
 HTTP GET /RpgChar/{id}/Equipment
 ```
 
 ### Response
+
 ```
 Responsecode 200 OK
 Content-Type: application/json
@@ -874,11 +1114,13 @@ Content-Type: application/json
 ```
 
 ### Request url for getting magic items
+
 ```
 HTTP GET /RpgChar/{id}/MagicItems
 ```
 
 ### Response
+
 ```
 Responsecode 200 OK
 Content-Type: application/json
@@ -901,11 +1143,13 @@ Content-Type: application/json
 ```
 
 ### Request url for getting notes
+
 ```
 HTTP GET /RpgChar/{id}/Notes
 ```
 
 ### Response
+
 ```
 Responsecode 200 OK
 Content-Type: application/json
@@ -921,11 +1165,13 @@ Content-Type: application/json
 ```
 
 ### Request url for getting spells
+
 ```
 HTTP GET /RpgChar/{id}/Spells
 ```
 
 ### Response
+
 ```
 Responsecode 200 OK
 Content-Type: application/json
@@ -989,11 +1235,13 @@ Content-Type: application/json
 ```
 
 ### Request url for getting feats
+
 ```
 HTTP GET /RpgChar/{id}/Feats
 ```
 
 ### Response
+
 ```
 Responsecode 200 OK
 Content-Type: application/json
@@ -1009,6 +1257,7 @@ Content-Type: application/json
 ```
 
 ## Setting data on a character
+
 The following methods are all sub methods on a `RpgChar` for setting fields, they all use the `PATCH` verb and only fields passed inn will be updated.
 The structure is the same as for getting parts and they all compliment them, the return of all api methods are the updated part.
 Meaning if you update the `health` of a character using `HTTP PATCH /RpgChar/{id}/Health` you will get in return the same object as if you called `HTTP GET /RpgChar/{id}/Health`.

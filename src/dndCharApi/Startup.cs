@@ -1,7 +1,6 @@
-﻿
-using dndChar.Api.Util;
+﻿using dndChar.Api.Util;
 using dndChar.Database;
-
+using dndCharApi.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -9,9 +8,12 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
+using MongoDB.Bson.Serialization.Conventions;
 using dndCharApi.Models.RpgChar;
 using MongoDB.Bson.Serialization;
-using MongoDB.Bson.Serialization.Conventions;
+using dndCharApi.Models.CallOfCthulu;
+using dndCharApi.Models;
+using dndCharApi.Models.Session;
 
 namespace dndCharApi
 {
@@ -46,6 +48,8 @@ namespace dndCharApi
                         .AllowCredentials();
                     });
             });
+
+            SetupCharacterSheetModels(services);
 
             SetupAuth0(services);
         }
@@ -89,12 +93,9 @@ namespace dndCharApi
                 app.UseDeveloperExceptionPage();
             }
 
-            var pack = new ConventionPack();
-            pack.Add(new CamelCaseElementNameConvention());
+            AddCamelCaseConvention();
 
-            ConventionRegistry.Register(new CamelCaseElementNameConvention().Name,pack,t => true);
-
-            app.UseStaticFiles();
+            AddClassMapsForCharacterSheets();
 
             app.UseAuthentication();
 
@@ -111,6 +112,30 @@ namespace dndCharApi
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+        }
+
+        private static void AddCamelCaseConvention()
+        {
+            var pack = new ConventionPack
+            {
+                new CamelCaseElementNameConvention()
+            };
+
+            ConventionRegistry.Register(new CamelCaseElementNameConvention().Name, pack, t => true);
+        }
+
+        private static void AddClassMapsForCharacterSheets()
+        {
+            BsonClassMap.RegisterClassMap<RpgCharModel>();
+            BsonClassMap.RegisterClassMap<CallOfCthulu>();
+            BsonClassMap.RegisterClassMap<Campaign>();
+        }
+
+        private static void SetupCharacterSheetModels(IServiceCollection services)
+        {
+            services.AddSingleton<ICharacterSheet, CallOfCthulu>();
+            services.AddSingleton<ICharacterSheet, RpgCharModel>();
+            services.AddSingleton<ICharacterSheet, Campaign>();
         }
     }
 }

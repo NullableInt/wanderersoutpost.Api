@@ -1,7 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
-using dndChar.Database;
-using dndCharApi;
+﻿using dndChar.Database;
 
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -20,7 +17,7 @@ namespace dndCharApi.Controllers
         public CharacterSheetController(UserManager<IdentityUser> userManager, DocumentStoreHolder holder)
         {
             UserManager = userManager;
-            MongoDb = holder.Store.GetDatabase("CharacterSheetDb");
+            MongoDb = holder.GetDefaultDatabase();
         }
 
         /*
