@@ -9,7 +9,7 @@ using MongoDB.Driver;
 
 namespace dndCharApi.Controllers
 {
-    [Route("api")]
+    [Route("[controller]")]
     public class ApiController : Controller
     {
         public IMongoDatabase MongoDb { get; set; }

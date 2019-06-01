@@ -13,6 +13,7 @@ using dndCharApi.Models.RpgChar;
 using MongoDB.Bson.Serialization;
 using dndCharApi.Models.CallOfCthulu;
 using dndCharApi.Models;
+using dndCharApi.Models.Session;
 
 namespace dndCharApi
 {
@@ -48,8 +49,7 @@ namespace dndCharApi
                     });
             });
 
-            services.AddSingleton<ICharacterSheet, CallOfCthulu>();
-            services.AddSingleton<ICharacterSheet, RpgCharModel>();
+            SetupCharacterSheetModels(services);
 
             SetupAuth0(services);
         }
@@ -97,8 +97,6 @@ namespace dndCharApi
 
             AddClassMapsForCharacterSheets();
 
-            app.UseStaticFiles();
-
             app.UseAuthentication();
 
             app.UseCors(builder => builder
@@ -118,8 +116,10 @@ namespace dndCharApi
 
         private static void AddCamelCaseConvention()
         {
-            var pack = new ConventionPack();
-            pack.Add(new CamelCaseElementNameConvention());
+            var pack = new ConventionPack
+            {
+                new CamelCaseElementNameConvention()
+            };
 
             ConventionRegistry.Register(new CamelCaseElementNameConvention().Name, pack, t => true);
         }
@@ -128,6 +128,14 @@ namespace dndCharApi
         {
             BsonClassMap.RegisterClassMap<RpgCharModel>();
             BsonClassMap.RegisterClassMap<CallOfCthulu>();
+            BsonClassMap.RegisterClassMap<Campaign>();
+        }
+
+        private static void SetupCharacterSheetModels(IServiceCollection services)
+        {
+            services.AddSingleton<ICharacterSheet, CallOfCthulu>();
+            services.AddSingleton<ICharacterSheet, RpgCharModel>();
+            services.AddSingleton<ICharacterSheet, Campaign>();
         }
     }
 }
