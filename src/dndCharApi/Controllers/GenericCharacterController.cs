@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 namespace dndCharApi.Controllers
 {
     [Route("")]
-    //[Authorize]
+    [Authorize]
     public class GenericCharacterController : Controller
     {
         private readonly IEnumerable<ICharacterSheet> characterSheetTypes;
