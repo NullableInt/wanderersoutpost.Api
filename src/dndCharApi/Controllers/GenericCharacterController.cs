@@ -175,7 +175,7 @@ namespace dndCharApi.Controllers
 
             await MongoDb.GetCollection<dynamic>("RpgCharModels").InsertOneAsync(deserializedGenericGoo);
 
-            return Json(firmlyShapedGoo.Id);
+            return Created(firmlyShapedGoo.Id, firmlyShapedGoo);
         }
     }
 }
