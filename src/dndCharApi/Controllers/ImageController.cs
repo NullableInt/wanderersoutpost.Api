@@ -38,7 +38,7 @@ namespace dndCharApi.Controllers
 
                 await blob.UploadFromStreamAsync(imageFile.OpenReadStream());
 
-                return Ok(blob.Uri.ToString());
+                return Created(blob.Uri.ToString(), imageFile);
             }
             catch (Exception e)
             {
