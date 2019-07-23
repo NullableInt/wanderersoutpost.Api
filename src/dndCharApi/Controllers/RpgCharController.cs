@@ -143,115 +143,115 @@ namespace dndCharApi.Controllers
         }
 
         [HttpGet("{id}/Profile")]
-        public async Task<IActionResult> GetProfile([FromRoute] string id) => await GetRpgModelPart(id, Builders<RpgCharModel>.Projection.Include(e => e.Profile), "Profile");
+        public async Task<IActionResult> GetProfile([FromRoute] string id) => await GetRpgModelPart(id, Builders<RpgCharModel>.Projection.Include(e => e.Profile).Exclude(e => e.Id));
 
         [HttpPatch("{id}/Profile")]
         public async Task<IActionResult> UpdateProfile([FromRoute] string id, [FromBody] Profile newProfile) => await UpdateRpgModel(id, Builders<RpgCharModel>.Update.Set(sheet => sheet.Profile, newProfile), newProfile);
 
         [HttpGet("{id}/Traits")]
-        public async Task<IActionResult> GetTraits([FromRoute] string id) => await GetRpgModelPart(id, Builders<RpgCharModel>.Projection.Include(e => e.Traits), "Traits");
+        public async Task<IActionResult> GetTraits([FromRoute] string id) => await GetRpgModelPart(id, Builders<RpgCharModel>.Projection.Include(e => e.Traits).Exclude(e => e.Id));
 
         [HttpPatch("{id}/Traits")]
         public async Task<IActionResult> UpdateTraits([FromRoute] string id, [FromBody] List<Trait> traits) => await UpdateRpgModel(id, Builders<RpgCharModel>.Update.Set(sheet => sheet.Traits, traits), traits);
 
         [HttpGet("{id}/Items")]
-        public async Task<IActionResult> GetItems([FromRoute] string id) => await GetRpgModelPart(id, Builders<RpgCharModel>.Projection.Include(e => e.Items), "Items");
+        public async Task<IActionResult> GetItems([FromRoute] string id) => await GetRpgModelPart(id, Builders<RpgCharModel>.Projection.Include(e => e.Items).Exclude(e => e.Id));
 
         [HttpPatch("{id}/Items")]
         public async Task<IActionResult> UpdateItems([FromRoute] string id, [FromBody] List<Item> items) => await UpdateRpgModel(id, Builders<RpgCharModel>.Update.Set(sheet => sheet.Items, items), items);
 
         [HttpGet("{id}/AbilityScores")]
-        public async Task<IActionResult> GetAbilityScores([FromRoute] string id) => await GetRpgModelPart(id, Builders<RpgCharModel>.Projection.Include(e => e.AbilityScores), "AbilityScores");
+        public async Task<IActionResult> GetAbilityScores([FromRoute] string id) => await GetRpgModelPart(id, Builders<RpgCharModel>.Projection.Include(e => e.AbilityScores).Exclude(e => e.Id));
 
         [HttpPatch("{id}/AbilityScores")]
         public async Task<IActionResult> UpdateAbilityScores([FromRoute] string id, [FromBody] AbilityScores abilityScores) => await UpdateRpgModel(id, Builders<RpgCharModel>.Update.Set(sheet => sheet.AbilityScores, abilityScores), abilityScores);
 
         [HttpGet("{id}/Status")]
-        public async Task<IActionResult> GetStatus([FromRoute] string id) => await GetRpgModelPart(id, Builders<RpgCharModel>.Projection.Include(e => e.Status), "Status");
+        public async Task<IActionResult> GetStatus([FromRoute] string id) => await GetRpgModelPart(id, Builders<RpgCharModel>.Projection.Include(e => e.Status).Exclude(e => e.Id));
 
         [HttpPatch("{id}/Status")]
         public async Task<IActionResult> UpdateStatus([FromRoute] string id, [FromBody] List<Status> statuses) => await UpdateRpgModel(id, Builders<RpgCharModel>.Update.Set(sheet => sheet.Status, statuses), statuses);
 
         [HttpGet("{id}/HitDice")]
-        public async Task<IActionResult> GetHitDice([FromRoute] string id) => await GetRpgModelPart(id, Builders<RpgCharModel>.Projection.Include(e => e.HitDice), "HitDice");
+        public async Task<IActionResult> GetHitDice([FromRoute] string id) => await GetRpgModelPart(id, Builders<RpgCharModel>.Projection.Include(e => e.HitDice).Exclude(e => e.Id));
 
         [HttpPatch("{id}/HitDice")]
         public async Task<IActionResult> UpdateHitDice([FromRoute] string id, [FromBody] List<HitDice> dice) => await UpdateRpgModel(id, Builders<RpgCharModel>.Update.Set(sheet => sheet.HitDice, dice), dice);
 
         [HttpGet("{id}/Health")]
-        public async Task<IActionResult> GetHealth([FromRoute] string id) => await GetRpgModelPart(id, Builders<RpgCharModel>.Projection.Include(e => e.Health), "Health");
+        public async Task<IActionResult> GetHealth([FromRoute] string id) => await GetRpgModelPart(id, Builders<RpgCharModel>.Projection.Include(e => e.Health).Exclude(e => e.Id));
 
         [HttpPatch("{id}/Health")]
         public async Task<IActionResult> UpdateHealth([FromRoute] string id, [FromBody] Health health) => await UpdateRpgModel(id, Builders<RpgCharModel>.Update.Set(sheet => sheet.Health, health), health);
 
         [HttpGet("{id}/SavingThrows")]
-        public async Task<IActionResult> GetSavingThrows([FromRoute] string id) => await GetRpgModelPart(id, Builders<RpgCharModel>.Projection.Include(e => e.SavingThrows), "SavingThrows");
+        public async Task<IActionResult> GetSavingThrows([FromRoute] string id) => await GetRpgModelPart(id, Builders<RpgCharModel>.Projection.Include(e => e.SavingThrows).Exclude(e => e.Id));
 
         [HttpPatch("{id}/SavingThrows")]
         public async Task<IActionResult> UpdateSavingThrows([FromRoute] string id, [FromBody] List<SavingThrow> savingThrows) => await UpdateRpgModel(id, Builders<RpgCharModel>.Update.Set(sheet => sheet.SavingThrows, savingThrows), savingThrows);
 
         [HttpGet("{id}/Skills")]
-        public async Task<IActionResult> GetSkills([FromRoute] string id) => await GetRpgModelPart(id, Builders<RpgCharModel>.Projection.Include(e => e.Skills), "Skills");
+        public async Task<IActionResult> GetSkills([FromRoute] string id) => await GetRpgModelPart(id, Builders<RpgCharModel>.Projection.Include(e => e.Skills).Exclude(e => e.Id));
 
         [HttpPatch("{id}/Skills")]
         public async Task<IActionResult> UpdateSkills([FromRoute] string id, [FromBody] List<Skill> skills) => await UpdateRpgModel(id, Builders<RpgCharModel>.Update.Set(sheet => sheet.Skills, skills), skills);
 
         [HttpGet("{id}/HitDiceType")]
-        public async Task<IActionResult> GetHitDiceType([FromRoute] string id) => await GetRpgModelPart(id, Builders<RpgCharModel>.Projection.Include(e => e.HitDiceType), "HitDiceType");
+        public async Task<IActionResult> GetHitDiceType([FromRoute] string id) => await GetRpgModelPart(id, Builders<RpgCharModel>.Projection.Include(e => e.HitDiceType).Exclude(e => e.Id));
 
         [HttpPatch("{id}/HitDiceType")]
         public async Task<IActionResult> UpdateHitDiceType([FromRoute] string id, [FromBody] List<HitDiceTypeModel> hitDices) => await UpdateRpgModel(id, Builders<RpgCharModel>.Update.Set(sheet => sheet.HitDiceType, hitDices), hitDices);
 
         [HttpGet("{id}/DeathSave")]
-        public async Task<IActionResult> GetDeathSave([FromRoute] string id) => await GetRpgModelPart(id, Builders<RpgCharModel>.Projection.Include(e => e.DeathSave), "DeathSave");
+        public async Task<IActionResult> GetDeathSave([FromRoute] string id) => await GetRpgModelPart(id, Builders<RpgCharModel>.Projection.Include(e => e.DeathSave).Exclude(e => e.Id));
 
         [HttpPatch("{id}/DeathSave")]
         public async Task<IActionResult> UpdateDeathSave([FromRoute] string id, [FromBody] List<DeathSave> deathSaves) => await UpdateRpgModel(id, Builders<RpgCharModel>.Update.Set(sheet => sheet.DeathSave, deathSaves), deathSaves);
 
         [HttpGet("{id}/Treasure")]
-        public async Task<IActionResult> GetTreasure([FromRoute] string id) => await GetRpgModelPart(id, Builders<RpgCharModel>.Projection.Include(e => e.Treasure), "Treasure");
+        public async Task<IActionResult> GetTreasure([FromRoute] string id) => await GetRpgModelPart(id, Builders<RpgCharModel>.Projection.Include(e => e.Treasure).Exclude(e => e.Id));
 
         [HttpPatch("{id}/Treasure")]
         public async Task<IActionResult> UpdateTreasure([FromRoute] string id, [FromBody] List<Treasure> treasures) => await UpdateRpgModel(id, Builders<RpgCharModel>.Update.Set(sheet => sheet.Treasure, treasures), treasures);
 
         [HttpGet("{id}/CharacterAppearance")]
-        public async Task<IActionResult> GetCharacterAppearance([FromRoute] string id) => await GetRpgModelPart(id, Builders<RpgCharModel>.Projection.Include(e => e.CharacterAppearance), "CharacterAppearance");
+        public async Task<IActionResult> GetCharacterAppearance([FromRoute] string id) => await GetRpgModelPart(id, Builders<RpgCharModel>.Projection.Include(e => e.CharacterAppearance).Exclude(e => e.Id));
 
         [HttpPatch("{id}/CharacterAppearance")]
         public async Task<IActionResult> UpdateCharacterAppearance([FromRoute] string id, [FromBody] List<CharacterAppearance> characterAppearances) => await UpdateRpgModel(id, Builders<RpgCharModel>.Update.Set(sheet => sheet.CharacterAppearance, characterAppearances), characterAppearances);
 
         [HttpGet("{id}/FeaturesTraits")]
-        public async Task<IActionResult> GetFeaturesTraits([FromRoute] string id) => await GetRpgModelPart(id, Builders<RpgCharModel>.Projection.Include(e => e.FeaturesTraits), "FeaturesTraits");
+        public async Task<IActionResult> GetFeaturesTraits([FromRoute] string id) => await GetRpgModelPart(id, Builders<RpgCharModel>.Projection.Include(e => e.FeaturesTraits).Exclude(e => e.Id));
 
         [HttpPatch("{id}/FeaturesTraits")]
         public async Task<IActionResult> UpdateFeaturesTraits([FromRoute] string id, [FromBody] List<FeaturesTrait> featuresTraits) => await UpdateRpgModel(id, Builders<RpgCharModel>.Update.Set(sheet => sheet.FeaturesTraits, featuresTraits), featuresTraits);
 
         [HttpGet("{id}/Equipment")]
-        public async Task<IActionResult> GetEquipment([FromRoute] string id) => await GetRpgModelPart(id, Builders<RpgCharModel>.Projection.Include(e => e.Equipment), "Equipment");
+        public async Task<IActionResult> GetEquipment([FromRoute] string id) => await GetRpgModelPart(id, Builders<RpgCharModel>.Projection.Include(e => e.Equipment).Exclude(e => e.Id));
 
         [HttpPatch("{id}/Equipment")]
         public async Task<IActionResult> UpdateEquipment([FromRoute] string id, [FromBody] Equipment equipment) => await UpdateRpgModel(id, Builders<RpgCharModel>.Update.Set(sheet => sheet.Equipment, equipment), equipment);
 
         [HttpGet("{id}/MagicItems")]
-        public async Task<IActionResult> GetMagicItems([FromRoute] string id) => await GetRpgModelPart(id, Builders<RpgCharModel>.Projection.Include(e => e.MagicItems), "MagicItems");
+        public async Task<IActionResult> GetMagicItems([FromRoute] string id) => await GetRpgModelPart(id, Builders<RpgCharModel>.Projection.Include(e => e.MagicItems).Exclude(e => e.Id));
 
         [HttpPatch("{id}/MagicItems")]
         public async Task<IActionResult> UpdateMagicItems([FromRoute] string id, [FromBody] List<MagicItem> magicItems) => await UpdateRpgModel(id, Builders<RpgCharModel>.Update.Set(sheet => sheet.MagicItems, magicItems), magicItems);
 
         [HttpGet("{id}/Notes")]
-        public async Task<IActionResult> GetNotes([FromRoute] string id) => await GetRpgModelPart(id, Builders<RpgCharModel>.Projection.Include(e => e.Notes), "Notes");
+        public async Task<IActionResult> GetNotes([FromRoute] string id) => await GetRpgModelPart(id, Builders<RpgCharModel>.Projection.Include(e => e.Notes).Exclude(e => e.Id));
 
         [HttpPatch("{id}/Notes")]
         public async Task<IActionResult> UpdateNotes([FromRoute] string id, [FromBody] List<Note> notes) => await UpdateRpgModel(id, Builders<RpgCharModel>.Update.Set(sheet => sheet.Notes, notes), notes);
 
         [HttpGet("{id}/Spells")]
-        public async Task<IActionResult> GetSpells([FromRoute] string id) => await GetRpgModelPart(id, Builders<RpgCharModel>.Projection.Include(e => e.Spells), "Spells");
+        public async Task<IActionResult> GetSpells([FromRoute] string id) => await GetRpgModelPart(id, Builders<RpgCharModel>.Projection.Include(e => e.Spells).Exclude(e => e.Id));
 
         [HttpPatch("{id}/Spells")]
         public async Task<IActionResult> UpdateSpells([FromRoute] string id, [FromBody] Spells spells) => await UpdateRpgModel(id, Builders<RpgCharModel>.Update.Set(sheet => sheet.Spells, spells), spells);
 
         [HttpGet("{id}/Feats")]
-        public async Task<IActionResult> GetFeats([FromRoute] string id) => await GetRpgModelPart(id, Builders<RpgCharModel>.Projection.Include(e => e.Feats), "Feats");
+        public async Task<IActionResult> GetFeats([FromRoute] string id) => await GetRpgModelPart(id, Builders<RpgCharModel>.Projection.Include(e => e.Feats).Exclude(e => e.Id));
 
         [HttpPatch("{id}/Feats")]
         public async Task<IActionResult> UpdateFeats([FromRoute] string id, [FromBody] List<Feat> feats) => await UpdateRpgModel(id, Builders<RpgCharModel>.Update.Set(sheet => sheet.Feats, feats), feats);
@@ -265,7 +265,7 @@ namespace dndCharApi.Controllers
             return Ok(returnData);
         }
 
-        private async Task<IActionResult> GetRpgModelPart(string id, ProjectionDefinition<RpgCharModel, dynamic> projectionDefinition, string part)
+        private async Task<IActionResult> GetRpgModelPart(string id, ProjectionDefinition<RpgCharModel, dynamic> projectionDefinition)
         {
             try
             {
@@ -274,12 +274,7 @@ namespace dndCharApi.Controllers
                 var list = await collection.Find(f => f.Id == stringId).Project(projectionDefinition).ToListAsync();
                 if(list.Count > 0)
                 {
-                    var obs = list[0];
-                    var typ = obs.GetType();
-                    var prop = typ.GetProperty(part);
-                    var val = prop.GetValue(obs, null);
-                    return Ok(val);
-                    //return Ok(obs.GetType().GetProperty(part).GetValue(obs, null));
+                    return Ok(list[0]);
                 }
                 return NoContent();
             }
