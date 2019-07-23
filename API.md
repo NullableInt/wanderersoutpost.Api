@@ -763,7 +763,6 @@ HTTP GET /RpgChar/{id}/Traits
 Responsecode 200 OK
 Content-Type: application/json
 {
-    "_id": "Id of object",
     "traits": [
         {
             "name": "Trait name",
@@ -786,7 +785,6 @@ HTTP GET /RpgChar/{id}/Items
 Responsecode 200 OK
 Content-Type: application/json
 {
-    "_id": "Id of object",
     "items":[
         {
             "name": "Woah",
@@ -812,7 +810,6 @@ HTTP GET /RpgChar/{id}/AbilityScores
 Responsecode 200 OK
 Content-Type: application/json
 {
-    "_id": "Id of object",
     "abilityScores": {
         "str": "4",
         "dex": "6",
@@ -836,7 +833,6 @@ HTTP GET /RpgChar/{id}/Status
 Responsecode 200 OK
 Content-Type: application/json
 {
-    "_id": "Id of object",
     "status": [
         {
             "identifier": "Dead,y",
@@ -860,7 +856,6 @@ HTTP GET /RpgChar/{id}/HitDice
 Responsecode 200 OK
 Content-Type: application/json
 {
-    "_id": "Id of object",
     "hitDice": [
         {
             "hitDiceUsed": 1,
@@ -882,7 +877,6 @@ HTTP GET /RpgChar/{id}/Health
 Responsecode 200 OK
 Content-Type: application/json
 {
-    "_id": "Id of object",
     "health": {
         "maxHitpoints": 6,
         "tempHitpoints": 2,
@@ -903,7 +897,6 @@ HTTP GET /RpgChar/{id}/SavingThrows
 Responsecode 200 OK
 Content-Type: application/json
 {
-    "_id": "Id of object",
     "savingThrows": [
         {
             "name": "Dex",
@@ -929,7 +922,6 @@ HTTP GET /RpgChar/{id}/Skills
 Responsecode 200 OK
 Content-Type: application/json
 {
-    "_id": "Id of object",
     "skills": [
         {
             "bonusModifier": 1,
@@ -953,7 +945,6 @@ HTTP GET /RpgChar/{id}/HitDiceType
 Responsecode 200 OK
 Content-Type: application/json
 {
-    "_id": "Id of object",
     "hitDiceType": [
         {
             "hitDiceType": "d8"
@@ -974,7 +965,6 @@ HTTP GET /RpgChar/{id}/DeathSave
 Responsecode 200 OK
 Content-Type: application/json
 {
-    "_id": "Id of object",
     "deathSave": [
         {
             "deathSaveSuccess": false,
@@ -1000,7 +990,6 @@ HTTP GET /RpgChar/{id}/Treasure
 Responsecode 200 OK
 Content-Type: application/json
 {
-    "_id": "Id of object",
     "treasure": [
         {
             "platinum": "1",
@@ -1025,7 +1014,6 @@ HTTP GET /RpgChar/{id}/CharacterAppearance
 Responsecode 200 OK
 Content-Type: application/json
 {
-    "_id": "Id of object",
     "characterAppearance": [
         {
             "height": "Height",
@@ -1050,7 +1038,6 @@ HTTP GET /RpgChar/{id}/FeaturesTraits
 Responsecode 200 OK
 Content-Type: application/json
 {
-    "_id": "Id of object",
     "featuresTraits": [
         {
             "background": "Noble",
@@ -1074,7 +1061,6 @@ HTTP GET /RpgChar/{id}/Equipment
 Responsecode 200 OK
 Content-Type: application/json
 {
-    "_id": "Id of object",
     "equipment": {
         "weapons": [
             {
@@ -1125,7 +1111,6 @@ HTTP GET /RpgChar/{id}/MagicItems
 Responsecode 200 OK
 Content-Type: application/json
 {
-    "_id": "Id of object",
     "magicItems": [
         {
             "name": "Boy",
@@ -1154,7 +1139,6 @@ HTTP GET /RpgChar/{id}/Notes
 Responsecode 200 OK
 Content-Type: application/json
 {
-    "_id": "Id of object",
     "notes": [
         {
             "text": "Test text",
@@ -1176,7 +1160,6 @@ HTTP GET /RpgChar/{id}/Spells
 Responsecode 200 OK
 Content-Type: application/json
 {
-    "_id": "Id of object",
     "spells": {
         "spellcastingAbility": "All so fuck you",
         "spellSaveDc": 19,
@@ -1246,7 +1229,6 @@ HTTP GET /RpgChar/{id}/Feats
 Responsecode 200 OK
 Content-Type: application/json
 {
-    "_id": "Id of object",
     "feats": [
         {
             "name": "Halfling nibleness",
