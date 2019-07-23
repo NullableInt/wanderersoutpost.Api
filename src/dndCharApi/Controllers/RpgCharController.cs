@@ -142,6 +142,12 @@ namespace dndCharApi.Controllers
             return new JsonResult(id);
         }
 
+        [HttpPost("newChar/{id?}")]
+        public Task<IActionResult> NewCharPost([FromRoute] string id = null)
+        {
+            return NewChar(id);
+        }
+
         [HttpGet("{id}/Profile")]
         public async Task<IActionResult> GetProfile([FromRoute] string id) => await GetRpgModelPart(id, Builders<RpgCharModel>.Projection.Include(e => e.Profile).Exclude(e => e.Id));
 

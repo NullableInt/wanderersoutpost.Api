@@ -694,6 +694,8 @@ Request has an optional id.
 ```
 HTTP GET /RpgChar/newChar/
 HTTP GET /RpgChar/newChar/{id}
+HTTP POST /RpgChar/newChar/
+HTTP POST /RpgChar/newChar/{id}
 ```
 
 ### Response
