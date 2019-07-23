@@ -120,7 +120,14 @@ namespace dndCharApi.Controllers
                 Notes = new List<Note>(),
                 OwnerID = userId,
                 Profile = new Profile(),
-                SavingThrows = new List<SavingThrow>(),
+                SavingThrows = new List<SavingThrow> {
+                    new SavingThrow { Name = "Str" },
+                    new SavingThrow { Name = "Dex" },
+                    new SavingThrow { Name = "Con" },
+                    new SavingThrow { Name = "Int" },
+                    new SavingThrow { Name = "Wis" },
+                    new SavingThrow { Name = "Cha" }
+                },
                 Skills = new List<Skill>(),
                 Spells = new Spells(),
                 Status = new List<Status>(),
