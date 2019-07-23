@@ -121,12 +121,12 @@ namespace dndCharApi.Controllers
                 OwnerID = userId,
                 Profile = new Profile(),
                 SavingThrows = new List<SavingThrow> {
-                    new SavingThrow { Name = "Str" },
-                    new SavingThrow { Name = "Dex" },
-                    new SavingThrow { Name = "Con" },
-                    new SavingThrow { Name = "Int" },
-                    new SavingThrow { Name = "Wis" },
-                    new SavingThrow { Name = "Cha" }
+                    new SavingThrow { Name = "Str", Proficiency = false },
+                    new SavingThrow { Name = "Dex", Proficiency = false },
+                    new SavingThrow { Name = "Con", Proficiency = false },
+                    new SavingThrow { Name = "Int", Proficiency = false },
+                    new SavingThrow { Name = "Wis", Proficiency = false },
+                    new SavingThrow { Name = "Cha", Proficiency = false }
                 },
                 Skills = new List<Skill>(),
                 Spells = new Spells(),
