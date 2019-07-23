@@ -275,7 +275,11 @@ namespace dndCharApi.Controllers
                 if(list.Count > 0)
                 {
                     var obs = list[0];
-                    return Ok(obs.GetType().GetProperty(part).GetValue(obs, null));
+                    var typ = obs.GetType();
+                    var prop = typ.GetProperty(part);
+                    var val = prop.GetValue(obs, null);
+                    return Ok(val);
+                    //return Ok(obs.GetType().GetProperty(part).GetValue(obs, null));
                 }
                 return NoContent();
             }
