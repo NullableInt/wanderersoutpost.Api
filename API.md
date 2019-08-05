@@ -175,7 +175,7 @@ Content-Type: application/json
             "bonusModifier": 1,
             "name": "Prospecting",
             "abilityScore": "Wis",
-            "proficiency": "Expertice"
+            "proficiencyModifer": 2
         }
     ],
     "hitDiceType": [
@@ -226,7 +226,7 @@ Content-Type: application/json
                 "type": "Type",
                 "dmg": "2d6",
                 "handedness": "Left",
-                "proficiency": "M;aybe",
+                "proficiencyModifer": 0.5,
                 "price": 1,
                 "currencyDenomination": "d",
                 "hit": -1,
@@ -929,7 +929,7 @@ Content-Type: application/json
             "bonusModifier": 1,
             "name": "Prospecting",
             "abilityScore": "Wis",
-            "proficiency": "Expertice"
+            "proficiencyModifier": 2
         }
     ]
 }
@@ -1070,7 +1070,7 @@ Content-Type: application/json
                 "type": "Type",
                 "dmg": "2d6",
                 "handedness": "Left",
-                "proficiency": "M;aybe",
+                "proficiencyModifier": 0.5,
                 "price": 1,
                 "currencyDenomination": "d",
                 "hit": -1,

@@ -143,7 +143,7 @@ namespace dndCharApi.Controllers
                             Dmg = "2d6",
                             Handedness = "Left",
                             Hit = -1,
-                            Proficiency = "M;aybe",
+                            ProficiencyModifer = 0.5m,
                             Property = "Prop",
                             Quantity = 1,
                             Range = "5ft",
@@ -261,7 +261,7 @@ namespace dndCharApi.Controllers
                     {
                         AbilityScore = "Wis",
                         BonusModifier = 1,
-                        Proficiency = "Expertice",
+                        ProficiencyModifer = 2,
                         Name = "Prospecting"
                     }
                 },
