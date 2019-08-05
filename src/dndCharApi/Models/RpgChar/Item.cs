@@ -8,5 +8,7 @@
         public double Weight { get; set; }
         public int Cost { get; set; }
         public string CurrencyDenomination { get; set; }
+        public bool Equippable { get; set; } = false;
+        public bool IsEquipped { get; set; } = false;
     }
 }
