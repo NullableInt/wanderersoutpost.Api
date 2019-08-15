@@ -6,7 +6,7 @@
         public string Type { get; set; }
         public string Dmg { get; set; }
         public string Handedness { get; set; }
-        public decimal ProficiencyModifer { get; set; }
+        public decimal ProficiencyModifier { get; set; }
         public int Price { get; set; }
         public string CurrencyDenomination { get; set; }
         public int Hit { get; set; }

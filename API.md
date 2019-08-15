@@ -175,7 +175,7 @@ Content-Type: application/json
             "bonusModifier": 1,
             "name": "Prospecting",
             "abilityScore": "Wis",
-            "proficiencyModifer": 2
+            "ProficiencyModifier": 2
         }
     ],
     "hitDiceType": [
@@ -226,7 +226,7 @@ Content-Type: application/json
                 "type": "Type",
                 "dmg": "2d6",
                 "handedness": "Left",
-                "proficiencyModifer": 0.5,
+                "ProficiencyModifier": 0.5,
                 "price": 1,
                 "currencyDenomination": "d",
                 "hit": -1,
