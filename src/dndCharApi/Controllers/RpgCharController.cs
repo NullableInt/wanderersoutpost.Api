@@ -105,7 +105,7 @@ namespace dndCharApi.Controllers
 
             var newChar = new RpgCharModel
             {
-                AbilityScores = new AbilityScores(),
+                AbilityScores = new AbilityScore[0],
                 CharacterAppearance = new List<CharacterAppearance>(),
                 DeathSave = new List<DeathSave>(),
                 Equipment = new Equipment(),
@@ -170,7 +170,7 @@ namespace dndCharApi.Controllers
         public async Task<IActionResult> GetAbilityScores([FromRoute] string id) => await GetRpgModelPart(id, Builders<RpgCharModel>.Projection.Include(e => e.AbilityScores).Exclude(e => e.Id));
 
         [HttpPatch("{id}/AbilityScores")]
-        public async Task<IActionResult> UpdateAbilityScores([FromRoute] string id, [FromBody] AbilityScores abilityScores) => await UpdateRpgModel(id, Builders<RpgCharModel>.Update.Set(sheet => sheet.AbilityScores, abilityScores), abilityScores);
+        public async Task<IActionResult> UpdateAbilityScores([FromRoute] string id, [FromBody] AbilityScore[] abilityScores) => await UpdateRpgModel(id, Builders<RpgCharModel>.Update.Set(sheet => sheet.AbilityScores, abilityScores), abilityScores);
 
         [HttpGet("{id}/Status")]
         public async Task<IActionResult> GetStatus([FromRoute] string id) => await GetRpgModelPart(id, Builders<RpgCharModel>.Projection.Include(e => e.Status).Exclude(e => e.Id));

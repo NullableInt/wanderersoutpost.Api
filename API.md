@@ -100,8 +100,6 @@ HTTP GET /api/mock
 Responsecode 200 OK
 Content-Type: application/json
 {
-    "id": "5cd13c18bd0cdbf3fcbec3c0",
-    "ownerID": "Unique ID for owner from identity federation",
     "profile": {
         "characterName": "Testy testerson",
         "characterImage": "Url here",
@@ -128,19 +126,39 @@ Content-Type: application/json
             "name": "Woah",
             "desc": "Oh no",
             "qty": 1,
-            "weight": 154,
+            "weight": 154.0,
             "cost": 14,
-            "currencyDenomination": "SP"
+            "currencyDenomination": "SP",
+            "equippable": false,
+            "isEquipped": false
         }
     ],
-    "abilityScores": {
-        "str": "4",
-        "dex": "6",
-        "con": "7",
-        "int": "5",
-        "wis": "3",
-        "cha": "8"
-    },
+    "abilityScores": [
+        {
+            "value": 8,
+            "name": "cha"
+        },
+        {
+            "value": 7,
+            "name": "con"
+        },
+        {
+            "value": 6,
+            "name": "dex"
+        },
+        {
+            "value": 5,
+            "name": "int"
+        },
+        {
+            "value": 4,
+            "name": "str"
+        },
+        {
+            "value": 3,
+            "name": "wis"
+        }
+    ],
     "status": [
         {
             "identifier": "Dead,y",
@@ -175,7 +193,7 @@ Content-Type: application/json
             "bonusModifier": 1,
             "name": "Prospecting",
             "abilityScore": "Wis",
-            "ProficiencyModifier": 2
+            "proficiencyModifier": 2.0
         }
     ],
     "hitDiceType": [
@@ -226,7 +244,7 @@ Content-Type: application/json
                 "type": "Type",
                 "dmg": "2d6",
                 "handedness": "Left",
-                "ProficiencyModifier": 0.5,
+                "proficiencyModifier": 0.5,
                 "price": 1,
                 "currencyDenomination": "d",
                 "hit": -1,
@@ -332,7 +350,12 @@ Content-Type: application/json
             "name": "Halfling nibleness",
             "description": "Allows you to sneak past friends"
         }
-    ]
+    ],
+    "id": "5d570c55973bac2e48a57af0",
+    "ownerID": "Unique ID for owner from identity federation",
+    "_created": "2019-08-16T20:04:37.561Z",
+    "_lastUpdated": "2019-08-16T20:04:37.561Z",
+    "gameSystem": "RpgCharModel"
 }
 ```
 

@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using dndChar.Database;
 using dndCharApi.Models.RpgChar;
 using Microsoft.AspNetCore.Authorization;
@@ -80,14 +81,14 @@ namespace dndCharApi.Controllers
         {
             return Json(new RpgCharModel
             {
-                AbilityScores = new AbilityScores
+                AbilityScores = new AbilityScore[]
                 {
-                    Cha = "8",
-                    Con = "7",
-                    Dex = "6",
-                    Int = "5",
-                    Str = "4",
-                    Wis = "3"
+                    new AbilityScore { Name = "cha", Value = 8},
+                    new AbilityScore { Name = "con", Value = 7},
+                    new AbilityScore { Name = "dex", Value = 6},
+                    new AbilityScore { Name = "int", Value = 5},
+                    new AbilityScore { Name = "str", Value = 4},
+                    new AbilityScore { Name = "wis", Value = 3}
                 },
                 CharacterAppearance = new System.Collections.Generic.List<CharacterAppearance>
                 {

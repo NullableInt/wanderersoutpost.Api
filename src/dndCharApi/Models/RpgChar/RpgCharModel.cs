@@ -7,7 +7,7 @@ namespace dndCharApi.Models.RpgChar
         public Profile Profile { get; set; }
         public List<Trait> Traits { get; set; }
         public List<Item> Items { get; set; }
-        public AbilityScores AbilityScores { get; set; }
+        public AbilityScore[] AbilityScores { get; set; }
         public List<Status> Status { get; set; }
         public List<HitDice> HitDice { get; set; }
         public Health Health { get; set; }
