@@ -107,7 +107,7 @@ Content-Type: application/json
         "playerName": "U+1F618",
         "race": "U+1F364",
         "alignment": "Truly evil",
-        "diety": "",
+        "diety": "Null",
         "typeClass": "God",
         "gender": "No",
         "age": "23",
@@ -192,8 +192,14 @@ Content-Type: application/json
         {
             "bonusModifier": 1,
             "name": "Prospecting",
-            "abilityScore": "Wis",
+            "abilityScore": "wis",
             "proficiencyModifier": 2.0
+        },
+        {
+            "bonusModifier": 4,
+            "name": "Sneaking",
+            "abilityScore": "dex",
+            "proficiencyModifier": 0.5
         }
     ],
     "hitDiceType": [
@@ -213,11 +219,11 @@ Content-Type: application/json
     ],
     "treasure": [
         {
-            "platinum": "1",
-            "gold": "0",
-            "electrum": "4",
-            "silver": "0",
-            "copper": "0"
+            "platinum": 1,
+            "gold": 0,
+            "electrum": 4,
+            "silver": 0,
+            "copper": 0
         }
     ],
     "characterAppearance": [
@@ -1017,11 +1023,11 @@ Content-Type: application/json
 {
     "treasure": [
         {
-            "platinum": "1",
-            "gold": "0",
-            "electrum": "4",
-            "silver": "0",
-            "copper": "0"
+            "platinum": 1,
+            "gold": 0,
+            "electrum": 4,
+            "silver": 0,
+            "copper": 0
         }
     ]
 }

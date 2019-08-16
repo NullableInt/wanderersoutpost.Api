@@ -81,7 +81,7 @@ namespace dndCharApi.Controllers
         {
             return Json(new RpgCharModel
             {
-                AbilityScores = new AbilityScore[]
+                AbilityScores = new List<AbilityScore>
                 {
                     new AbilityScore { Name = "cha", Value = 8},
                     new AbilityScore { Name = "con", Value = 7},
@@ -90,7 +90,7 @@ namespace dndCharApi.Controllers
                     new AbilityScore { Name = "str", Value = 4},
                     new AbilityScore { Name = "wis", Value = 3}
                 },
-                CharacterAppearance = new System.Collections.Generic.List<CharacterAppearance>
+                CharacterAppearance = new List<CharacterAppearance>
                 {
                     new CharacterAppearance
                     {
@@ -101,7 +101,7 @@ namespace dndCharApi.Controllers
                         Weight = "Weight"
                     }
                 },
-                DeathSave = new System.Collections.Generic.List<DeathSave>
+                DeathSave = new List<DeathSave>
                 {
                     new DeathSave
                     {
@@ -114,7 +114,7 @@ namespace dndCharApi.Controllers
                 },
                 Equipment = new Equipment
                 {
-                    Armor = new System.Collections.Generic.List<Armor>
+                    Armor = new List<Armor>
                     {
                         new Armor
                         {
@@ -130,7 +130,7 @@ namespace dndCharApi.Controllers
                             Weight = 12
                         }
                     },
-                    Weapons = new System.Collections.Generic.List<Weapon>
+                    Weapons = new List<Weapon>
                     {
                         new Weapon
                         {
@@ -152,7 +152,7 @@ namespace dndCharApi.Controllers
                         }
                     }
                 },
-                Feats = new System.Collections.Generic.List<Feat>
+                Feats = new List<Feat>
                 {
                     new Feat
                     {
@@ -160,7 +160,7 @@ namespace dndCharApi.Controllers
                         Name = "Halfling nibleness"
                     }
                 },
-                FeaturesTraits = new System.Collections.Generic.List<FeaturesTrait>
+                FeaturesTraits = new List<FeaturesTrait>
                 {
                     new FeaturesTrait
                     {
@@ -176,7 +176,7 @@ namespace dndCharApi.Controllers
                     MaxHitpoints = 6,
                     TempHitpoints = 2
                 },
-                HitDice = new System.Collections.Generic.List<HitDice>
+                HitDice = new List<HitDice>
                 {
                     new HitDice
                     {
@@ -184,7 +184,7 @@ namespace dndCharApi.Controllers
                         HitDiceUsed = 1
                     }
                 },
-                HitDiceType = new System.Collections.Generic.List<HitDiceTypeModel>
+                HitDiceType = new List<HitDiceTypeModel>
                 {
                     new HitDiceTypeModel
                     {
@@ -192,7 +192,7 @@ namespace dndCharApi.Controllers
                     }
                 },
                 Id = ObjectId.GenerateNewId().ToString(),
-                Items = new System.Collections.Generic.List<Item>
+                Items = new List<Item>
                 {
                     new Item
                     {
@@ -204,7 +204,7 @@ namespace dndCharApi.Controllers
                         Weight = 154
                     }
                 },
-                MagicItems = new System.Collections.Generic.List<MagicItem>
+                MagicItems = new List<MagicItem>
                 {
                     new MagicItem
                     {
@@ -219,7 +219,7 @@ namespace dndCharApi.Controllers
                         Type = "Unknown"
                     }
                 },
-                Notes = new System.Collections.Generic.List<Note>
+                Notes = new List<Note>
                 {
                     new Note
                     {
@@ -235,7 +235,7 @@ namespace dndCharApi.Controllers
                     Background = "Is this a duplicate from Features and traits?",
                     CharacterImage = "Url here",
                     CharacterName = "Testy testerson",
-                    Diety = "",
+                    Diety = "Null",
                     Exp = "Milestone",
                     Gender = "No",
                     Level = 2,
@@ -243,7 +243,7 @@ namespace dndCharApi.Controllers
                     Race = "U+1F364",
                     TypeClass = "God"
                 },
-                SavingThrows = new System.Collections.Generic.List<SavingThrow>
+                SavingThrows = new List<SavingThrow>
                 {
                     new SavingThrow
                     {
@@ -256,19 +256,26 @@ namespace dndCharApi.Controllers
                         Proficiency = false
                     }
                 },
-                Skills = new System.Collections.Generic.List<Skill>
+                Skills = new List<Skill>
                 {
                     new Skill
                     {
-                        AbilityScore = "Wis",
+                        AbilityScore = "wis",
                         BonusModifier = 1,
                         ProficiencyModifier = 2,
                         Name = "Prospecting"
+                    },
+                    new Skill
+                    {
+                        AbilityScore = "dex",
+                        BonusModifier = 4,
+                        ProficiencyModifier = 0.5m,
+                        Name = "Sneaking"
                     }
                 },
                 Spells = new Spells
                 {
-                    Cantrips = new System.Collections.Generic.List<Cantrip>
+                    Cantrips = new List<Cantrip>
                     {
                         new Cantrip
                         {
@@ -292,7 +299,7 @@ namespace dndCharApi.Controllers
                     MaxPrepared = 13,
                     SpellAttackBonus = 42,
                     SpellcastingAbility = "All so fuck you",
-                    SpellList = new System.Collections.Generic.List<SpellList>
+                    SpellList = new List<SpellList>
                     {
                         new SpellList
                         {
@@ -316,7 +323,7 @@ namespace dndCharApi.Controllers
                     },
                     SpellSaveDc = 19,
                     SpellsKnown = 1,
-                    SpellSlots = new System.Collections.Generic.List<SpellSlot>
+                    SpellSlots = new List<SpellSlot>
                     {
                         new SpellSlot
                         {
@@ -327,7 +334,7 @@ namespace dndCharApi.Controllers
                         }
                     }
                 },
-                Status = new System.Collections.Generic.List<Status>
+                Status = new List<Status>
                 {
                     new Status
                     {
@@ -337,7 +344,7 @@ namespace dndCharApi.Controllers
                         Value = 13
                     }
                 },
-                Traits = new System.Collections.Generic.List<Trait>
+                Traits = new List<Trait>
                 {
                     new Trait
                     {
@@ -346,15 +353,15 @@ namespace dndCharApi.Controllers
                         Race = "Racism"
                     }
                 },
-                Treasure = new System.Collections.Generic.List<Treasure>
+                Treasure = new List<Treasure>
                 {
                     new Treasure
                     {
-                        Copper = "0",
-                        Electrum = "4",
-                        Gold = "0",
-                        Platinum = "1",
-                        Silver = "0"
+                        Copper = 0,
+                        Electrum = 4,
+                        Gold = 0,
+                        Platinum = 2,
+                        Silver = 8
                     }
                 },
                 _created = new BsonDateTime(System.DateTime.UtcNow),

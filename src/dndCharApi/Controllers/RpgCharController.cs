@@ -105,7 +105,7 @@ namespace dndCharApi.Controllers
 
             var newChar = new RpgCharModel
             {
-                AbilityScores = new AbilityScore[0],
+                AbilityScores = new List<AbilityScore>(),
                 CharacterAppearance = new List<CharacterAppearance>(),
                 DeathSave = new List<DeathSave>(),
                 Equipment = new Equipment(),
@@ -120,14 +120,7 @@ namespace dndCharApi.Controllers
                 Notes = new List<Note>(),
                 OwnerID = userId,
                 Profile = new Profile(),
-                SavingThrows = new List<SavingThrow> {
-                    new SavingThrow { Name = "Str", Proficiency = false },
-                    new SavingThrow { Name = "Dex", Proficiency = false },
-                    new SavingThrow { Name = "Con", Proficiency = false },
-                    new SavingThrow { Name = "Int", Proficiency = false },
-                    new SavingThrow { Name = "Wis", Proficiency = false },
-                    new SavingThrow { Name = "Cha", Proficiency = false }
-                },
+                SavingThrows = new List<SavingThrow> (),
                 Skills = new List<Skill>(),
                 Spells = new Spells(),
                 Status = new List<Status>(),
@@ -170,7 +163,7 @@ namespace dndCharApi.Controllers
         public async Task<IActionResult> GetAbilityScores([FromRoute] string id) => await GetRpgModelPart(id, Builders<RpgCharModel>.Projection.Include(e => e.AbilityScores).Exclude(e => e.Id));
 
         [HttpPatch("{id}/AbilityScores")]
-        public async Task<IActionResult> UpdateAbilityScores([FromRoute] string id, [FromBody] AbilityScore[] abilityScores) => await UpdateRpgModel(id, Builders<RpgCharModel>.Update.Set(sheet => sheet.AbilityScores, abilityScores), abilityScores);
+        public async Task<IActionResult> UpdateAbilityScores([FromRoute] string id, [FromBody] List<AbilityScore> abilityScores) => await UpdateRpgModel(id, Builders<RpgCharModel>.Update.Set(sheet => sheet.AbilityScores, abilityScores), abilityScores);
 
         [HttpGet("{id}/Status")]
         public async Task<IActionResult> GetStatus([FromRoute] string id) => await GetRpgModelPart(id, Builders<RpgCharModel>.Projection.Include(e => e.Status).Exclude(e => e.Id));
