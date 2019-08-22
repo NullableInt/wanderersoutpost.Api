@@ -158,7 +158,7 @@ namespace dndCharApi.Controllers
             var type = characterSheetTypes.FirstOrDefault(s => s.GetType().Name.Equals(gameSystem, StringComparison.OrdinalIgnoreCase));
             if (type == null)
             {
-                return BadRequest($"{gameSystem} is not a valid type");
+                return BadRequest($"{gameSystem} is not a valid type, go fuck yourself and come back with the right type.");
             }   
 
             var deserializedGenericGoo = Newtonsoft.Json.JsonConvert.DeserializeObject(body.ToString(), type.GetType());
