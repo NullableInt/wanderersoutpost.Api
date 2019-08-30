@@ -52,19 +52,16 @@ namespace dndCharApi
                     });
             });
 
-            //SetupCharacterSheetModels(services);
-
             services.AddSingleton<IAuthorizationHandler, HasScopeHandler>();
-            foreach (Type type in Assembly.GetAssembly(typeof(BaseCharacterSheet))
-                                  .GetTypes()
-                                  .Where(d =>
-                                    d.IsClass
-                                    && d.IsSubclassOf(typeof(BaseCharacterSheet))))
+
+            foreach (Type type in Assembly.GetAssembly(typeof(BaseCharacterSheet)).GetTypes()
+                                    .Where(d => d.IsClass && d.IsSubclassOf(typeof(BaseCharacterSheet))))
             {
                 services.AddSingleton(typeof(ICharacterSheet), type);
+                BsonClassMap.LookupClassMap(type);
             }
 
-                SetupAuth0(services);
+            SetupAuth0(services);
         }
 
         private void SetupAuth0(IServiceCollection services)
@@ -108,8 +105,6 @@ namespace dndCharApi
 
             AddCamelCaseConvention();
 
-            //AddClassMapsForCharacterSheets();
-
             app.UseAuthentication();
 
             app.UseCors(builder => builder
@@ -135,20 +130,6 @@ namespace dndCharApi
             };
 
             ConventionRegistry.Register(new CamelCaseElementNameConvention().Name, pack, t => true);
-        }
-
-        private static void AddClassMapsForCharacterSheets()
-        {
-            BsonClassMap.RegisterClassMap<RpgCharModel>();
-            BsonClassMap.RegisterClassMap<CallOfCthulu>();
-            BsonClassMap.RegisterClassMap<Campaign>();
-        }
-
-        private static void SetupCharacterSheetModels(IServiceCollection services)
-        {
-            services.AddSingleton<ICharacterSheet, CallOfCthulu>();
-            services.AddSingleton<ICharacterSheet, RpgCharModel>();
-            services.AddSingleton<ICharacterSheet, Campaign>();
         }
     }
 }
