@@ -121,13 +121,14 @@ namespace dndCharApi.Controllers
                             Class = 11,
                             CurrencyDenomination = "What",
                             Description = "Desc",
-                            Equipped = "eq",
                             MagicalModifier = 1,
                             Name = "Name",
                             Price = 1,
                             Stealth = "1",
                             Type = "Type",
-                            Weight = 12
+                            Weight = 12,
+                            IsAttuned = true,
+                            IsEqupped = true
                         }
                     },
                     Weapons = new List<Weapon>

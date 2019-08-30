@@ -17,5 +17,7 @@
         public string Property { get; set; }
         public string Description { get; set; }
         public int Quantity { get; set; }
+        public bool IsEqupped { get; set; } = false;
+        public bool IsAttuned { get; set; } = false;
     }
 }

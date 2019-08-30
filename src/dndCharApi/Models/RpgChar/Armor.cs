@@ -11,6 +11,7 @@
         public int Class { get; set; }
         public string Stealth { get; set; }
         public string Description { get; set; }
-        public string Equipped { get; set; }
+        public bool IsEqupped { get; set; } = false;
+        public bool IsAttuned { get; set; } = false;
     }
     }

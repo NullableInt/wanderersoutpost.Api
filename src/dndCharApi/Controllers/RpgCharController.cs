@@ -57,7 +57,7 @@ namespace dndCharApi.Controllers
             }
             return NotFound();
         }
-        
+
         [HttpPost("{id?}")]
         public async Task<IActionResult> SetAll([FromBody] RpgCharModel dynamic, [FromRoute] string id = null)
         {
@@ -120,7 +120,7 @@ namespace dndCharApi.Controllers
                 Notes = new List<Note>(),
                 OwnerID = userId,
                 Profile = new Profile(),
-                SavingThrows = new List<SavingThrow> (),
+                SavingThrows = new List<SavingThrow>(),
                 Skills = new List<Skill>(),
                 Spells = new Spells(),
                 Status = new List<Status>(),
@@ -254,6 +254,62 @@ namespace dndCharApi.Controllers
 
         [HttpPatch("{id}/Feats")]
         public async Task<IActionResult> UpdateFeats([FromRoute] string id, [FromBody] List<Feat> feats) => await UpdateRpgModel(id, Builders<RpgCharModel>.Update.Set(sheet => sheet.Feats, feats), feats);
+
+        [HttpPost("{id}/Items")]
+        public async Task<IActionResult> InsertOneItem([FromRoute] string charId, [FromBody] Item item)
+        {
+            var collection = MongoDb.GetCollection<RpgCharModel>("RpgCharModels");
+            var deleteCollection = MongoDb.GetCollection<RpgCharModel>("RpgCharModelsDeleted");
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+
+            var filter = Builders<RpgCharModel>.Filter.And(
+                Builders<RpgCharModel>.Filter.Eq(x => x.Id, charId),
+                Builders<RpgCharModel>.Filter.Eq(x => x.OwnerID, userId));
+
+            var update = Builders<RpgCharModel>.Update.Push(x => x.Items, item);
+
+            var result = await collection.FindOneAndUpdateAsync(filter, update);
+
+            return Ok();
+        }
+
+        [HttpPatch("{charId}/Items/{itemId}")]
+        public async Task<IActionResult> UpdateSingleItem([FromRoute] string characterId, [FromRoute] string itemId, [FromBody] Item item)
+        {
+            var collection = MongoDb.GetCollection<RpgCharModel>("RpgCharModels");
+            var deleteCollection = MongoDb.GetCollection<RpgCharModel>("RpgCharModelsDeleted");
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+
+            var filter = Builders<RpgCharModel>.Filter.And(
+                Builders<RpgCharModel>.Filter.Eq(x => x.Id, characterId),
+                Builders<RpgCharModel>.Filter.Eq(x => x.OwnerID, userId),
+                Builders<RpgCharModel>.Filter.ElemMatch(x => x.Items, x=> x.Id == itemId));
+
+            var update = Builders<RpgCharModel>.Update.Set(x => x.Items[-1], item);
+
+            var result = await collection.UpdateOneAsync(filter, update);
+
+            return result.IsAcknowledged ? Ok() : (IActionResult)BadRequest();
+        }
+
+        [HttpDelete("{charId}/Items/{itemId}")]
+        public async Task<IActionResult> DeleteSingleItem([FromRoute] string characterId, [FromRoute] string itemId)
+        {
+            var collection = MongoDb.GetCollection<RpgCharModel>("RpgCharModels");
+            var deleteCollection = MongoDb.GetCollection<RpgCharModel>("RpgCharModelsDeleted");
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+
+            var filter = Builders<RpgCharModel>.Filter.And(
+                Builders<RpgCharModel>.Filter.Eq(x => x.Id, characterId),
+                Builders<RpgCharModel>.Filter.Eq(x => x.OwnerID, userId),
+                Builders<RpgCharModel>.Filter.ElemMatch(x => x.Items, x => x.Id == itemId));
+
+            var update = Builders<RpgCharModel>.Update.PullFilter(x => x.Items, i => i.Id == itemId);
+
+            var result = await collection.UpdateOneAsync(filter, update);
+
+            return result.IsAcknowledged ? Ok() : (IActionResult)BadRequest();
+        }
 
         private async Task<IActionResult> UpdateRpgModel(string id, UpdateDefinition<RpgCharModel> updateMethod, dynamic returnData)
         {

@@ -14,6 +14,9 @@ using MongoDB.Bson.Serialization;
 using dndCharApi.Models.CallOfCthulu;
 using dndCharApi.Models;
 using dndCharApi.Models.Session;
+using System;
+using System.Reflection;
+using System.Linq;
 
 namespace dndCharApi
 {
@@ -49,9 +52,19 @@ namespace dndCharApi
                     });
             });
 
-            SetupCharacterSheetModels(services);
+            //SetupCharacterSheetModels(services);
 
-            SetupAuth0(services);
+            services.AddSingleton<IAuthorizationHandler, HasScopeHandler>();
+            foreach (Type type in Assembly.GetAssembly(typeof(BaseCharacterSheet))
+                                  .GetTypes()
+                                  .Where(d =>
+                                    d.IsClass
+                                    && d.IsSubclassOf(typeof(BaseCharacterSheet))))
+            {
+                services.AddSingleton(typeof(ICharacterSheet), type);
+            }
+
+                SetupAuth0(services);
         }
 
         private void SetupAuth0(IServiceCollection services)
@@ -95,7 +108,7 @@ namespace dndCharApi
 
             AddCamelCaseConvention();
 
-            AddClassMapsForCharacterSheets();
+            //AddClassMapsForCharacterSheets();
 
             app.UseAuthentication();
 
