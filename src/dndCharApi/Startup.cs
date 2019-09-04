@@ -17,6 +17,8 @@ using dndCharApi.Models.Session;
 using System;
 using System.Reflection;
 using System.Linq;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
 namespace dndCharApi
 {
@@ -33,7 +35,15 @@ namespace dndCharApi
         {
             services.AddMvc(options =>
                                 options.Conventions.Add(new ApiExplorerVisibilityEnabledConvention()))
+                .AddJsonOptions(op =>
+                {
+                    op.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+                    op.SerializerSettings.DefaultValueHandling = DefaultValueHandling.Include;
+                    op.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
+                })
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+            services.AddResponseCompression();
 
             services.AddSingleton<DocumentStoreHolder>();
 
