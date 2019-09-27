@@ -22,13 +22,9 @@ namespace dndCharApi.Controllers
             MongoConfig = options.Value;
         }
 
-        /// <summary>
-        /// Test the api is live
-        /// </summary>
-        /// <returns>Everything fine</returns>
         [HttpGet]
         [Route("public")]
-        public JsonResult Public()
+        public IActionResult Public()
         {
             return Json(new
             {
@@ -39,7 +35,7 @@ namespace dndCharApi.Controllers
         [HttpGet]
         [Route("private")]
         [Authorize]
-        public JsonResult Private()
+        public IActionResult Private()
         {
             return Json(new
             {
@@ -50,7 +46,7 @@ namespace dndCharApi.Controllers
         [HttpGet]
         [Route("private-scoped")]
         [Authorize("read:messages")]
-        public JsonResult Scoped()
+        public IActionResult Scoped()
         {
             return Json(new
             {

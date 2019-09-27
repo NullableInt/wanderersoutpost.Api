@@ -19,7 +19,6 @@ using Newtonsoft.Json.Serialization;
 using Microsoft.OpenApi.Models;
 using System.IO;
 using Swashbuckle.AspNetCore.SwaggerGen;
-using Swashbuckle.AspNetCore.SwaggerUI;
 
 namespace dndCharApi
 {
@@ -79,9 +78,13 @@ namespace dndCharApi
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Some API", Version = "v1" });
                 var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
-                c.IncludeXmlComments(xmlPath, true);
+                c.IncludeXmlComments(xmlPath);
                 c.GeneratePolymorphicSchemas();
                 c.DescribeAllParametersInCamelCase();
+                c.CustomOperationIds(apiDesc =>
+                {
+                    return apiDesc.TryGetMethodInfo(out MethodInfo methodInfo) ? methodInfo.Name : null;
+                });
             });
         }
 
@@ -118,16 +121,12 @@ namespace dndCharApi
             app.UseSwagger(c =>
             {
                 c.RouteTemplate = "api-docs/{documentName}/swagger.json";
-            })
-            .UseSwaggerUI(c =>
+            });
+            app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/api-docs/v1/swagger.json", "Plz read this boyo man");
                 c.DocumentTitle = "Mmmyyyea bby";
                 c.RoutePrefix = "api-docs";
-                c.EnableDeepLinking();
-                c.DefaultModelExpandDepth(3);
-                c.DefaultModelRendering(ModelRendering.Model);
-                c.DocExpansion(DocExpansion.Full);
             });
 
             app.UseDeveloperExceptionPage();
