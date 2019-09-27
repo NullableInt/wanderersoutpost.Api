@@ -63,8 +63,7 @@ namespace dndCharApi.Controllers
         {
             var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
             dynamic.OwnerID = userId;
-
-            if (string.IsNullOrEmpty(id) || !ObjectId.TryParse(id, out var objectId))
+            if (string.IsNullOrEmpty(id) || !ObjectId.TryParse(id, out _))
             {
                 id = ObjectId.GenerateNewId().ToString();
             }
@@ -94,11 +93,10 @@ namespace dndCharApi.Controllers
         }
 
         [HttpGet("newChar/{id?}")]
-        public async Task<IActionResult> NewChar([FromRoute] string id = null)
+        public async Task<string> NewChar([FromRoute] string id = null)
         {
             var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
-
-            if (string.IsNullOrEmpty(id) || !ObjectId.TryParse(id, out var objectId))
+            if (string.IsNullOrEmpty(id) || !ObjectId.TryParse(id, out _))
             {
                 id = ObjectId.GenerateNewId().ToString();
             }
@@ -132,11 +130,11 @@ namespace dndCharApi.Controllers
 
             var collection = MongoDb.GetCollection<RpgCharModel>("RpgCharModels");
             await collection.InsertOneAsync(newChar);
-            return new JsonResult(id);
+            return id;
         }
 
         [HttpPost("newChar/{id?}")]
-        public Task<IActionResult> NewCharPost([FromRoute] string id = null)
+        public Task<string> NewCharPost([FromRoute] string id = null)
         {
             return NewChar(id);
         }

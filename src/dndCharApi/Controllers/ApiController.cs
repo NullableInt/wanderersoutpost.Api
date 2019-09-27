@@ -10,6 +10,8 @@ using MongoDB.Driver;
 
 namespace dndCharApi.Controllers
 {
+    [ApiConventionType(typeof(DefaultApiConventions))]
+    [ApiController]
     [Route("[controller]")]
     public class ApiController : Controller
     {
