@@ -24,10 +24,10 @@ namespace dndCharApi.Controllers
         }
 
         /// <summary>
-        /// æpotgfrhjkpølokfgkhjm
+        /// Stores an image and returns the url for it
         /// </summary>
-        /// <param name="imageFile">pøflkogojhnb</param>
-        /// <returns></returns>
+        /// <param name="imageFile">The <seealso cref="IFormFile"/> file</param>
+        /// <returns>The <seealso cref="Uri"/> of the image</returns>
         [ProducesResponseType(201)]
         [ProducesResponseType(400)]
         [HttpPost("uploadImage")]

@@ -58,6 +58,12 @@ namespace dndCharApi.Controllers
             return Ok(newCampagin.Id);
         }
 
+        /// <summary>
+        /// Adds a character to a campaign
+        /// </summary>
+        /// <param name="campaignId">The ID of the campaign</param>
+        /// <param name="characterId">The ID of the character</param>
+        /// <returns></returns>
         [HttpPost("{campaignId}/add/{characterId}")]
         public async Task<IActionResult> AddCharacter([FromRoute] string campaignId, [FromRoute] string characterId)
         {

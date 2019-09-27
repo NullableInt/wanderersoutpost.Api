@@ -23,6 +23,7 @@ namespace dndCharApi.Controllers
             MongoDb = holder.GetDefaultDatabase();
         }
 
+
         [HttpGet("")]
         public async Task<IActionResult> IndexAsync()
         {

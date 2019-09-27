@@ -1,8 +1,6 @@
-﻿using dndChar.Api.Util;
-using dndChar.Database;
+﻿using dndChar.Database;
 using dndCharApi.Authorization;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -18,8 +16,8 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Microsoft.OpenApi.Models;
 using System.IO;
-using Swashbuckle.AspNetCore.SwaggerGen;
 using Swashbuckle.AspNetCore.SwaggerUI;
+using System.Collections.Generic;
 
 namespace dndCharApi
 {
@@ -82,6 +80,22 @@ namespace dndCharApi
                 c.IncludeXmlComments(xmlPath, true);
                 c.GeneratePolymorphicSchemas();
                 c.DescribeAllParametersInCamelCase();
+                c.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
+                {
+                    Type = SecuritySchemeType.OAuth2,
+                    Flows = new OpenApiOAuthFlows
+                    {
+                        Implicit = new OpenApiOAuthFlow
+                        {
+                            AuthorizationUrl = new Uri($"https://{Configuration["Auth0:Domain"]}", UriKind.RelativeOrAbsolute),
+                            Scopes = new Dictionary<string, string>
+                            {
+                                { "readAccess", "Access read operations" },
+                                { "writeAccess", "Access write operations" }
+                            }
+                        }
+                    }
+                });
             });
         }
 
@@ -127,7 +141,7 @@ namespace dndCharApi
                 c.EnableDeepLinking();
                 c.DefaultModelExpandDepth(3);
                 c.DefaultModelRendering(ModelRendering.Model);
-                c.DocExpansion(DocExpansion.Full);
+                c.DocExpansion(DocExpansion.List);
             });
 
             app.UseDeveloperExceptionPage();

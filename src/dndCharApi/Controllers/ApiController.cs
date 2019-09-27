@@ -24,6 +24,10 @@ namespace dndCharApi.Controllers
             MongoConfig = options.Value;
         }
 
+        /// <summary>
+        /// Checks that the api is live
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Route("public")]
         public IActionResult Public()
