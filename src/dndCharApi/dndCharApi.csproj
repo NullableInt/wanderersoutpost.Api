@@ -32,10 +32,4 @@
     </Content>
   </ItemGroup>
 
-  <ItemGroup>
-    <None Update="dndCharApi.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-
 </Project>
