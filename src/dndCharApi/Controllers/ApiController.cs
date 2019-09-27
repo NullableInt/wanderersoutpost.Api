@@ -76,6 +76,7 @@ namespace dndCharApi.Controllers
             return Json(System.Environment.GetEnvironmentVariable("MongodbUrl"));
         }
 
+        [ProducesResponseType(typeof(RpgCharModel), 200)]
         [HttpGet("mock")]
         public IActionResult Mock()
         {

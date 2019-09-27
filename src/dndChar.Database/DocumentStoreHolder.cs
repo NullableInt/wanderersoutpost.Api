@@ -6,11 +6,10 @@ namespace dndChar.Database
     public class DocumentStoreHolder
     {
         public const string CharDatabaseName = "RpgCharModelDb";
-        public DocumentStoreHolder(IOptions<MongoConfig> options)
+        public DocumentStoreHolder()
         {
             Store = new MongoClient(System.Environment.GetEnvironmentVariable("MongodbUrl"));
         }
-
 
         public IMongoClient Store { get; private set; }
 

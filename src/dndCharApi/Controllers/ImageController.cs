@@ -23,6 +23,8 @@ namespace dndCharApi.Controllers
             StorageAccount = CloudStorageAccount.Parse(storageConnectionString);
         }
 
+        [ProducesResponseType(201)]
+        [ProducesResponseType(400)]
         [HttpPost("uploadImage")]
         public async Task<IActionResult> UploadImage(IFormFile imageFile)
         {

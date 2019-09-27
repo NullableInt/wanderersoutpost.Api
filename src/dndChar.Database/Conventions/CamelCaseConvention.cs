@@ -1,8 +1,5 @@
 ﻿using MongoDB.Bson.Serialization;
 using MongoDB.Bson.Serialization.Conventions;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace dndChar.Database.Conventions
 {

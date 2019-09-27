@@ -9,16 +9,16 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using MongoDB.Bson.Serialization.Conventions;
-using dndCharApi.Models.RpgChar;
 using MongoDB.Bson.Serialization;
-using dndCharApi.Models.CallOfCthulu;
 using dndCharApi.Models;
-using dndCharApi.Models.Session;
 using System;
 using System.Reflection;
 using System.Linq;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+using Microsoft.OpenApi.Models;
+using System.IO;
+using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace dndCharApi
 {
@@ -72,6 +72,20 @@ namespace dndCharApi
             }
 
             SetupAuth0(services);
+
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Some API", Version = "v1" });
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                c.IncludeXmlComments(xmlPath);
+                c.GeneratePolymorphicSchemas();
+                c.DescribeAllParametersInCamelCase();
+                c.CustomOperationIds(apiDesc =>
+                {
+                    return apiDesc.TryGetMethodInfo(out MethodInfo methodInfo) ? methodInfo.Name : null;
+                });
+            });
         }
 
         private void SetupAuth0(IServiceCollection services)
@@ -102,17 +116,21 @@ namespace dndCharApi
             services.AddSingleton<IAuthorizationHandler, HasScopeHandler>();
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app)
         {
-            if (env.IsDevelopment())
+            app.UseSwagger(c =>
             {
-                app.UseDeveloperExceptionPage();
-            }
-            else
+                c.RouteTemplate = "api-docs/{documentName}/swagger.json";
+            });
+            app.UseSwaggerUI(c =>
             {
-                app.UseDeveloperExceptionPage();
-            }
+                c.SwaggerEndpoint("/api-docs/v1/swagger.json", "Plz read this boyo man");
+                c.DocumentTitle = "Mmmyyyea bby";
+                c.RoutePrefix = "api-docs";
+            });
 
+            app.UseDeveloperExceptionPage();
+            
             AddCamelCaseConvention();
 
             app.UseAuthentication();
@@ -124,12 +142,13 @@ namespace dndCharApi
                 .AllowAnyHeader()
                 .AllowAnyMethod());
 
-            app.UseMvc(routes =>
-            {
-                routes.MapRoute(
-                    name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
-            });
+            //app.UseMvc(routes =>
+            //{
+            //    routes.MapRoute(
+            //        name: "default",
+            //        template: "{controller=Home}/{action=Index}/{id?}");
+            //});
+            app.UseMvc();
         }
 
         private static void AddCamelCaseConvention()

@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>dndCharApi</name>
+    </assembly>
+    <members>
+        <member name="M:dndCharApi.Controllers.ApiController.Claims">
+            <summary>
+            This is a helper action. It allows you to easily view all the claims of the token
+            </summary>
+            <returns></returns>
+        </member>
+    </members>
+</doc>
