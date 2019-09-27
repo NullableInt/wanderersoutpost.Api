@@ -10,7 +10,7 @@ using MongoDB.Driver;
 
 namespace dndCharApi.Controllers
 {
-    [ApiConventionType(typeof(DefaultApiConventions))]
+    [ApiExplorerSettings(IgnoreApi = false, GroupName = nameof(ApiController))]
     [ApiController]
     [Route("[controller]")]
     public class ApiController : Controller
@@ -34,7 +34,7 @@ namespace dndCharApi.Controllers
             });
         }
 
-        [HttpGet]
+        [HttpGet("private")]
         [Route("private")]
         [Authorize]
         public IActionResult Private()

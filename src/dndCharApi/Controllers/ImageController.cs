@@ -23,6 +23,11 @@ namespace dndCharApi.Controllers
             StorageAccount = CloudStorageAccount.Parse(storageConnectionString);
         }
 
+        /// <summary>
+        /// æpotgfrhjkpølokfgkhjm
+        /// </summary>
+        /// <param name="imageFile">pøflkogojhnb</param>
+        /// <returns></returns>
         [ProducesResponseType(201)]
         [ProducesResponseType(400)]
         [HttpPost("uploadImage")]

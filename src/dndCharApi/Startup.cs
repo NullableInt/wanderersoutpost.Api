@@ -34,8 +34,8 @@ namespace dndCharApi
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc(options =>
-                                options.Conventions.Add(new ApiExplorerVisibilityEnabledConvention()))
+            services
+                .AddMvc()
                 .AddJsonOptions(op =>
                 {
                     op.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
@@ -143,12 +143,6 @@ namespace dndCharApi
                 .AllowAnyHeader()
                 .AllowAnyMethod());
 
-            //app.UseMvc(routes =>
-            //{
-            //    routes.MapRoute(
-            //        name: "default",
-            //        template: "{controller=Home}/{action=Index}/{id?}");
-            //});
             app.UseMvc();
         }
 
