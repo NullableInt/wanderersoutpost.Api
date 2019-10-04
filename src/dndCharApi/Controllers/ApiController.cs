@@ -82,11 +82,11 @@ namespace dndCharApi.Controllers
             return Json(System.Environment.GetEnvironmentVariable("MongodbUrl"));
         }
 
-        [ProducesResponseType(typeof(RpgCharModel), 200)]
+        [ProducesResponseType(typeof(FiveEModel), 200)]
         [HttpGet("mock")]
         public IActionResult Mock()
         {
-            return Json(new RpgCharModel
+            return Json(new FiveEModel
             {
                 AbilityScores = new List<AbilityScore>
                 {

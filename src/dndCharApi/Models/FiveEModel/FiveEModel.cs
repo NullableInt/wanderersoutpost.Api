@@ -2,7 +2,7 @@
 
 namespace dndCharApi.Models.RpgChar
 {
-    public class RpgCharModel : BaseCharacterSheet
+    public class FiveEModel : BaseCharacterSheet
     {
         public Profile Profile { get; set; }
         public List<Trait> Traits { get; set; }
