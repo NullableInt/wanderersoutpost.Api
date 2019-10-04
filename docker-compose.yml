@@ -5,6 +5,6 @@ services:
     image: ${DOCKER_REGISTRY-}dndcharapi
     build:
       context: .
-      dockerfile: src/dndCharApi/Dockerfile
+      dockerfile: src/TheWanderersOutpost.Api/Dockerfile
     ports:
       - "3010:3010"

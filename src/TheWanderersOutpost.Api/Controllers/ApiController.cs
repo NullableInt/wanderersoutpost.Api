@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using dndChar.Database;
+using TheWanderersOutpost.Api.Database;
 using TheWanderersOutpost.Api.Models.RpgChar;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

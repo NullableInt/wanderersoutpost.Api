@@ -1,7 +1,7 @@
 ﻿using MongoDB.Bson.Serialization;
 using MongoDB.Bson.Serialization.Conventions;
 
-namespace dndChar.Database.Conventions
+namespace TheWanderersOutpost.Api.Database.Conventions
 {
     public class CamelCaseConvention : IMemberMapConvention
     {

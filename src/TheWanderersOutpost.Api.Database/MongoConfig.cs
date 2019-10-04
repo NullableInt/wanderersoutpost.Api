@@ -1,4 +1,4 @@
-﻿namespace dndChar.Database
+﻿namespace TheWanderersOutpost.Api.Database
 {
     public class MongoConfig
     {

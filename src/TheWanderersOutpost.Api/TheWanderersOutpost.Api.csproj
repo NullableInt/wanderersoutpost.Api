@@ -26,7 +26,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\dndChar.Database\TheWanderersOutpost.Api.Database.csproj" />
+    <ProjectReference Include="..\TheWanderersOutpost.Api.Database\TheWanderersOutpost.Api.Database.csproj" />
   </ItemGroup>
 
   <ItemGroup>

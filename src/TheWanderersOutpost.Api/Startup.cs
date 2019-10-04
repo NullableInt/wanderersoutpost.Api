@@ -1,4 +1,4 @@
-﻿using dndChar.Database;
+﻿using TheWanderersOutpost.Api.Database;
 using TheWanderersOutpost.Api.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc;

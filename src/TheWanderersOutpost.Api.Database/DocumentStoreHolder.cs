@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 
-namespace dndChar.Database
+namespace TheWanderersOutpost.Api.Database
 {
     public class DocumentStoreHolder
     {

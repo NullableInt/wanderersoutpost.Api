@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using dndChar.Database;
+using TheWanderersOutpost.Api.Database;
 using TheWanderersOutpost.Api.Models;
 using TheWanderersOutpost.Api.Models.Session;
 using Microsoft.AspNetCore.Authorization;
