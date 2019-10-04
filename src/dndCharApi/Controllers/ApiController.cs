@@ -1,14 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using dndChar.Database;
-using dndCharApi.Models.RpgChar;
+using TheWanderersOutpost.Api.Models.RpgChar;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using MongoDB.Bson;
 using MongoDB.Driver;
 
-namespace dndCharApi.Controllers
+namespace TheWanderersOutpost.Api.Controllers
 {
     [ApiExplorerSettings(IgnoreApi = false, GroupName = nameof(ApiController))]
     [ApiController]

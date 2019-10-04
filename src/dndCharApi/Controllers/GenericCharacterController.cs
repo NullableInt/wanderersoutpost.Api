@@ -1,6 +1,6 @@
 ﻿using dndChar.Database;
-using dndCharApi.Extensions;
-using dndCharApi.Models;
+using TheWanderersOutpost.Api.Extensions;
+using TheWanderersOutpost.Api.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Bson;
@@ -11,7 +11,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
-namespace dndCharApi.Controllers
+namespace TheWanderersOutpost.Api.Controllers
 {
     [Route("")]
     [Authorize]

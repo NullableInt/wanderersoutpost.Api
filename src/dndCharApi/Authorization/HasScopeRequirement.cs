@@ -1,7 +1,7 @@
 using System;
 using Microsoft.AspNetCore.Authorization;
 
-namespace dndCharApi.Authorization
+namespace TheWanderersOutpost.Api.Authorization
 {
     public class HasScopeRequirement : IAuthorizationRequirement
     {

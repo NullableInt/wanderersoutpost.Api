@@ -1,7 +1,7 @@
 ﻿using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Bson;
 
-namespace dndCharApi.Models
+namespace TheWanderersOutpost.Api.Models
 {
     public class BaseCharacterSheet : ICharacterSheet
     {

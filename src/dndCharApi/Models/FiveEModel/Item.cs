@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace dndCharApi.Models.RpgChar
+namespace TheWanderersOutpost.Api.Models.RpgChar
 {
     public class Item
     {

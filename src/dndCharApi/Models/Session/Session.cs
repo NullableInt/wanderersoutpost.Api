@@ -1,7 +1,7 @@
 ﻿using MongoDB.Bson;
 using System.Collections.Generic;
 
-namespace dndCharApi.Models.Session
+namespace TheWanderersOutpost.Api.Models.Session
 {
     public class Session
     {

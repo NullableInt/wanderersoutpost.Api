@@ -1,4 +1,4 @@
-﻿namespace dndCharApi
+﻿namespace TheWanderersOutpost.Api
 {
     public class AllowedCors
     {

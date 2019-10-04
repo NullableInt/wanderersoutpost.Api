@@ -2,7 +2,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 
-namespace dndCharApi.Authorization
+namespace TheWanderersOutpost.Api.Authorization
 {
     public class HasScopeHandler : AuthorizationHandler<HasScopeRequirement>
     {

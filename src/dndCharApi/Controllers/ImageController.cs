@@ -6,7 +6,7 @@ using Microsoft.Azure.Storage.Blob;
 using System;
 using System.Threading.Tasks;
 
-namespace dndCharApi.Controllers
+namespace TheWanderersOutpost.Api.Controllers
 {
     [Route("[controller]")]
     [ApiController]

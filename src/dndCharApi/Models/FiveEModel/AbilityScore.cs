@@ -1,7 +1,7 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
-namespace dndCharApi.Models.RpgChar
+namespace TheWanderersOutpost.Api.Models.RpgChar
 {
     public class AbilityScore
     {

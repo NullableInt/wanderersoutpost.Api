@@ -1,4 +1,4 @@
-namespace dndCharApi.Models
+namespace TheWanderersOutpost.Api.Models
 {
     public class ErrorViewModel
     {

@@ -2,13 +2,13 @@
 using System.Security.Claims;
 using System.Threading.Tasks;
 using dndChar.Database;
-using dndCharApi.Models.RpgChar;
+using TheWanderersOutpost.Api.Models.RpgChar;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Bson;
 using MongoDB.Driver;
 
-namespace dndCharApi.Controllers
+namespace TheWanderersOutpost.Api.Controllers
 {
     [Route("[controller]")]
     [Route("characters")]

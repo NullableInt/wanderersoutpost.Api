@@ -11,7 +11,7 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>O:\Git\dndChar.Api\src\dndCharApi\dndCharApi.xml</DocumentationFile>
+    <DocumentationFile>TheWanderersOutpost.Api.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
@@ -25,7 +25,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\dndChar.Database\dndChar.Database.csproj" />
+    <ProjectReference Include="..\dndChar.Database\TheWanderersOutpost.Api.Database.csproj" />
   </ItemGroup>
 
   <ItemGroup>

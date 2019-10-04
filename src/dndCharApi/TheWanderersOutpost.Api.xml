@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>TheWanderersOutpost.Api</name>
+    </assembly>
+    <members>
+        <member name="M:TheWanderersOutpost.Api.Controllers.ApiController.Public">
+            <summary>
+            Checks that the api is live
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:TheWanderersOutpost.Api.Controllers.ApiController.Claims">
+            <summary>
+            This is a helper action. It allows you to easily view all the claims of the token
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:TheWanderersOutpost.Api.Controllers.CampaignController.AddCharacter(System.String,System.String)">
+            <summary>
+            Adds a character to a campaign
+            </summary>
+            <param name="campaignId">The ID of the campaign</param>
+            <param name="characterId">The ID of the character</param>
+            <returns></returns>
+        </member>
+        <member name="M:TheWanderersOutpost.Api.Controllers.ImageController.UploadImage(Microsoft.AspNetCore.Http.IFormFile)">
+            <summary>
+            Stores an image and returns the url for it
+            </summary>
+            <param name="imageFile">The <seealso cref="T:Microsoft.AspNetCore.Http.IFormFile"/> file</param>
+            <returns>The <seealso cref="T:System.Uri"/> of the image</returns>
+        </member>
+    </members>
+</doc>

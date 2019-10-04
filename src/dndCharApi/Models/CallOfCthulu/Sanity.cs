@@ -1,4 +1,4 @@
-﻿namespace dndCharApi.Models.CallOfCthulu
+﻿namespace TheWanderersOutpost.Api.Models.CallOfCthulu
 {
     public class Sanity
     {

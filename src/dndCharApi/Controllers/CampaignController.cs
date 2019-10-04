@@ -4,14 +4,14 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using dndChar.Database;
-using dndCharApi.Models;
-using dndCharApi.Models.Session;
+using TheWanderersOutpost.Api.Models;
+using TheWanderersOutpost.Api.Models.Session;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Bson;
 using MongoDB.Driver;
 
-namespace dndCharApi.Controllers
+namespace TheWanderersOutpost.Api.Controllers
 {
     [Route("[controller]")]
     [ApiController]

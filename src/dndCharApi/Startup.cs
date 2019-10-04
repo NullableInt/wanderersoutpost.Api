@@ -1,5 +1,5 @@
 ﻿using dndChar.Database;
-using dndCharApi.Authorization;
+using TheWanderersOutpost.Api.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using MongoDB.Bson.Serialization.Conventions;
 using MongoDB.Bson.Serialization;
-using dndCharApi.Models;
+using TheWanderersOutpost.Api.Models;
 using System;
 using System.Reflection;
 using System.Linq;
@@ -19,7 +19,7 @@ using System.IO;
 using Swashbuckle.AspNetCore.SwaggerUI;
 using System.Collections.Generic;
 
-namespace dndCharApi
+namespace TheWanderersOutpost.Api
 {
     public class Startup
     {

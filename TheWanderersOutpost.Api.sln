@@ -5,11 +5,11 @@ VisualStudioVersion = 16.0.28803.452
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{E26682F2-14B0-447D-B491-49DF1CC0E293}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "dndChar.Database", "src\dndChar.Database\dndChar.Database.csproj", "{3F9329F5-E48A-47F8-9B7B-B17B1927EF5A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TheWanderersOutpost.Api.Database", "src\dndChar.Database\TheWanderersOutpost.Api.Database.csproj", "{3F9329F5-E48A-47F8-9B7B-B17B1927EF5A}"
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{D4781D57-4B52-4C1B-9AB1-884238A52088}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "dndCharApi", "src\dndCharApi\dndCharApi.csproj", "{93C6C467-FCA4-448D-A2B4-7E2D9A306D62}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TheWanderersOutpost.Api", "src\dndCharApi\TheWanderersOutpost.Api.csproj", "{93C6C467-FCA4-448D-A2B4-7E2D9A306D62}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

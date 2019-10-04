@@ -1,4 +1,4 @@
-﻿namespace dndCharApi.Extensions
+﻿namespace TheWanderersOutpost.Api.Extensions
 {
     public static class ExtensionMethods
     {
