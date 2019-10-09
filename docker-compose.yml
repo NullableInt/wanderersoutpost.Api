@@ -1,8 +1,8 @@
 version: '3.4'
 
 services:
-  dndcharapi:
-    image: ${DOCKER_REGISTRY-}dndcharapi
+  TheWanderersOutpost.Api:
+    image: ${DOCKER_REGISTRY-}TheWanderersOutpost.Api
     build:
       context: .
       dockerfile: src/TheWanderersOutpost.Api/Dockerfile
