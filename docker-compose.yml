@@ -1,8 +1,7 @@
 version: '3.4'
 
 services:
-  TheWanderersOutpost.Api:
-    image: ${DOCKER_REGISTRY-}TheWanderersOutpost.Api
+  thewanderersoutpost.api:
     build:
       context: .
       dockerfile: src/TheWanderersOutpost.Api/Dockerfile
