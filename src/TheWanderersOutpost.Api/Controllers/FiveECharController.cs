@@ -10,7 +10,6 @@ using MongoDB.Driver;
 
 namespace TheWanderersOutpost.Api.Controllers
 {
-    [Route("[controller]")]
     [Route("characters")]
     [Route("5e")]
     [Route("rpgChar")]
