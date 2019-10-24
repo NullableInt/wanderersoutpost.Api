@@ -273,7 +273,7 @@ namespace TheWanderersOutpost.Api.Controllers
             return Ok();
         }
 
-        [HttpPatch("{charId}/Items/{itemId}")]
+        [HttpPatch("{characterId}/Items/{itemId}")]
         public async Task<IActionResult> UpdateSingleItem([FromRoute] string characterId, [FromRoute] string itemId, [FromBody] Item item)
         {
             var collection = MongoDb.GetCollection<FiveEModel>("RpgCharModels");
@@ -292,7 +292,7 @@ namespace TheWanderersOutpost.Api.Controllers
             return result.IsAcknowledged ? Ok() : (IActionResult)BadRequest();
         }
 
-        [HttpDelete("{charId}/Items/{itemId}")]
+        [HttpDelete("{characterId}/Items/{itemId}")]
         public async Task<IActionResult> DeleteSingleItem([FromRoute] string characterId, [FromRoute] string itemId)
         {
             var collection = MongoDb.GetCollection<FiveEModel>("RpgCharModels");
