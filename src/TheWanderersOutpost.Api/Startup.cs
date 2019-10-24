@@ -18,6 +18,7 @@ using Microsoft.OpenApi.Models;
 using System.IO;
 using Swashbuckle.AspNetCore.SwaggerUI;
 using System.Collections.Generic;
+using TheWanderersOutpost.Api.Database.Conventions;
 
 namespace TheWanderersOutpost.Api
 {
@@ -164,10 +165,10 @@ namespace TheWanderersOutpost.Api
         {
             var pack = new ConventionPack
             {
-                new CamelCaseElementNameConvention()
+                new CamelCaseConvention()
             };
 
-            ConventionRegistry.Register(new CamelCaseElementNameConvention().Name, pack, t => true);
+            ConventionRegistry.Register(new CamelCaseConvention().Name, pack, t => true);
         }
     }
 }
