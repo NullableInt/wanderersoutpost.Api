@@ -316,7 +316,15 @@ namespace TheWanderersOutpost.Api.Controllers
             var collection = MongoDb.GetCollection<FiveEModel>("RpgCharModels");
             var stringId = id.ToString();
             updateMethod = updateMethod.CurrentDate(s => s._lastUpdated);
-            await collection.UpdateOneAsync(filter => filter.Id == stringId, updateMethod);
+            try
+            {
+                await collection.UpdateOneAsync(filter => filter.Id == stringId, updateMethod);
+            }
+            catch (System.Exception e)
+            {
+                throw e;
+            }
+            
             return Ok(returnData);
         }
 
