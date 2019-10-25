@@ -10,9 +10,8 @@ using MongoDB.Driver;
 
 namespace TheWanderersOutpost.Api.Controllers
 {
-    [ApiExplorerSettings(IgnoreApi = false, GroupName = nameof(ApiController))]
     [ApiController]
-    [Route("[controller]")]
+    [Route("api")]
     public class ApiController : Controller
     {
         public IMongoDatabase MongoDb { get; set; }
@@ -38,10 +37,10 @@ namespace TheWanderersOutpost.Api.Controllers
             });
         }
 
-        [HttpGet("private")]
+        [HttpGet()]
         [Route("private")]
         [Authorize]
-        public IActionResult Private()
+        public IActionResult PrivateEndpoint()
         {
             return Json(new
             {
@@ -379,7 +378,7 @@ namespace TheWanderersOutpost.Api.Controllers
 
         [HttpPatch("publicPatch")]
         [HttpPost("publicPost")]
-        public IActionResult testPublic([FromBody] object propertyValue)
+        public IActionResult TestPublic([FromBody] object propertyValue)
         {
             return Json(propertyValue);
         }
@@ -387,7 +386,7 @@ namespace TheWanderersOutpost.Api.Controllers
         [HttpPatch("privatePatch")]
         [HttpPost("privatePost")]
         [Authorize]
-        public IActionResult testPrivate([FromBody] object propertyValue)
+        public IActionResult TestPrivate([FromBody] object propertyValue)
         {
             return Json(propertyValue);
         }

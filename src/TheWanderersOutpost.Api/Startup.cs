@@ -141,7 +141,7 @@ namespace TheWanderersOutpost.Api
                 c.EnableDeepLinking();
                 c.DefaultModelExpandDepth(3);
                 c.DefaultModelRendering(ModelRendering.Model);
-                c.DocExpansion(DocExpansion.List);
+                c.DocExpansion(DocExpansion.None);
             });
 
             app.UseDeveloperExceptionPage();
