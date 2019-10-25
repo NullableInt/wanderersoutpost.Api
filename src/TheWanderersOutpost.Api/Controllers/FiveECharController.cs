@@ -47,43 +47,6 @@ namespace TheWanderersOutpost.Api.Controllers
             }
         }
 
-        [HttpGet("test")]
-        [AllowAnonymous]
-        public async Task<string> Test()
-        {
-            string id = ObjectId.GenerateNewId().ToString();
-            var newChar = new FiveEModel
-            {
-                AbilityScores = new List<AbilityScore>(),
-                CharacterAppearance = new List<CharacterAppearance>(),
-                DeathSave = new List<DeathSave>(),
-                Equipment = new Equipment(),
-                Feats = new List<Feat>(),
-                FeaturesTraits = new List<FeaturesTrait>(),
-                Health = new Health(),
-                HitDice = new List<HitDice>(),
-                HitDiceType = new List<HitDiceTypeModel>(),
-                Id = id.ToString(),
-                Items = new List<Item>(),
-                MagicItems = new List<MagicItem>(),
-                Notes = new List<Note>(),
-                OwnerID = "thisIsATest",
-                Profile = new Profile(),
-                SavingThrows = new List<SavingThrow>(),
-                Skills = new List<Skill>(),
-                Spells = new Spells(),
-                Status = new List<Status>(),
-                Traits = new List<Trait>(),
-                Treasure = new List<Treasure>(),
-                _created = new BsonDateTime(System.DateTime.UtcNow),
-                _lastUpdated = new BsonDateTime(System.DateTime.UtcNow)
-            };
-
-            var collection = MongoDb.GetCollection<FiveEModel>("RpgCharModels");
-            await collection.InsertOneAsync(newChar);
-            return id;
-        }
-
         [HttpGet("{id}")]
         public async Task<IActionResult> GetAllById([FromRoute] string id)
         {
