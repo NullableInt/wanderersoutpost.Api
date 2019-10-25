@@ -1,9 +1,9 @@
 ﻿using System.IO;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Azure.Storage.Shared.Protocol;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Sentry;
 
 namespace TheWanderersOutpost.Api
 {
@@ -31,7 +31,8 @@ namespace TheWanderersOutpost.Api
                     logging.AddDebug();
                     logging.AddEventSourceLogger();
                 })
-                .UseStartup<Startup>();
+                .UseStartup<Startup>()
+                .UseSentry();
         }
     }
 }
