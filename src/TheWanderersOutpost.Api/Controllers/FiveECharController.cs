@@ -12,7 +12,6 @@ namespace TheWanderersOutpost.Api.Controllers
 {
     [Route("characters")]
     [Route("5e")]
-    [Route("rpgChar")]
     [ApiController]
     [Authorize]
     public class FiveECharController : Controller

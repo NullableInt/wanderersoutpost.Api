@@ -7,8 +7,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using MongoDB.Bson;
 using MongoDB.Driver;
-using System.Threading.Tasks;
-using Newtonsoft.Json.Linq;
 
 namespace TheWanderersOutpost.Api.Controllers
 {
