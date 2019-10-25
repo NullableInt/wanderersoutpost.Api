@@ -8,6 +8,7 @@ using Microsoft.Extensions.Options;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using System.Threading.Tasks;
+using Newtonsoft.Json.Linq;
 
 namespace TheWanderersOutpost.Api.Controllers
 {
@@ -376,6 +377,21 @@ namespace TheWanderersOutpost.Api.Controllers
                 _created = new BsonDateTime(System.DateTime.UtcNow),
                 _lastUpdated = new BsonDateTime(System.DateTime.UtcNow)
             });
+        }
+
+        [HttpPatch("publicPatch")]
+        [HttpPost("publicPost")]
+        public IActionResult testPublic([FromBody] object propertyValue)
+        {
+            return Json(propertyValue);
+        }
+
+        [HttpPatch("privatePatch")]
+        [HttpPost("privatePost")]
+        [Authorize]
+        public IActionResult testPrivate([FromBody] object propertyValue)
+        {
+            return Json(propertyValue);
         }
     }
 }
