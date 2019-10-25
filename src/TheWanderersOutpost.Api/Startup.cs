@@ -157,7 +157,7 @@ namespace TheWanderersOutpost.Api
                 .AllowAnyHeader()
                 .AllowAnyMethod());
 
-            app.UseMvc();
+            app.UseRouting().UseEndpoints(e => e.MapControllers());
         }
 
         private static void AddCamelCaseConvention()

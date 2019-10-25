@@ -1,8 +1,8 @@
-FROM mcr.microsoft.com/dotnet/core/aspnet:3.0-buster-slim AS base
+FROM mcr.microsoft.com/dotnet/core/aspnet:2.2-stretch-slim AS base
 WORKDIR /app
 EXPOSE 80
 
-FROM mcr.microsoft.com/dotnet/core/sdk:3.0-buster AS build
+FROM mcr.microsoft.com/dotnet/core/sdk:2.2-stretch AS build
 WORKDIR /src
 COPY ["src/TheWanderersOutpost.Api/TheWanderersOutpost.Api.csproj", "src/TheWanderersOutpost.Api/"]
 COPY ["src/TheWanderersOutpost.Api.Database/TheWanderersOutpost.Api.Database.csproj", "src/TheWanderersOutpost.Api.Database/"]
