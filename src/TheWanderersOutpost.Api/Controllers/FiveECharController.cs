@@ -266,9 +266,9 @@ namespace TheWanderersOutpost.Api.Controllers
 
             var update = Builders<FiveEModel>.Update.Push(x => x.Items, item);
 
-            var result = await collection.FindOneAndUpdateAsync(filter, update);
-            
-            return Ok(result.Items);
+            //await collection.FindOneAndUpdateAsync(filter, update);
+            var result = await collection.UpdateOneAsync(filter, update, new UpdateOptions { IsUpsert = true });
+            return result.IsAcknowledged ? Ok(result) : (IActionResult)BadRequest();
         }
 
         [HttpPatch("{characterId}/Items/{itemId}")]
