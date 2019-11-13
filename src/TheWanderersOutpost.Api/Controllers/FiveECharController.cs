@@ -261,7 +261,7 @@ namespace TheWanderersOutpost.Api.Controllers
             var userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
 
             var filter = Builders<FiveEModel>.Filter.And(
-                Builders<FiveEModel>.Filter.Eq("_id", ObjectId.Parse(id)),
+                Builders<FiveEModel>.Filter.Eq(x => x.Id, id),
                 Builders<FiveEModel>.Filter.Eq(x => x.OwnerID, userId));
 
             var update = Builders<FiveEModel>.Update.Push(x => x.Items, item);
