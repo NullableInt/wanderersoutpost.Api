@@ -255,14 +255,13 @@ namespace TheWanderersOutpost.Api.Controllers
         public async Task<IActionResult> UpdateFeats([FromRoute] string id, [FromBody] List<Feat> feats) => await UpdateRpgModel(id, Builders<FiveEModel>.Update.Set(sheet => sheet.Feats, feats), feats);
 
         [HttpPost("{id}/Items")]
-        public async Task<IActionResult> InsertOneItem([FromRoute] string charId, [FromBody] Item item)
+        public async Task<IActionResult> InsertOneItem([FromRoute] string id, [FromBody] Item item)
         {
             var collection = MongoDb.GetCollection<FiveEModel>("RpgCharModels");
-            var deleteCollection = MongoDb.GetCollection<FiveEModel>("RpgCharModelsDeleted");
             var userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
 
             var filter = Builders<FiveEModel>.Filter.And(
-                Builders<FiveEModel>.Filter.Eq(x => x.Id, charId),
+                Builders<FiveEModel>.Filter.Eq(x => x.Id, id),
                 Builders<FiveEModel>.Filter.Eq(x => x.OwnerID, userId));
 
             var update = Builders<FiveEModel>.Update.Push(x => x.Items, item);
