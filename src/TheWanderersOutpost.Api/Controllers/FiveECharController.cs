@@ -286,7 +286,7 @@ namespace TheWanderersOutpost.Api.Controllers
 
             var update = Builders<FiveEModel>.Update.Set(x => x.Items[-1], item);
 
-            var result = await collection.UpdateOneAsync(filter, update);
+            var result = await collection.UpdateOneAsync(filter, update, new UpdateOptions { IsUpsert = true });
 
             return result.IsAcknowledged ? Ok() : (IActionResult)BadRequest();
         }
