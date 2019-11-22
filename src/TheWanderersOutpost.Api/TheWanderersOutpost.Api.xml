@@ -24,6 +24,12 @@
             <param name="characterId">The ID of the character</param>
             <returns></returns>
         </member>
+        <member name="M:TheWanderersOutpost.Api.Controllers.ChaosController.Public">
+            <summary>
+            Checks that the api is live
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:TheWanderersOutpost.Api.Controllers.ImageController.UploadImage(Microsoft.AspNetCore.Http.IFormFile)">
             <summary>
             Stores an image and returns the url for it

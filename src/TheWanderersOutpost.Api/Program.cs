@@ -7,7 +7,7 @@ using Sentry;
 
 namespace TheWanderersOutpost.Api
 {
-    public class Program
+    public static class Program
     {
         public static void Main(string[] args)
         {
@@ -32,7 +32,10 @@ namespace TheWanderersOutpost.Api
                     logging.AddEventSourceLogger();
                 })
                 .UseStartup<Startup>()
-                .UseSentry();
+#if !DEBUG
+                .UseSentry()
+#endif
+                ;
         }
     }
 }

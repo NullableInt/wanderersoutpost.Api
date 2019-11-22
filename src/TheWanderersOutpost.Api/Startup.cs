@@ -14,10 +14,6 @@ using System.Reflection;
 using System.Linq;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
-using Microsoft.OpenApi.Models;
-using System.IO;
-using Swashbuckle.AspNetCore.SwaggerUI;
-using System.Collections.Generic;
 
 namespace TheWanderersOutpost.Api
 {
@@ -72,30 +68,9 @@ namespace TheWanderersOutpost.Api
 
             SetupAuth0(services);
 
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Some API", Version = "v1" });
-                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
-                c.IncludeXmlComments(xmlPath, true);
-                c.GeneratePolymorphicSchemas();
-                c.DescribeAllParametersInCamelCase();
-                c.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
-                {
-                    Type = SecuritySchemeType.OAuth2,
-                    Flows = new OpenApiOAuthFlows
-                    {
-                        Implicit = new OpenApiOAuthFlow
-                        {
-                            AuthorizationUrl = new Uri($"https://{Configuration["Auth0:Domain"]}", UriKind.RelativeOrAbsolute),
-                            Scopes = new Dictionary<string, string>
-                            {
-                                { "readAccess", "Access read operations" },
-                                { "writeAccess", "Access write operations" }
-                            }
-                        }
-                    }
-                });
+            services.AddOpenApiDocument(settings => {
+                settings.SchemaType = NJsonSchema.SchemaType.OpenApi3;
+                settings.OperationProcessors.Insert(settings.OperationProcessors.Count, new OperationAnonymiserProcessor());
             });
         }
 
@@ -125,25 +100,11 @@ namespace TheWanderersOutpost.Api
 
             // register the scope authorization handler
             services.AddSingleton<IAuthorizationHandler, HasScopeHandler>();
+
         }
 
         public void Configure(IApplicationBuilder app)
         {
-            app.UseSwagger(c =>
-            {
-                c.RouteTemplate = "api-docs/{documentName}/swagger.json";
-            })
-            .UseSwaggerUI(c =>
-            {
-                c.SwaggerEndpoint("/api-docs/v1/swagger.json", "Plz read this boyo man");
-                c.DocumentTitle = "Mmmyyyea bby";
-                c.RoutePrefix = "api-docs";
-                c.EnableDeepLinking();
-                c.DefaultModelExpandDepth(3);
-                c.DefaultModelRendering(ModelRendering.Model);
-                c.DocExpansion(DocExpansion.None);
-            });
-
             app.UseDeveloperExceptionPage();
             
             AddCamelCaseConvention();
@@ -158,6 +119,7 @@ namespace TheWanderersOutpost.Api
                 .AllowAnyMethod());
 
             app.UseMvc();
+            app.UseOpenApi();
         }
 
         private static void AddCamelCaseConvention()

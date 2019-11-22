@@ -28,7 +28,7 @@ namespace TheWanderersOutpost.Api.Controllers
         /// </summary>
         /// <param name="imageFile">The <seealso cref="IFormFile"/> file</param>
         /// <returns>The <seealso cref="Uri"/> of the image</returns>
-        [ProducesResponseType(201)]
+        [ProducesResponseType(typeof(string), 201)]
         [ProducesResponseType(400)]
         [HttpPost("uploadImage")]
         public async Task<IActionResult> UploadImage(IFormFile imageFile)
@@ -37,20 +37,13 @@ namespace TheWanderersOutpost.Api.Controllers
             {
                 return BadRequest();
             }
-            try
-            {
-                CloudBlobClient blobClient = StorageAccount.CreateCloudBlobClient();
-                CloudBlobContainer blobContainer = blobClient.GetContainerReference(BlobContainerName);
-                CloudBlockBlob blob = blobContainer.GetBlockBlobReference($"{Guid.NewGuid()}/{imageFile.FileName}");
+            CloudBlobClient blobClient = StorageAccount.CreateCloudBlobClient();
+            CloudBlobContainer blobContainer = blobClient.GetContainerReference(BlobContainerName);
+            CloudBlockBlob blob = blobContainer.GetBlockBlobReference($"{Guid.NewGuid()}/{imageFile.FileName}");
 
-                await blob.UploadFromStreamAsync(imageFile.OpenReadStream());
+            await blob.UploadFromStreamAsync(imageFile.OpenReadStream());
 
-                return Created(blob.Uri.ToString(), imageFile);
-            }
-            catch (Exception e)
-            {
-                return BadRequest(e);
-            }
+            return Created(blob.Uri.ToString(), imageFile);            
         }
     }
 }

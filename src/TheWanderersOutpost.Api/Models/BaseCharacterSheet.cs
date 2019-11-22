@@ -11,9 +11,13 @@ namespace TheWanderersOutpost.Api.Models
         [BsonRequired]
         public string OwnerID { get; set; }
         [BsonRequired]
+#pragma warning disable IDE1006 // Naming Styles
         public BsonDateTime _created { get; set; }
+#pragma warning restore IDE1006 // Naming Styles
         [BsonRequired]
+#pragma warning disable IDE1006 // Naming Styles
         public BsonDateTime _lastUpdated { get; set; }
+#pragma warning restore IDE1006 // Naming Styles
 
         [BsonRequired]
         public string GameSystem => GetType().Name;

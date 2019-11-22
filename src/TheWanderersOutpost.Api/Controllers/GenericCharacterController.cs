@@ -122,11 +122,13 @@ namespace TheWanderersOutpost.Api.Controllers
                         await collection.UpdateOneAsync(filter, Builders<dynamic>.Update.Set(property, value).CurrentDate("_lastUpdated"));
                         return Ok(propertyValue);
                     }
+#pragma warning disable CA1031 // Do not catch general exception types
                     catch (Exception)
                     {
                         return BadRequest($"An error occured when updating {stringId}'s {property}.");
                     }
-                    
+#pragma warning restore CA1031 // Do not catch general exception types
+
                 }
             }
             return NotFound();
