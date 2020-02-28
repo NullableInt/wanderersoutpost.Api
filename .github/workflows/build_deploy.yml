@@ -11,7 +11,7 @@ on:
 # 2. Change these variables for your configuration:
 env:
   AZURE_WEBAPP_NAME: 'wanderersoutpostapi' #'TheWanderersOutpost.Api'    # set this to your application's name
-  AZURE_WEBAPP_PACKAGE_PATH: './src/TheWanderersOutpost.Api/bin/Release/netcoreapp3.1/' #'./build'      # set this to the path to your web app project, defaults to the repository root
+  AZURE_WEBAPP_PACKAGE_PATH: './build'      # set this to the path to your web app project, defaults to the repository root
   DOTNET_VERSION: '3.1.101'           # set this to the dot net version to use
 
 jobs:
@@ -33,9 +33,9 @@ jobs:
         run: |
           dotnet build ./src/TheWanderersOutpost.Api --configuration Release
 
-      # - name: dotnet publish
-        # run: |
-          # dotnet publish ./src/TheWanderersOutpost.Api/TheWanderersOutpost.Api.csproj -c Release -o build
+      - name: dotnet publish
+        run: |
+          dotnet publish ./src/TheWanderersOutpost.Api/TheWanderersOutpost.Api.csproj -c Release -o build
           
       # Deploy to Azure Web apps
       - name: 'Run Azure webapp deploy action using publish profile credentials'

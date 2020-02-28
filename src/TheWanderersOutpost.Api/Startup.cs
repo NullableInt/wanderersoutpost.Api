@@ -22,148 +22,150 @@ using Microsoft.AspNetCore.Hosting;
 
 namespace TheWanderersOutpost.Api
 {
-    public class Startup
+  public class Startup
+  {
+    public Startup(IConfiguration configuration)
     {
-        public Startup(IConfiguration configuration)
+      Configuration = configuration;
+    }
+
+    public IConfiguration Configuration { get; }
+
+    public void ConfigureServices(IServiceCollection services)
+    {
+      services.AddResponseCompression();
+
+      services.AddSingleton<DocumentStoreHolder>();
+
+      services.Configure<MongoConfig>(Configuration.GetSection("MongoConfig"));
+
+      services.AddCors(options =>
+      {
+        options.AddPolicy("AllowSpecificOrigin",
+                  builder =>
+                  {
+                builder
+                      .WithOrigins("http://localhost:3000", "http://localhost:8080")
+                      .AllowAnyMethod()
+                      .AllowAnyHeader()
+                      .AllowCredentials();
+              });
+      });
+
+      services.AddControllers();
+
+      services.AddSingleton<IAuthorizationHandler, HasScopeHandler>();
+
+      foreach (Type type in Assembly.GetAssembly(typeof(BaseCharacterSheet)).GetTypes()
+                              .Where(d => d.IsClass && d.IsSubclassOf(typeof(BaseCharacterSheet))))
+      {
+        services.AddSingleton(typeof(ICharacterSheet), type);
+        BsonClassMap.LookupClassMap(type);
+      }
+
+      SetupAuth0(services);
+
+      services.AddSwaggerGen(c =>
+      {
+        c.SwaggerDoc("v1", new OpenApiInfo { Title = "Some API", Version = "v1" });
+        var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+        var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+        c.IncludeXmlComments(xmlPath, true);
+        c.GeneratePolymorphicSchemas();
+        c.DescribeAllParametersInCamelCase();
+        c.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
         {
-            Configuration = configuration;
-        }
-
-        public IConfiguration Configuration { get; }
-
-        public void ConfigureServices(IServiceCollection services)
-        {
-            services.AddResponseCompression();
-
-            services.AddSingleton<DocumentStoreHolder>();
-
-            services.Configure<MongoConfig>(Configuration.GetSection("MongoConfig"));
-
-            services.AddCors(options =>
+          Type = SecuritySchemeType.OAuth2,
+          Flows = new OpenApiOAuthFlows
+          {
+            Implicit = new OpenApiOAuthFlow
             {
-                options.AddPolicy("AllowSpecificOrigin",
-                    builder =>
-                    {
-                        builder
-                        .WithOrigins("http://localhost:3000", "http://localhost:8080")
-                        .AllowAnyMethod()
-                        .AllowAnyHeader()
-                        .AllowCredentials();
-                    });
-            });
-
-            services.AddControllers();
-
-            services.AddSingleton<IAuthorizationHandler, HasScopeHandler>();
-
-            foreach (Type type in Assembly.GetAssembly(typeof(BaseCharacterSheet)).GetTypes()
-                                    .Where(d => d.IsClass && d.IsSubclassOf(typeof(BaseCharacterSheet))))
-            {
-                services.AddSingleton(typeof(ICharacterSheet), type);
-                BsonClassMap.LookupClassMap(type);
-            }
-
-            SetupAuth0(services);
-
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Some API", Version = "v1" });
-                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
-                c.IncludeXmlComments(xmlPath, true);
-                c.GeneratePolymorphicSchemas();
-                c.DescribeAllParametersInCamelCase();
-                c.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
-                {
-                    Type = SecuritySchemeType.OAuth2,
-                    Flows = new OpenApiOAuthFlows
-                    {
-                        Implicit = new OpenApiOAuthFlow
-                        {
-                            AuthorizationUrl = new Uri($"https://{Configuration["Auth0:Domain"]}", UriKind.RelativeOrAbsolute),
-                            Scopes = new Dictionary<string, string>
-                            {
+              AuthorizationUrl = new Uri($"https://{Configuration["Auth0:Domain"]}", UriKind.RelativeOrAbsolute),
+              Scopes = new Dictionary<string, string>
+                      {
                                 { "readAccess", "Access read operations" },
                                 { "writeAccess", "Access write operations" }
-                            }
-                        }
-                    }
-                });
-            });
-        }
+                      }
+            }
+          }
+        });
+      });
+    }
 
-        private void SetupAuth0(IServiceCollection services)
+    private void SetupAuth0(IServiceCollection services)
+    {
+      string domain = $"https://{Configuration["Auth0:Domain"]}";
+      services.AddAuthentication(options =>
+      {
+        options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+        options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+
+      }).AddJwtBearer(options =>
+      {
+        options.Authority = Configuration["Auth0:Authority"];
+        options.Audience = Configuration["Auth0:Audience"];
+        options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
         {
-            string domain = $"https://{Configuration["Auth0:Domain"]}";
-            services.AddAuthentication(options =>
-            {
-                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+          ValidAudience = Configuration["Auth0:Audience"],
+          ValidIssuer = domain
+        };
+      });
 
-            }).AddJwtBearer(options =>
-            {
-                options.Authority = Configuration["Auth0:Authority"];
-                options.Audience = Configuration["Auth0:Audience"];
-                options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
-                {
-                    ValidAudience = Configuration["Auth0:Audience"],
-                    ValidIssuer = domain
-                };
-            });
+      services.AddAuthorization(options =>
+      {
+        options.AddPolicy("read:messages", policy => policy.Requirements.Add(new HasScopeRequirement("read:messages", domain)));
+      });
 
-            services.AddAuthorization(options =>
-            {
-                options.AddPolicy("read:messages", policy => policy.Requirements.Add(new HasScopeRequirement("read:messages", domain)));
-            });
+      // register the scope authorization handler
+      services.AddSingleton<IAuthorizationHandler, HasScopeHandler>();
+    }
 
-            // register the scope authorization handler
-            services.AddSingleton<IAuthorizationHandler, HasScopeHandler>();
-        }
+    public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+    {
+      app.UseSwagger(c =>
+      {
+        c.RouteTemplate = "api-docs/{documentName}/swagger.json";
+      })
+      .UseSwaggerUI(c =>
+      {
+        c.SwaggerEndpoint("/api-docs/v1/swagger.json", "Plz read this boyo man");
+        c.DocumentTitle = "Mmmyyyea bby";
+        c.RoutePrefix = "api-docs";
+        c.EnableDeepLinking();
+        c.DefaultModelExpandDepth(3);
+        c.DefaultModelRendering(ModelRendering.Model);
+        c.DocExpansion(DocExpansion.None);
+      });
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
-        {
-            app.UseSwagger(c =>
-            {
-                c.RouteTemplate = "api-docs/{documentName}/swagger.json";
-            })
-            .UseSwaggerUI(c =>
-            {
-                c.SwaggerEndpoint("/api-docs/v1/swagger.json", "Plz read this boyo man");
-                c.DocumentTitle = "Mmmyyyea bby";
-                c.RoutePrefix = "api-docs";
-                c.EnableDeepLinking();
-                c.DefaultModelExpandDepth(3);
-                c.DefaultModelRendering(ModelRendering.Model);
-                c.DocExpansion(DocExpansion.None);
-            });
+      app.UseDeveloperExceptionPage();
 
-            app.UseDeveloperExceptionPage();
-            
-            AddCamelCaseConvention();
+      AddCamelCaseConvention();
 
-            app.UseAuthentication();
+      app.UseAuthentication();
 
-            app.UseCors(builder => builder
-                .SetIsOriginAllowedToAllowWildcardSubdomains()
-                .WithOrigins(Configuration.GetSection("AllowedCors").Get<AllowedCors>().Cors)
-                .AllowCredentials()
-                .AllowAnyHeader()
-                .AllowAnyMethod());
 
-            app.UseRouting().UseAuthorization().UseEndpoints(e =>
-            {
-                e.MapControllers();
-            });
-        }
+      Console.WriteLine(Configuration.GetSection("AllowedCors"));
+      app.UseCors(builder => builder
+          .SetIsOriginAllowedToAllowWildcardSubdomains()
+          .WithOrigins(Configuration.GetSection("AllowedCors").Get<AllowedCors>().Cors)
+          .AllowCredentials()
+          .AllowAnyHeader()
+          .AllowAnyMethod());
 
-        private static void AddCamelCaseConvention()
-        {
-            var pack = new ConventionPack
+      app.UseRouting().UseAuthorization().UseEndpoints(e =>
+      {
+        e.MapControllers();
+      });
+    }
+
+    private static void AddCamelCaseConvention()
+    {
+      var pack = new ConventionPack
             {
                 new CamelCaseElementNameConvention()
             };
 
-            ConventionRegistry.Register(new CamelCaseElementNameConvention().Name, pack, t => true);
-        }
+      ConventionRegistry.Register(new CamelCaseElementNameConvention().Name, pack, t => true);
     }
+  }
 }
