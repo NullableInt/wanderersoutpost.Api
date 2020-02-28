@@ -10,7 +10,7 @@ COPY ["src/TheWanderersOutpost.Api/TheWanderersOutpost.Api.csproj", "src/TheWand
 COPY ["src/TheWanderersOutpost.Api.Database/TheWanderersOutpost.Api.Database.csproj", "src/TheWanderersOutpost.Api.Database/"]
 RUN dotnet restore "src/TheWanderersOutpost.Api/TheWanderersOutpost.Api.csproj"
 COPY . .
-WORKDIR "/src/src/TheWanderersOutpost.Api"
+WORKDIR "./src/TheWanderersOutpost.Api"
 RUN dotnet build "TheWanderersOutpost.Api.csproj" -c Release -o /app/build
 
 FROM build AS publish
