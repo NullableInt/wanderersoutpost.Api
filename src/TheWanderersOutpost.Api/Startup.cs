@@ -33,17 +33,6 @@ namespace TheWanderersOutpost.Api
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services
-                .AddJsonOptions(op =>
-                {
-                    op.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
-                    op.SerializerSettings.DefaultValueHandling = DefaultValueHandling.Include;
-                    op.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
-                })
-                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-
-
-
             services.AddResponseCompression();
 
             services.AddSingleton<DocumentStoreHolder>();

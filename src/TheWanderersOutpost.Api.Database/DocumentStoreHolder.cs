@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.Options;
-using MongoDB.Driver;
+﻿using MongoDB.Driver;
 
 namespace TheWanderersOutpost.Api.Database
 {
