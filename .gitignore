@@ -333,3 +333,5 @@ ASALocalRun/
 .env
 data/db/*
 mongod.lock
+
+build/

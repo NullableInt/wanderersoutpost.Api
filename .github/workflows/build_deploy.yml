@@ -31,8 +31,8 @@ jobs:
       # Run dotnet build and publish
       - name: dotnet build and publish
         run: |
-          dotnet build --configuration Release
-          dotnet publish -c Release -o myapp 
+          dotnet build .\src\TheWanderersOutpost.Api --configuration Release
+          dotnet publish .\src\TheWanderersOutpost.Api\TheWanderersOutpost.Api.csproj -c Release -o build/
           
       # Deploy to Azure Web apps
       - name: 'Run Azure webapp deploy action using publish profile credentials'
