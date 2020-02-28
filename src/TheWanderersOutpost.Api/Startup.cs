@@ -18,6 +18,7 @@ using Microsoft.OpenApi.Models;
 using System.IO;
 using Swashbuckle.AspNetCore.SwaggerUI;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Hosting;
 
 namespace TheWanderersOutpost.Api
 {
@@ -33,7 +34,6 @@ namespace TheWanderersOutpost.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services
-                .AddMvc()
                 .AddJsonOptions(op =>
                 {
                     op.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
@@ -41,6 +41,8 @@ namespace TheWanderersOutpost.Api
                     op.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
                 })
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+
 
             services.AddResponseCompression();
 
@@ -127,7 +129,7 @@ namespace TheWanderersOutpost.Api
             services.AddSingleton<IAuthorizationHandler, HasScopeHandler>();
         }
 
-        public void Configure(IApplicationBuilder app)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.UseSwagger(c =>
             {
@@ -157,7 +159,10 @@ namespace TheWanderersOutpost.Api
                 .AllowAnyHeader()
                 .AllowAnyMethod());
 
-            app.UseMvc();
+            app.UseRouting().UseAuthorization().UseEndpoints(e =>
+            {
+                e.MapControllers();
+            });
         }
 
         private static void AddCamelCaseConvention()
