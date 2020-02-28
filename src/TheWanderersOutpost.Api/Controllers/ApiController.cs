@@ -85,7 +85,7 @@ namespace TheWanderersOutpost.Api.Controllers
         [HttpGet("mock")]
         public IActionResult Mock()
         {
-            return Json(new FiveEModel
+            var data = new FiveEModel
             {
                 AbilityScores = new List<AbilityScore>
                 {
@@ -371,9 +371,10 @@ namespace TheWanderersOutpost.Api.Controllers
                         Silver = 8
                     }
                 },
-                _created = new BsonDateTime(System.DateTime.UtcNow),
-                _lastUpdated = new BsonDateTime(System.DateTime.UtcNow)
-            });
+                _created = System.DateTime.UtcNow,
+                _lastUpdated = System.DateTime.UtcNow
+            };
+            return base.Json(data);
         }
 
         [HttpPatch("publicPatch")]

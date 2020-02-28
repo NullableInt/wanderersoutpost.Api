@@ -52,6 +52,8 @@ namespace TheWanderersOutpost.Api
                     });
             });
 
+            services.AddControllers();
+
             services.AddSingleton<IAuthorizationHandler, HasScopeHandler>();
 
             foreach (Type type in Assembly.GetAssembly(typeof(BaseCharacterSheet)).GetTypes()

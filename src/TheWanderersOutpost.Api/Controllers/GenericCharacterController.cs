@@ -170,8 +170,8 @@ namespace TheWanderersOutpost.Api.Controllers
             var firmlyShapedGoo = deserializedGenericGoo as BaseCharacterSheet;
             firmlyShapedGoo.Id = ObjectId.GenerateNewId().ToString();
             firmlyShapedGoo.OwnerID = userId;
-            firmlyShapedGoo._created = new BsonDateTime(System.DateTime.UtcNow);
-            firmlyShapedGoo._lastUpdated = new BsonDateTime(System.DateTime.UtcNow);
+            firmlyShapedGoo._created = DateTime.UtcNow;
+            firmlyShapedGoo._lastUpdated = DateTime.UtcNow;
 
             await MongoDb.GetCollection<dynamic>("RpgCharModels").InsertOneAsync(deserializedGenericGoo);
 

@@ -1,5 +1,6 @@
 ﻿using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Bson;
+using System;
 
 namespace TheWanderersOutpost.Api.Models
 {
@@ -11,9 +12,11 @@ namespace TheWanderersOutpost.Api.Models
         [BsonRequired]
         public string OwnerID { get; set; }
         [BsonRequired]
-        public BsonDateTime _created { get; set; }
+        [BsonRepresentation(BsonType.DateTime)]
+        public DateTime _created { get; set; }
         [BsonRequired]
-        public BsonDateTime _lastUpdated { get; set; }
+        [BsonRepresentation(BsonType.DateTime)]
+        public DateTime _lastUpdated { get; set; }
 
         [BsonRequired]
         public string GameSystem => GetType().Name;

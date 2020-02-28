@@ -45,8 +45,8 @@ namespace TheWanderersOutpost.Api.Controllers
             {
                 Id = ObjectId.GenerateNewId().ToString(),
                 OwnerID = userId,
-                _created = new BsonDateTime(DateTime.UtcNow),
-                _lastUpdated = new BsonDateTime(DateTime.UtcNow),
+                _created = DateTime.UtcNow,
+                _lastUpdated = DateTime.UtcNow,
                 CampaignType = gameSystem,
                 CampaignImage = "",
                 Characters = new List<string>(),

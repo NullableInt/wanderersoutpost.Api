@@ -69,8 +69,8 @@ namespace TheWanderersOutpost.Api.Controllers
                 id = ObjectId.GenerateNewId().ToString();
             }
             dynamic.Id = id.ToString();
-            dynamic._created = new BsonDateTime(System.DateTime.UtcNow);
-            dynamic._lastUpdated = new BsonDateTime(System.DateTime.UtcNow);
+            dynamic._created = System.DateTime.UtcNow;
+            dynamic._lastUpdated = System.DateTime.UtcNow;
 
             var collection = MongoDb.GetCollection<FiveEModel>("RpgCharModels");
             await collection.InsertOneAsync(dynamic);
@@ -125,8 +125,8 @@ namespace TheWanderersOutpost.Api.Controllers
                 Status = new List<Status>(),
                 Traits = new List<Trait>(),
                 Treasure = new List<Treasure>(),
-                _created = new BsonDateTime(System.DateTime.UtcNow),
-                _lastUpdated = new BsonDateTime(System.DateTime.UtcNow)
+                _created = System.DateTime.UtcNow,
+                _lastUpdated = System.DateTime.UtcNow
             };
 
             var collection = MongoDb.GetCollection<FiveEModel>("RpgCharModels");
