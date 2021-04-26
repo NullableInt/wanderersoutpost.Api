@@ -142,9 +142,7 @@ namespace TheWanderersOutpost.Api
       AddCamelCaseConvention();
 
       app.UseAuthentication();
-
-
-      Console.WriteLine(Configuration.GetSection("AllowedCors"));
+      
       app.UseCors(builder => builder
           .SetIsOriginAllowedToAllowWildcardSubdomains()
           .WithOrigins(Configuration.GetSection("AllowedCors").Get<AllowedCors>().Cors)
